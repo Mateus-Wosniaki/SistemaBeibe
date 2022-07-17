@@ -221,7 +221,7 @@
                         <div class="row">
                             <div class="credits ml-auto">
                                 <span class="copyright">
-                                    TADS N / Desenvolvimento Web 2 - <script>
+                                    BEIBE - Beauty Embuste Indústria de Beleza e Estética - <script>
                                         document.write(new Date().getFullYear());
                                     </script>
                                 </span>
