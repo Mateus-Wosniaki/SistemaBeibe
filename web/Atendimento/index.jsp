@@ -1,6 +1,6 @@
 <%-- 
     Document   : index
-    Created on : Jul 10, 2022, 6:23:21 PM
+    Created on : 17 de jul. de 2022, 16:15:43
     Author     : Gabriel Jesus Peres
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Início | SAC - Beibe</title>
+        <title>SAC - Listagem de Atendimentos</title>
 
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
@@ -20,12 +20,12 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="#" class="simple-text logo-normal">
-                        BEIBE - Gerente
+                        BEIBE - Atendimento
                     </a>
                 </div>
                 <div class="sidebar-wrapper" style="padding-right: 2px;">
                     <ul class="nav">
-                        <li class="active ">
+                        <li>
                             <a href="#">
                                 <i class="nc-icon nc-bank"></i>
                                 <p>Dashboard</p>
@@ -37,7 +37,7 @@
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="#">
                                 <i class="nc-icon nc-book-bookmark"></i>
                                 <p>Atendimentos</p>
@@ -90,118 +90,59 @@
                         </div>
                     </div>
                 </nav>
-
                 <div class="content">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="icon-big text-center icon-warning">
-                                                <i class="nc-icon nc-chat-33 text-primary"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="numbers">
-                                                <p class="card-category">Total de Atendimentos</p>
-                                                <p class="card-title">832<p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer ">
-                                    <hr>
-                                    <div class="stats">
-                                        Quantidade de atendimentos efetuados até o momento
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="icon-big text-center icon-warning">
-                                                <i class="nc-icon nc-support-17 text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="numbers">
-                                                <p class="card-category">Atendimentos - Em Aberto</p>
-                                                <p class="card-title">200<p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer ">
-                                    <hr>
-                                    <div class="stats">
-                                        Quantidade de atendimentos em aberto
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="icon-big text-center icon-warning">
-                                                <i class="nc-icon nc-chart-pie-36 text-warning"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="numbers">
-                                                <p class="card-category">Porcentagem Atendimentos - Em Aberto / Total</p>
-                                                <p class="card-title">23%<p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer ">
-                                    <hr>
-                                    <div class="stats">
-                                        Quantidade de atendimentos em aberto em relação ao total
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card ">
-                                <div class="card-header ">
+                                <div class="card-header d-flex d-inline align-items-center">
+                                    <div class="icon-big text-center">
+                                        <h4 class="my-1"><i class="nc-icon nc-support-17 text-danger mx-4"></i></h4>
+                                    </div>
                                     <h5 class="card-title">
-                                        <i class="nc-icon nc-chart-bar-32 text-success mr-4"></i>
-                                        Razão de Atendimentos por Categoria
+                                        Listagem de Atendimentos
                                     </h5>
                                 </div>
                                 <div class="card-body ">
                                     <table class="table table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Categoria</th>
-                                                <th>Razão de Atendimentos</th>
+                                                <th>Atendimento</th>
+                                                <th>Data Criação</th>
+                                                <th class="disabled-sorting text-right">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>23/<strong>150</strong></td>
+                                                <td><a href="#">Tiger Nixon</a></td>
+                                                <td class="text-danger">15/07/2022</td>
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Garrett Winters</td>
-                                                <td>23/<strong>150</strong></td>
+                                                <td><a href="#">Garrett Winters</a></td>
+                                                <td>16/07/2022</td>
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Ashton Cox</td>
-                                                <td>23/<strong>150</strong></td>
+                                                <td><a href="#">Ashton Cox</a></td>
+                                                <td>17/07/2022</td>
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Cedric Kelly</td>
-                                                <td>23/<strong>150</strong></td>
+                                                <td><a href="#">Cedric Kelly</a></td>
+                                                <td class="text-warning">18/07/2022</td>
+                                                <td class="text-right">
+                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -209,7 +150,11 @@
                                 <div class="card-footer ">
                                     <hr>
                                     <div class="stats">
-                                        Quantidade, por categoria, de atendimentos em aberto / total de atendimentos
+                                        Obs. Protótipo: Essa tela reúne a funcionalidade 
+                                        de listagem de atendimentos de todas as roles - Cliente, Funcionário e Gerente;
+                                        No decorrer do desenvolvimento será utilizada
+                                        como base para criação das telas, separadas por role
+                                        e funcionalidade específica de cada tipo de listagem.
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +176,7 @@
                 </footer>
             </div>
         </div>
+
         <script src="../assets/js/core/jquery.min.js"></script>
         <script src="../assets/js/core/popper.min.js"></script>
         <script src="../assets/js/core/bootstrap.min.js"></script>
