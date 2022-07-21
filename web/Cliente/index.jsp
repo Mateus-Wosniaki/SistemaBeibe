@@ -29,33 +29,21 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="active">
-                            <a href="./inicio.jsp">
+                            <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
                                 <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
+                            <a href="updateUser.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./typography.html">
+                            <a href="userServiceList.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
                                 <p>Atendimentos</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./tables.html">
-                                <i class="nc-icon nc-paper"></i>
-                                <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
@@ -83,7 +71,7 @@
                         <div class="collapse navbar-collapse justify-content-end" id="navigation">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link btn-rotate" href="javascript:;">
+                                    <a class="nav-link btn-rotate" href="../Autenticacao/login.jsp">
                                         <i class="nc-icon nc-button-power"></i>
                                         <p>
                                             <span class="d-lg-none d-md-block">Sair</span>
@@ -114,11 +102,6 @@
                                                 <td>Falta de Estoque</td>
                                                 <td>Aberto</td>
                                                 <td>2011-04-25</td>
-                                                <!--<td class="text-right">
-                                                    <a href="#" class="btn btn-info btn-link btn-icon btn-sm like"><i class="fa fa-eye"></i></a>
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></a>
-                                                </td>-->
                                             </tr>
                                             <tr>
                                                 <td>Falta de Estoque</td>

@@ -16,12 +16,8 @@
         <!-- CSS Files -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-        <!-- CSS Just for demo purpose, don't include it in your project -->
-        <link href="../assets/demo/demo.css" rel="stylesheet" />
 
     </head>
-
-
     <body class="">
         <div class="wrapper ">
             <div class="sidebar" data-color="white" data-active-color="danger">
@@ -36,33 +32,21 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li>
-                            <a href="./dashboard.html">
-                                <i class="nc-icon nc-bank"></i>
-                                <p>DashBoard</p>
+                            <a href="index.jsp">
+                                <i class="nc-icon nc-shop"></i>
+                                <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./icons.html">
+                            <a href="updateUser.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="./map.html">
+                        <li class="active">
+                            <a href="userServiceList.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimento</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./notifications.html">
-                                <i class="nc-icon nc-paper"></i>
-                                <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li class="active ">
-                            <a href="./user.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
+                                <p>Atendimentos</p>
                             </a>
                         </li>
                     </ul>
@@ -80,10 +64,11 @@
                                     <span class="navbar-toggler-bar bar3"></span>
                                 </button>
                             </div>
-                            <a class="navbar-brand" href="javascript:;">Criar atendimento</a>
+                            <a class="navbar-brand" href="javascript:;">SAC - Sistema Atendimento Ao Cliente</a>
                         </div>
                     </div>
-                </nav> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                </nav> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-bar navbar-kebab"></span>
                     <span class="navbar-toggler-bar navbar-kebab"></span>
                     <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -92,10 +77,6 @@
 
                 <div class="content">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                            </div>
-                        </div>
                         <div class="col-md-12">
                             <div class="card card-user">
                                 <div class="card-header">
@@ -127,7 +108,7 @@
                                             <div class="col-md pl-1">
                                                 <div class="form-group">
                                                     <label>Produto</label>
-                                                    <input type="email" class="form-control" placeholder="" value="">
+                                                    <input type="text" class="form-control" placeholder="" value="">
                                                 </div>
                                             </div>
                                             <div class="col-md pl-1">
@@ -138,10 +119,10 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 pr-1">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Descrição</label>
-                                                    <input type="text" class="form-control" placeholder="" value="">
+                                                    <textarea class="form-control textarea" placeholder="Detalhe seu atendimento" > </textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,22 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <footer class="footer footer-black  footer-white ">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <nav class="footer-nav">
 
-                            </nav>
-                            <div class="credits ml-auto">
-                                <span class="copyright">
-                                    © <script>
-                                        document.write(new Date().getFullYear())
-                                    </script>, made with <i class="fa fa-heart heart"></i> by me
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
         <!--   Core JS Files   -->
@@ -179,15 +145,6 @@
         <script src="../assets/js/core/popper.min.js"></script>
         <script src="../assets/js/core/bootstrap.min.js"></script>
         <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-        <!--  Google Maps Plugin    -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-        <!-- Chart JS -->
-        <script src="../assets/js/plugins/chartjs.min.js"></script>
-        <!--  Notifications Plugin    -->
-        <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-        <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-        <script src="../assets/demo/demo.js"></script>
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

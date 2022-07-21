@@ -24,14 +24,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#">Cadastro</a>
+                    <a class="nav-link" href="createUser.jsp">Cadastro</a>
                 </div>
             </div>
         </nav>
         <div class="content">
             <div class="container">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                    <form class="form" method="POST" action="#">
+                    <form class="form" method="POST" action="../Cliente/index.jsp">
                         <div class="card card-login">
                             <div class="card-header ">
                                 <div class="card-header ">

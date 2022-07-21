@@ -28,33 +28,21 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li>
-                            <a href="./inicio.jsp">
+                            <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
                                 <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
+                            <a href="updateUser.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="./typography.html">
+                        <li class="active">
+                            <a href="userServiceList.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
                                 <p>Atendimentos</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./tables.html">
-                                <i class="nc-icon nc-paper"></i>
-                                <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
@@ -82,7 +70,7 @@
                         <div class="collapse navbar-collapse justify-content-end" id="navigation">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link btn-rotate" href="javascript:;">
+                                    <a class="nav-link btn-rotate" href="../Autenticacao/login.jsp">
                                         <i class="nc-icon nc-button-power"></i>
                                         <p>
                                             <span class="d-lg-none d-md-block">Sair</span>
@@ -101,7 +89,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-body">
-                                        <form method="POST" action="index.jsp">
+                                        <form method="POST" action="userServiceList.jsp">
                                             <div class="row">
                                                 <div class="col-md-4 pr-1">
                                                     <div class="form-group">
@@ -150,13 +138,13 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Solução</label>
-                                                        <textarea class="form-control textarea" name="solucao"></textarea>
+                                                        <textarea class="form-control textarea" name="solucao" disabled></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="ml-auto mr-auto">
-                                                    <button type="submit" class="btn btn-success btn-round">Resolver</button>
+                                                    <button type="submit" class="btn btn-danger btn-round">Excluir</button>
                                                     <button class="btn btn-link btn-round">Voltar</button>
                                                 </div>
                                             </div>
