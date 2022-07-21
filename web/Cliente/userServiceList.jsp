@@ -76,6 +76,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card ">
+                                <div class="card-body">
+                                    <a href="createService.jsp"><i class="fa fa-plus"></i>Novo atendimento</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
                                 <div class="card-header d-flex d-inline align-items-center">
                                     <h5 class="card-title">
                                         Listagem de Atendimentos

@@ -48,33 +48,39 @@ Coded by www.creative-tim.com
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li>
-                            <a href="./inicio.jsp">
+                            <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
                                 <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
+                            <a href="detalheGerente.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos</p>
+                        <li class="active">
+                            <a href="listaColaborador.jsp">
+                                <i class="nc-icon nc-circle-10"></i>
+                                <p>Colaboradores</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./tables.html">
+                            <a href="atendimentoAberto.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Atendimentos Abertos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="todosAtendimentos.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Todos Atendimentos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="relatorios.jsp">
                                 <i class="nc-icon nc-paper"></i>
                                 <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
@@ -157,7 +163,7 @@ Coded by www.creative-tim.com
                         </td>
                         <td class="text-right">
                             <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-info btn-round">Editar</button>
+                                <a href="cadastroColaborador.jsp"><i class="fa fa-pencil"></i></a>
                                 <button type="submit" class="btn btn-danger btn-round">Excluir</button>
                             </div>
                         </td>
@@ -177,7 +183,7 @@ Coded by www.creative-tim.com
                         </td>
                         <td class="text-right">
                             <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-info btn-round">Editar</button>
+                                <a href="cadastroColaborador.jsp"><i class="fa fa-pencil"></i></a>
                                 <button type="submit" class="btn btn-danger btn-round">Excluir</button>
                             </div>
                         </td>
@@ -193,7 +199,7 @@ Coded by www.creative-tim.com
           </div>
         </div>
         <div class="col text-center">
-            <button type="submit" class="btn btn-success btn-round">Cadastro</button>
+            <a href="cadastroColaborador.jsp" class="btn btn-primary btn-round">Cadastrar</a>
         </div> 
       </div>
   

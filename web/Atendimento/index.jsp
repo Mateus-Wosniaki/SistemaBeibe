@@ -26,34 +26,39 @@
                 <div class="sidebar-wrapper" style="padding-right: 2px;">
                     <ul class="nav">
                         <li>
-                            <a href="#">
-                                <i class="nc-icon nc-bank"></i>
-                                <p>Dashboard</p>
+                            <a href="index.jsp">
+                                <i class="nc-icon nc-shop"></i>
+                                <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="detalheGerente.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li class="active">
-                            <a href="#">
-                                <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos</p>
+                        <li>
+                            <a href="listaColaborador.jsp">
+                                <i class="nc-icon nc-circle-10"></i>
+                                <p>Colaboradores</p>
                             </a>
                         </li>
-
                         <li>
-                            <a href="#">
+                            <a href="atendimentos.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Atendimentos Abertos</p>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="atendimentos.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Todos Atendimentos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="relatorios.jsp">
                                 <i class="nc-icon nc-paper"></i>
                                 <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
@@ -108,56 +113,29 @@
                                             <tr>
                                                 <th>Atendimento</th>
                                                 <th>Data Criação</th>
-                                                <th class="disabled-sorting text-right">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td><a href="#">Tiger Nixon</a></td>
                                                 <td class="text-danger">15/07/2022</td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#">Garrett Winters</a></td>
                                                 <td>16/07/2022</td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#">Ashton Cox</a></td>
                                                 <td>17/07/2022</td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#">Cedric Kelly</a></td>
                                                 <td class="text-warning">18/07/2022</td>
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="card-footer ">
-                                    <hr>
-                                    <div class="stats">
-                                        Obs. Protótipo: Essa tela reúne a funcionalidade 
-                                        de listagem de atendimentos de todas as roles - Cliente, Funcionário e Gerente;
-                                        No decorrer do desenvolvimento será utilizada
-                                        como base para criação das telas, separadas por role
-                                        e funcionalidade específica de cada tipo de listagem.
-                                    </div>
-                                </div>
-                            </div>
+                             </div>
                         </div>
                     </div>
                 </div>

@@ -22,37 +22,37 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-                        CLIENTE
+                        FUNCIONÁRIO
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li>
-                            <a href="./inicio.jsp">
+                            <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
                                 <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
+                            <a href="detalheFuncionario.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./typography.html">
+                            <a href="atendimentoAberto.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos</p>
+                                <p>Atendimentos Abertos</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./tables.html">
-                                <i class="nc-icon nc-paper"></i>
-                                <p>Relatórios</p>
+                            <a href="todosAtendimentos.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Todos Atendimentos</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="./typography.html">
+                        <li class="active">
+                            <a href="exibirProdutos.html">
                                 <i class="nc-icon nc-tag-content"></i>
                                 <p>Produtos</p>
                             </a>
@@ -96,7 +96,7 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <h5>Cadastrar Produto</h5>
-                    <form>
+                    <form method="POST" action="exibirProdutos.html">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">

@@ -22,39 +22,45 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-                        CLIENTE
+                        GERENTE
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li>
-                            <a href="./inicio.jsp">
+                            <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
                                 <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
+                            <a href="detalheGerente.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos</p>
+                        <li class="active">
+                            <a href="listaColaborador.jsp">
+                                <i class="nc-icon nc-circle-10"></i>
+                                <p>Colaboradores</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./tables.html">
+                            <a href="atendimentoAberto.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Atendimentos Abertos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="todosAtendimentos.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Todos Atendimentos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="relatorios.jsp">
                                 <i class="nc-icon nc-paper"></i>
                                 <p>Relatórios</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./typography.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
