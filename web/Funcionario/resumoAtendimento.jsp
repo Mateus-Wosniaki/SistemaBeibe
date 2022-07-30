@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="DetalheFuncionario.html">
+                            <a href="detalheFuncionario.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -52,13 +52,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="ExibirProdutos.html">
+                            <a href="exibirProdutos.jsp">
                                 <i class="nc-icon nc-tag-content"></i>
                                 <p>Produtos</p>
                             </a>
                         </li>
                         <li>
-                            <a href="CategoriasProduto.html">
+                            <a href="categoriasProduto.jsp">
                                 <i class="nc-icon nc-tag-nc-layout-11"></i>
                                 <p>Categorias</p>
                             </a>

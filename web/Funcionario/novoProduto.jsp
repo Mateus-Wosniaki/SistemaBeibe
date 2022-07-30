@@ -30,7 +30,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="DetalheFuncionario.html">
+                            <a href="detalheFuncionario.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="active">
-                            <a href="ExibirProdutos.html">
+                            <a href="exibirProdutos.jsp">
                                 <i class="nc-icon nc-tag-content"></i>
                                 <p>Produtos</p>
                             </a>
@@ -92,7 +92,7 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <h5>Cadastrar Produto</h5>
-                    <form method="POST" action="ExibirProdutos.html">
+                    <form method="POST" action="exibirProdutos.jsp">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">

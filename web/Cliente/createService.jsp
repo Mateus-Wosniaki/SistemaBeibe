@@ -31,11 +31,11 @@
                         <li>
                             <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
-                                <p>InÃ­cio</p>
+                                <p>Início</p>
                             </a>
                         </li>
                         <li>
-                            <a href="updateUser.html">
+                            <a href="updateUser.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -98,7 +98,7 @@
                                         <div class="row">
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
-                                                    <label >SituaÃ§Ã£o</label>
+                                                    <label >Situação</label>
                                                     <input readonly type="text" class="form-control" placeholder="Aberto">
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>DescriÃ§Ã£o</label>
+                                                    <label>Descrição</label>
                                                     <textarea class="form-control textarea" placeholder="Detalhe seu atendimento" > </textarea>
                                                 </div>
                                             </div>

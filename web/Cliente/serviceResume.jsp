@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="updateUser.html">
+                            <a href="updateUser.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>

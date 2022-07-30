@@ -25,7 +25,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="DetalheGerente.html">
+                            <a href="detalheGerente.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>

@@ -1,10 +1,15 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Detalhes Gerente</title>
-
+        <title>Detalhes Funcionario</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -14,33 +19,39 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="#" class="simple-text logo-normal">
-                        BEIBE - Gerente
+                        FUNCIONÁRIO
                     </a>
                 </div>
                 <div class="sidebar-wrapper" style="padding-right: 2px;">
                     <ul class="nav">
                         <li>
-                            <a href="#">
-                                <i class="nc-icon nc-bank"></i>
-                                <p>Dashboard</p>
+                            <a href="index.jsp">
+                                <i class="nc-icon nc-shop"></i>
+                                <p>Início</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
+                        <li class="active">
+                            <a href="detalheFuncionario.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./user.html">
-                                <i class="nc-icon nc-single-02"></i>
-                                <p>RelatÃ³rios </p>
+                            <a href="atendimentoAberto.jsp">
+                                <i class="nc-icon nc-book-bookmark"></i>
+                                <p>Atendimentos Abertos</p>
                             </a>
                         </li>
                         <li>
-                            <a href="./typography.html">
+                            <a href="todosAtendimentos.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos</p>
+                                <p>Todos Atendimentos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="exibirProdutos.html">
+                                <i class="nc-icon nc-tag-content"></i>
+                                <p>Produtos</p>
                             </a>
                         </li>
                     </ul>
@@ -57,7 +68,7 @@
                                     <span class="navbar-toggler-bar bar3"></span>
                                 </button>
                             </div>
-                            <a class="navbar-brand" href="#">SAC - Grentes</a>
+                            <a class="navbar-brand" href="#">SAC - Funcionario</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -90,13 +101,13 @@
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>Nome</label>
-                                                        <input type="text" class="form-control" disabled="" value="JosÃ© Mande Cardoso">
+                                                        <input type="text" class="form-control" disabled="" value="Matheus W">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-3">
                                                     <div class="form-group">
                                                         <label>Sobrenome</label>
-                                                        <input type="text" class="form-control" disabled="" value="Chingulo">
+                                                        <input type="text" class="form-control" disabled="" value="W">
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +115,7 @@
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>CPF</label>
-                                                        <input type="text" class="form-control" disabled="" value="800.395.999-89">
+                                                        <input type="text" class="form-control" disabled="" value="800.395.88-89">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 pr-1">
@@ -116,7 +127,7 @@
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Telefone</label>
-                                                        <input type="text" class="form-control" disabled="" value="(41) 99845-4603">
+                                                        <input type="text" class="form-control" disabled="" value="(41) 99845-3333">
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,39 +149,34 @@
                                                 <div class="col-md-2 pr-1">
                                                     <div class="form-group">
                                                         <label>CEP</label>
-                                                        <input type="text" class="form-control" disabled="" value="81070-140">
+                                                        <input type="text" class="form-control" disabled="" value="81070-342">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pr-1">
                                                     <div class="form-group">
                                                         <label>Rua</label>
-                                                        <input type="text" class="form-control" disabled="" value="Miguel AbraÃ£o">
+                                                        <input type="text" class="form-control" disabled="" value="Marechal Anor">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1 pl-1">
                                                     <div class="form-group">
-                                                        <label>NÃºmero</label>
-                                                        <input type="text" class="form-control" disabled="" value="610">
+                                                        <label>Número</label>
+                                                        <input type="text" class="form-control" disabled="" value="342">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Complemento</label>
-                                                        <input type="text" class="form-control" disabled="" value="12">
+                                                        <input type="text" class="form-control" disabled="" value="2">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Bairro</label>
-                                                        <input type="text" class="form-control" disabled="" value="PortÃ£o">
+                                                        <input type="text" class="form-control" disabled="" value="Bacacheri">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="ml-auto mr-auto">
-                                                    <button class="btn btn-link btn-round">Voltar</button>
-                                                </div>
-                                            </div>                       
                                         </form>
                                     </div>
                                 </div>
@@ -183,7 +189,7 @@
                         <div class="row">
                             <div class="credits ml-auto">
                                 <span class="copyright">
-                                    BEIBE - Beauty Embuste IndÃºstria de Beleza e EstÃ©tica - <script>
+                                    BEIBE - Beauty Embuste Indústria de Beleza e Estética - <script>
                                         document.write(new Date().getFullYear());
                                     </script>
                                 </span>

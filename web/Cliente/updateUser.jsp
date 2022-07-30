@@ -32,11 +32,11 @@
                         <li>
                             <a href="index.jsp">
                                 <i class="nc-icon nc-shop"></i>
-                                <p>InÃ­cio</p>
+                                <p>Início</p>
                             </a>
                         </li>
                         <li class="active">
-                            <a href="updateUser.html">
+                            <a href="updateUser.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -93,7 +93,7 @@
                                     <h5 class="card-title">Editar Usuario</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="updateUser.html">
+                                    <form method="POST" action="updateUser.jsp">
                                         <div class="row">
                                             <div class="col-md pr-1">
                                                 <div class="form-group">
@@ -104,7 +104,7 @@
                                             <div class="col-md pl-1">
                                                 <div class="form-group">
                                                     <label>Sobrenome</label>
-                                                    <input type="text" class="form-control" placeholder="" value="De lÃ¡">
+                                                    <input type="text" class="form-control" placeholder="" value="De lá">
                                                 </div>
                                             </div>
                                         </div>

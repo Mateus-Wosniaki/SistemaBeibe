@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="updateUser.html">
+                            <a href="updateUser.jsp">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -77,7 +77,7 @@
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-body">
-                                    <a href="createService.html" class="btn btn-primary"><i class="fa fa-plus"></i>  Novo atendimento</a>
+                                    <a href="createService.jsp" class="btn btn-primary"><i class="fa fa-plus"></i>  Novo atendimento</a>
                                 </div>
                             </div>
                         </div>
