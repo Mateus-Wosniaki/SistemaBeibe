@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Relatórios</title>
-
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -58,38 +58,6 @@
                 </div>
             </div>
             <div class="main-panel">
-                <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper">
-                            <div class="navbar-toggle">
-                                <button type="button" class="navbar-toggler">
-                                    <span class="navbar-toggler-bar bar1"></span>
-                                    <span class="navbar-toggler-bar bar2"></span>
-                                    <span class="navbar-toggler-bar bar3"></span>
-                                </button>
-                            </div>
-                            <a class="navbar-brand" href="#">SAC - Funcionario</a>
-                        </div>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-end" id="navigation">  
-                            <ul class="navbar-nav">
-                                <li>
-                                    <a class="nav-link btn-rotate" href="#">
-                                        <i class="nc-icon nc-button-power"></i>
-                                        <p>
-                                            <span class="d-lg-none d-md-block">Logout</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <div class="main-panel">
                     <!-- Navbar -->
                     <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
                         <div class="container-fluid">
@@ -731,7 +699,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

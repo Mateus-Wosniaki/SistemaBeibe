@@ -20,7 +20,7 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="#" class="simple-text logo-normal">
-                        BEIBE - Atendimento
+                        FUNCIONÁRIO
                     </a>
                 </div>
                 <div class="sidebar-wrapper" style="padding-right: 2px;">

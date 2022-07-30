@@ -15,7 +15,7 @@
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
                     <a href="#" class="simple-text logo-normal">
-                        BEIBE - Atendimento
+                        CLIENTE
                     </a>
                 </div>
                 <div class="sidebar-wrapper" style="padding-right: 2px;">
@@ -77,7 +77,7 @@
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-body">
-                                    <a href="createService.jsp"><i class="fa fa-plus"></i>Novo atendimento</a>
+                                    <a href="createService.html" class="btn btn-primary"><i class="fa fa-plus"></i>  Novo atendimento</a>
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@
         <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
     </head>
 
-    <body class="">
+    <body>
         <div class="wrapper ">
             <div class="sidebar" data-color="white" data-active-color="danger">
                 <div class="logo">
@@ -39,7 +39,7 @@
                                 <p>Perfil</p>
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="atendimentoAberto.jsp">
                                 <i class="nc-icon nc-book-bookmark"></i>
                                 <p>Atendimentos Abertos</p>
