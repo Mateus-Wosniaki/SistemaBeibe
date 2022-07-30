@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="detalheFuncionario.html">
+                            <a href="DetalheFuncionario.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -50,7 +50,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="exibirProdutos.html">
+                            <a href="ExibirProdutos.html">
                                 <i class="nc-icon nc-tag-content"></i>
                                 <p>Produtos</p>
                             </a>

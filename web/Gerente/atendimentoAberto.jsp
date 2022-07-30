@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="detalheGerente.html">
+                            <a href="DetalheGerente.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>

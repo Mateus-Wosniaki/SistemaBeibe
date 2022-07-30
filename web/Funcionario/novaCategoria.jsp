@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="detalheFuncionario.html">
+                            <a href="DetalheFuncionario.html">
                                 <i class="nc-icon nc-single-02"></i>
                                 <p>Perfil</p>
                             </a>
@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li  class="active">
-                            <a href="exibirProdutos.html">
+                            <a href="ExibirProdutos.html">
                                 <i class="nc-icon nc-tag-content"></i>
                                 <p>Produtos</p>
                             </a>
@@ -96,7 +96,7 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <h5>Cadastrar Categoria</h5>
-                    <form method="POST" action="exibirProdutos.html">
+                    <form method="POST" action="ExibirProdutos.html">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
