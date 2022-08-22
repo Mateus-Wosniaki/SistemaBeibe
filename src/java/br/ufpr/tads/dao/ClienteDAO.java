@@ -9,5 +9,5 @@ package br.ufpr.tads.dao;
  * @author Mateus Wosniaki
  */
 public class ClienteDAO {
-    
+        
 }
