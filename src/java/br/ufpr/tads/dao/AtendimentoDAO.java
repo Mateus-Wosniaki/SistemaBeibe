@@ -6,8 +6,8 @@ package br.ufpr.tads.dao;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Gabril
  */
-public class ClienteDAO {
-        
+public class AtendimentoDAO {
+    
 }
