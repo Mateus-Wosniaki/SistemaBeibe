@@ -26,6 +26,13 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
     private static final String ATUALIZAR = "update public.Endereco set CEP = ?, logradouro = ?, numero = ?, complemento = ?, idMunicipio = ? where idEndereco = ?";
 
     private Connection con = null;
+    
+    public EnderecoDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Erro DAO: Conexão nula ao criar EnderecoDAO.");
+        }
+        this.con = con;
+    }
 
     @Override
     public Endereco buscar(int id) throws DAOException {

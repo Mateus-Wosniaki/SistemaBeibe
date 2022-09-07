@@ -26,6 +26,13 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
     private static final String ATUALIZAR = "update public.Produto set tituloProduto = ?, descricaoProduto = ?, pesoProduto = ?, idCategoria = ? where idProduto = ?";
 
     private Connection con = null;
+    
+    public ProdutoDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Erro DAO: Conexão nula ao criar ProdutoDAO.");
+        }
+        this.con = con;
+    }
 
     @Override
     public Produto buscar(int id) throws DAOException {

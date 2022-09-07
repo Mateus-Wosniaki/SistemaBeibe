@@ -25,6 +25,13 @@ public class CategoriaDAO implements InterfaceDAO<Categoria> {
     private static final String ATUALIZAR = "update public.Categoria set nomeCategoria = ? where idCategoria = ?";
 
     private Connection con = null;
+    
+    public CategoriaDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Erro DAO: Conexão nula ao criar CategoriaDAO.");
+        }
+        this.con = con;
+    }
 
     @Override
     public Categoria buscar(int id) throws DAOException {

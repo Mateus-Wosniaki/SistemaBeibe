@@ -34,6 +34,13 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = ? where idAtendimento = ?";
 
     private Connection con = null;
+    
+    public AtendimentoDAO(Connection con) throws DAOException {
+        if (con == null) {
+            throw new DAOException("Erro DAO: Conexão nula ao criar AtendimentoDAO.");
+        }
+        this.con = con;
+    }
 
     @Override
     public Atendimento buscar(int id) throws DAOException {
