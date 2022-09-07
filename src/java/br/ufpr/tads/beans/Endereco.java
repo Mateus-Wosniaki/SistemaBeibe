@@ -12,19 +12,21 @@ import java.io.Serializable;
  */
 public class Endereco implements Serializable {
     private int enderecoId;
+    private String cep;
+    private int numero;
     private String rua;
     private String complemento;
-    private String cep;
     private Cidade cidade;
     
     public Endereco(){};
 
-    public Endereco(int enderecoId, String rua, String complemento, String cep, Cidade cidade) {
+    public Endereco(int enderecoId, String rua, String complemento, String cep, Cidade cidade, int numero) {
         this.enderecoId = enderecoId;
         this.rua = rua;
         this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
+        this.numero = numero;
     }
 
     public int getEnderecoId() {
@@ -65,6 +67,14 @@ public class Endereco implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
     
 }
