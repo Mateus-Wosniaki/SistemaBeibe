@@ -4,11 +4,13 @@
  */
 package br.ufpr.tads.beans;
 
+import java.io.Serializable;
+
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
-public class Cidade {
+public class Cidade implements Serializable {
     private int cidadeId;
     private String descricao;
     private Estado estado;

@@ -4,36 +4,39 @@
  */
 package br.ufpr.tads.beans;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
-public class Atendimento {
+public class Atendimento implements Serializable {
     private int atendimentoId;
     private Date dataCriacao;
+    private Date dataFinalizado;
     private Situacao situacao;
     private Produto produto;
     private Usuario cliente;
-    private TipoAtendimento tipoAtendimentoId;
+    private Usuario atendente;
+    private TipoAtendimento tipoAtendimento;
     private String descricao;
     private String justificativa;
 
     public Atendimento(){};
-    
-    public Atendimento(int atendimentoId, Date dataCriacao, Situacao situacao, Produto produto, Usuario cliente, TipoAtendimento tipoAtendimentoId, String descricao, String justificativa) {
+
+    public Atendimento(int atendimentoId, Date dataCriacao, Date dataFinalizado, Situacao situacao, Produto produto, Usuario cliente, Usuario atendente, TipoAtendimento tipoAtendimento, String descricao, String justificativa) {
         this.atendimentoId = atendimentoId;
         this.dataCriacao = dataCriacao;
+        this.dataFinalizado = dataFinalizado;
         this.situacao = situacao;
         this.produto = produto;
         this.cliente = cliente;
-        this.tipoAtendimentoId = tipoAtendimentoId;
+        this.atendente = atendente;
+        this.tipoAtendimento = tipoAtendimento;
         this.descricao = descricao;
         this.justificativa = justificativa;
     }
-    
-    
 
     public int getAtendimentoId() {
         return atendimentoId;
@@ -75,12 +78,12 @@ public class Atendimento {
         this.cliente = cliente;
     }
 
-    public TipoAtendimento getTipoAtendimentoId() {
-        return tipoAtendimentoId;
+    public TipoAtendimento getTipoAtendimento() {
+        return tipoAtendimento;
     }
 
-    public void setTipoAtendimentoId(TipoAtendimento tipoAtendimentoId) {
-        this.tipoAtendimentoId = tipoAtendimentoId;
+    public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
+        this.tipoAtendimento = tipoAtendimento;
     }
 
     public String getDescricao() {
@@ -98,6 +101,23 @@ public class Atendimento {
     public void setJustificativa(String justificativa) {
         this.justificativa = justificativa;
     }
+
+    public Date getDataFinalizado() {
+        return dataFinalizado;
+    }
+
+    public void setDataFinalizado(Date dataFinalizado) {
+        this.dataFinalizado = dataFinalizado;
+    }
+
+    public Usuario getAtendente() {
+        return atendente;
+    }
+
+    public void setAtendente(Usuario atendente) {
+        this.atendente = atendente;
+    }
+    
     
     
 }
