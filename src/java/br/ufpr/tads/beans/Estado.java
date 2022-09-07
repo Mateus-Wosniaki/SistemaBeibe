@@ -13,12 +13,14 @@ import java.io.Serializable;
 public class Estado implements Serializable {
     private int estadoId;
     private String descricao;
+    private String siglaUF;
     
     public Estado(){};
 
-    public Estado(int estadoId, String descricao) {
+    public Estado(int estadoId, String descricao, String siglaUF) {
         this.estadoId = estadoId;
         this.descricao = descricao;
+        this.siglaUF = siglaUF;
     }
 
     public int getEstadoId() {
@@ -36,5 +38,13 @@ public class Estado implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    public String getSiglaUF() {
+        return siglaUF;
+    }
+
+    public void setSiglaUF(String siglaUF) {
+        this.siglaUF = siglaUF;
+    }
+   
 }
