@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -84,8 +85,47 @@ public class AtendimentoDAO implements DAO<Atendimento> {
     @Override
     public List<Atendimento> buscarTodos() throws DAOException {
         try (PreparedStatement st = con.prepareStatement(BUSCARTODOS)) {
-            // TODO: implementar
-            return null;
+            List<Atendimento> atendimentos = new ArrayList<>();
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                Atendimento atendimento = new Atendimento();
+                
+                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
+                atendimento.setDataCriacao(rs.getDate("dataChamado"));
+                atendimento.setDataFinalizado(rs.getDate("dataFinalizado"));
+                atendimento.setJustificativa(rs.getString("justificativa"));
+                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                
+                Usuario cliente = new Usuario();
+                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                atendimento.setCliente(cliente);
+                
+                // Realiza uma etapa extra de validação, pois Atendente pode ser nulo, 
+                // caso o status ainda esteja em aberto, por exemplo
+                int idAtendente = rs.getInt("idAtendente");
+                if (!rs.wasNull()) {
+                    Usuario atendente = new Usuario();
+                    atendente.setUsuarioId(idAtendente);
+                    atendimento.setAtendente(atendente);
+                }
+                
+                Produto produto = new Produto();
+                produto.setProdutoId(rs.getInt("idProduto"));
+                atendimento.setProduto(produto);
+                
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                atendimento.setSituacao(situacao);
+                
+                TipoAtendimento tipoAtendimento = new TipoAtendimento();
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                atendimento.setTipoAtendimento(tipoAtendimento);
+                
+                atendimentos.add(atendimento);
+            }
+            
+            return atendimentos;
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao recuperar todos atendimentos", e);
         }
