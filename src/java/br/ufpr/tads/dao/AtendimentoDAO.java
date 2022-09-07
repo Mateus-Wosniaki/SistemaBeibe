@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Gabril
+ * @author Gabriel Jesus Peres
  */
 public class AtendimentoDAO implements DAO<Atendimento> {
     private static final String INSERIR = 
@@ -31,7 +31,7 @@ public class AtendimentoDAO implements DAO<Atendimento> {
     private static final String DELETAR = 
             "delete from public.Atendimento where idAtendimento = ?";
     private static final String ATUALIZAR = 
-            "update public.Atendimento set MUDAR = ?, MUDAR = ?, MUDAR = ? where idAtendimento = ?";
+            "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = ? where idAtendimento = ?";
 
     private Connection con = null;
 
@@ -133,17 +133,42 @@ public class AtendimentoDAO implements DAO<Atendimento> {
 
     @Override
     public void inserir(Atendimento atendimento) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(INSERIR)) {
-            // TODO: implementar
+        try (PreparedStatement st = con.prepareStatement(INSERIR, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            st.setInt(1, atendimento.getAtendimentoId());
+            st.setInt(2, atendimento.getTipoAtendimento().getTipoAtendimentoId());
+            st.setInt(3, atendimento.getProduto().getProdutoId());
+            st.setString(4, atendimento.getDescricao());
+            st.setInt(5, atendimento.getSituacao().getSituacaoId());
+            
+            st.executeUpdate();
+            
+            // Recebe de retorno do statement o idAtendimento, e então,
+            // Atualiza o objeto origem, setando o idAtendimento do banco de dados
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                atendimento.setAtendimentoId(rs.getInt(1));
+            }   
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao inserir o atendimento: " + atendimento.getAtendimentoId(), e);
         }
     }
 
+    /**
+     * O método de atualização serve para a conclusão dos Atendimentos, portanto
+     * irá atualizar apenas: Justificativa, idAtendente, dataFinalizada e Situação
+     * @param atendimento
+     * @throws DAOException 
+     */
     @Override
     public void atualizar(Atendimento atendimento) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(ATUALIZAR)) {
-            // TODO: implementar
+            st.setString(1, atendimento.getJustificativa());
+            st.setInt(2, atendimento.getAtendente().getUsuarioId());
+            st.setDate(3, new java.sql.Date(atendimento.getDataFinalizado().getTime()));
+            st.setInt(4, atendimento.getSituacao().getSituacaoId());
+            st.setInt(5, atendimento.getAtendimentoId());
+            
+            st.executeUpdate();
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao atualizar o atendimento: " + atendimento.getAtendimentoId(), e);
         }
@@ -152,7 +177,8 @@ public class AtendimentoDAO implements DAO<Atendimento> {
     @Override
     public void remover(Atendimento atendimento) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            // TODO: implementar
+            st.setInt(1, atendimento.getAtendimentoId());
+            st.executeUpdate();
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao remover o atendimento: " + atendimento.getAtendimentoId(), e);
         }
