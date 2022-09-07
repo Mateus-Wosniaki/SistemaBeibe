@@ -1,26 +1,27 @@
 package br.ufpr.tads.facade;
 
-import br.ufpr.tads.beans.Atendimento;
+import br.ufpr.tads.dao.AtendimentoDAO;
+import br.ufpr.tads.dao.ConnectionFactory;
+import br.ufpr.tads.exception.DAOException;
 import br.ufpr.tads.exception.FuncionarioException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
 public class FuncionarioFacade {
     
     public static void resolverAtendimento(String justificativa) throws FuncionarioException{
-        /*
-        try{
-            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
-            funcionarioDao.resolverAtendimento(justificativa);
-        }
-        }catch(DAOException ex){
-            throw new FuncionarioException("Erro ao resolver atendimento", ex);
-        }
-        */
+//        try{
+//            ConnectionFactory con = new ConnectionFactory();
+//            AtendimentoDAO atendimentoDAO = new AtendimentoDAO(con.getConnection());
+//            
+//            atendimentoDAO.atualizar(justificativa);
+//        }catch(DAOException ex){
+//            throw new FuncionarioException("Erro ao resolver atendimento", ex);
+//        }
+        throw new FuncionarioException("NECESSÁRIO IMPLEMENTAR: precisa ter o id do Atendimento a ser resolvido... + se possível, o objeto do Atendimento c/ a justificativa");
+        // FIXME: Ler o método atualizar de AtendimentoDAO!
     } 
     
 }
