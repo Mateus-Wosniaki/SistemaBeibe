@@ -4,11 +4,13 @@
  */
 package br.ufpr.tads.beans;
 
+import java.io.Serializable;
+
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
-public class Produto {
+public class Produto implements Serializable {
     private int produtoId;
     private String nome;
     private Categoria categoria;

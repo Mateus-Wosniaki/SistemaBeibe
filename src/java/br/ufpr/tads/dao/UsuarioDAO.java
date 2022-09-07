@@ -4,6 +4,8 @@
  */
 package br.ufpr.tads.dao;
 
+import br.ufpr.tads.beans.Endereco;
+import br.ufpr.tads.beans.Funcao;
 import br.ufpr.tads.beans.Usuario;
 import br.ufpr.tads.exception.DAOException;
 import java.sql.Connection;
@@ -17,13 +19,18 @@ import java.util.ArrayList;
  *
  * @author Gabriel Jesus Peres
  */
-public class UsuarioDAO implements DAO<Usuario> {
+public class UsuarioDAO implements InterfaceDAO<Usuario> {
 
-    private static final String INSERIR = "insert into MUDAR (*, *, *) values (?, ?, ?)";
-    private static final String BUSCARTODOS = "select * from MUDAR";
-    private static final String BUSCARPORID = "select * from MUDAR where MUDAR = ?";
-    private static final String DELETAR = "delete from MUDAR where MUDAR = ?";
-    private static final String ATUALIZAR = "update MUDAR set MUDAR = ?, MUDAR = ?, MUDAR = ? where MUDAR = ?";
+    private static final String INSERIR = 
+            "insert into public.Usuario (nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao) values (?, ?, ?, ?, ?, ?, ?)";
+    private static final String BUSCARTODOS = 
+            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario";
+    private static final String BUSCARPORID = 
+            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario where idUsuario = ?";
+    private static final String DELETAR = 
+            "delete from public.Usuario where idUsuario = ?";
+    private static final String ATUALIZAR = 
+            "update public.Usuario set nomeCompleto = ?, email = ?, CPF = ?, telefone = ?, senha = ?, idEndereco = ?, idFuncao = ? where idUsuario = ?";
 
     private Connection con = null;
 
@@ -43,13 +50,20 @@ public class UsuarioDAO implements DAO<Usuario> {
             ResultSet rs = st.executeQuery();
             
             if (rs.next()) {
-                usuario.setUsuarioId(id);
+                usuario.setUsuarioId(rs.getInt("idUsuario"));
                 usuario.setNomeCompleto(rs.getString("nomeCompleto"));
-                usuario.setCpf(rs.getString("cpf"));
+                usuario.setCpf(rs.getString("CPF"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
                 usuario.setTelefone(rs.getString("telefone"));
-                // TODO: usuario.setFuncao e usuario.setEndereco
+                
+                Funcao funcao = new Funcao();
+                funcao.setFuncaoId(rs.getInt("idFuncao"));
+                usuario.setFuncao(funcao);
+                
+                Endereco endereco = new Endereco();
+                endereco.setEnderecoId(rs.getInt("idEndereco"));
+                usuario.setEndereco(endereco);
             }
             
             return usuario;
@@ -74,7 +88,14 @@ public class UsuarioDAO implements DAO<Usuario> {
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
                 usuario.setTelefone(rs.getString("telefone"));
-                // TODO: usuario.setFuncao e usuario.setEndereco
+                
+                Funcao funcao = new Funcao();
+                funcao.setFuncaoId(rs.getInt("idFuncao"));
+                usuario.setFuncao(funcao);
+                
+                Endereco endereco = new Endereco();
+                endereco.setEnderecoId(rs.getInt("idEndereco"));
+                usuario.setEndereco(endereco);
                 
                 usuarios.add(usuario);
             }
@@ -87,7 +108,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     @Override
     public void inserir(Usuario usuario) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(INSERIR)) {
+        try (PreparedStatement st = con.prepareStatement(INSERIR, PreparedStatement.RETURN_GENERATED_KEYS)) {
             st.setString(1, usuario.getNomeCompleto());
             st.setString(2, usuario.getEmail());
             st.setString(3, usuario.getCpf());
@@ -97,6 +118,12 @@ public class UsuarioDAO implements DAO<Usuario> {
             st.setInt(7, usuario.getFuncao().getFuncaoId());
             
             st.executeUpdate();
+            
+            // Recebe o id criado no banco de dados, atualiza o objeto com esse id
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                usuario.setUsuarioId(rs.getInt(1));
+            }
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao inserir o usuário: " + usuario.getNomeCompleto(), e);
         }
@@ -127,7 +154,6 @@ public class UsuarioDAO implements DAO<Usuario> {
     public void remover(Usuario usuario) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
             st.setInt(1, usuario.getUsuarioId());
-            
             st.executeUpdate();
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao remover o usuário: " + usuario.getNomeCompleto(), e);

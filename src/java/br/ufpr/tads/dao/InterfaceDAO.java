@@ -5,18 +5,15 @@
 package br.ufpr.tads.dao;
 
 import br.ufpr.tads.exception.DAOException;
-import java.util.List;
 
 /**
- *
+ * Implementação dos métodos CRUD, extendendo métodos de leitura da interface
+ * ReadonlyDAO
  * @author Gabril
+ * @param <T> Bean Genérico
  */
-public interface DAO<T> {
-
-    T buscar(int id) throws DAOException;
-
-    List<T> buscarTodos() throws DAOException;
-
+public interface InterfaceDAO<T> extends IReadonlyDAO<T> {
+    
     void inserir(T t) throws DAOException;
 
     void atualizar(T t) throws DAOException;

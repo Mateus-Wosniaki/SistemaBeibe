@@ -4,19 +4,23 @@
  */
 package br.ufpr.tads.beans;
 
+import java.io.Serializable;
+
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
-public class Estado {
+public class Estado implements Serializable {
     private int estadoId;
     private String descricao;
+    private String siglaUF;
     
     public Estado(){};
 
-    public Estado(int estadoId, String descricao) {
+    public Estado(int estadoId, String descricao, String siglaUF) {
         this.estadoId = estadoId;
         this.descricao = descricao;
+        this.siglaUF = siglaUF;
     }
 
     public int getEstadoId() {
@@ -34,5 +38,13 @@ public class Estado {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    public String getSiglaUF() {
+        return siglaUF;
+    }
+
+    public void setSiglaUF(String siglaUF) {
+        this.siglaUF = siglaUF;
+    }
+   
 }

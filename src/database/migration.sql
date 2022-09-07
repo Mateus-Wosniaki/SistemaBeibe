@@ -42,13 +42,12 @@ CREATE TABLE public.Municipio (
 
 CREATE TABLE public.Endereco (
   idEndereco SERIAL PRIMARY KEY,
+  CEP CHAR(8) NOT NULL,
   logradouro VARCHAR(128) NOT NULL,
   numero INT,
   complemento VARCHAR(30),
   idMunicipio INT,
-  idEstado INT,
-  FOREIGN KEY (idMunicipio) REFERENCES public.Municipio(idMunicipio),
-  FOREIGN KEY (idEstado) REFERENCES public.Estado(idEstado)
+  FOREIGN KEY (idMunicipio) REFERENCES public.Municipio(idMunicipio)
 );
 
 CREATE TABLE public.Usuario (
