@@ -32,6 +32,11 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             "delete from public.Atendimento where idAtendimento = ?";
     private static final String ATUALIZAR = 
             "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = ? where idAtendimento = ?";
+    // idSituação => 1 == Em aberto ; 2 == Finalizado
+    private static final String BUSCAR_ATENDIMENTOS_ABERTO = 
+            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa from public.Atendimento where idSituacao = 1";
+    private static final String BUSCAR_ATENDIMENTOS_CLIENTE = 
+            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa,idAtendente,dataFinalizado from public.Atendimento where idCliente = ?";
 
     private Connection con = null;
     
@@ -188,6 +193,95 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             st.executeUpdate();
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao remover o atendimento: " + atendimento.getAtendimentoId(), e);
+        }
+    }
+
+    public List<Atendimento> buscarTodosAtendimentosAbertos() throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(BUSCAR_ATENDIMENTOS_ABERTO)) {
+            List<Atendimento> atendimentos = new ArrayList<>();
+            
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                Atendimento atendimento = new Atendimento();
+                
+                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
+                atendimento.setDataCriacao(rs.getDate("dataChamado"));
+                atendimento.setJustificativa(rs.getString("justificativa"));
+                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                
+                Usuario cliente = new Usuario();
+                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                atendimento.setCliente(cliente);
+
+                Produto produto = new Produto();
+                produto.setProdutoId(rs.getInt("idProduto"));
+                atendimento.setProduto(produto);
+                
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                atendimento.setSituacao(situacao);
+                
+                TipoAtendimento tipoAtendimento = new TipoAtendimento();
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                atendimento.setTipoAtendimento(tipoAtendimento);
+                
+                atendimentos.add(atendimento);
+            }
+            
+            return atendimentos;
+        } catch(SQLException e) {
+            throw new DAOException("Erro DAO: Problema ao recuperar todos atendimentos", e);
+        }
+    }
+
+    public List<Atendimento> buscarAtendimentosCliente(int clienteId) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(BUSCAR_ATENDIMENTOS_CLIENTE)) {
+            List<Atendimento> atendimentos = new ArrayList<>();
+            st.setInt(1, clienteId);
+            
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                Atendimento atendimento = new Atendimento();
+                
+                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
+                atendimento.setDataCriacao(rs.getDate("dataChamado"));
+                atendimento.setDataFinalizado(rs.getDate("dataFinalizado"));
+                atendimento.setJustificativa(rs.getString("justificativa"));
+                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                
+                Usuario cliente = new Usuario();
+                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                atendimento.setCliente(cliente);
+                
+                // Realiza uma etapa extra de validação, pois Atendente pode ser nulo, 
+                // caso o status ainda esteja em aberto, por exemplo
+                int idAtendente = rs.getInt("idAtendente");
+                if (!rs.wasNull()) {
+                    Usuario atendente = new Usuario();
+                    atendente.setUsuarioId(idAtendente);
+                    atendimento.setAtendente(atendente);
+                }
+                
+                Produto produto = new Produto();
+                produto.setProdutoId(rs.getInt("idProduto"));
+                atendimento.setProduto(produto);
+                
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                atendimento.setSituacao(situacao);
+                
+                TipoAtendimento tipoAtendimento = new TipoAtendimento();
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                atendimento.setTipoAtendimento(tipoAtendimento);
+                
+                atendimentos.add(atendimento);
+            }
+            
+            return atendimentos;
+        } catch(SQLException e) {
+            throw new DAOException("Erro DAO: Problema ao recuperar todos atendimentos do cliente Id: " + clienteId, e);
         }
     }
 }
