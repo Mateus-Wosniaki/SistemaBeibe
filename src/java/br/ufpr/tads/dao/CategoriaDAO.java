@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Gabril
  */
-public class CategoriaDAO implements DAO<Categoria> {
+public class CategoriaDAO implements InterfaceDAO<Categoria> {
     private static final String INSERIR = "insert into public.Categoria (nomeCategoria) values (?)";
     private static final String BUSCARTODOS = "select idCategoria, nomeCategoria from public.Categoria";
     private static final String BUSCARPORID = "select idCategoria, nomeCategoria from public.Categoria where idCategoria = ?";

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Gabriel Jesus Peres
  */
-public class EnderecoDAO implements DAO<Endereco> {
+public class EnderecoDAO implements InterfaceDAO<Endereco> {
     private static final String INSERIR = "insert into public.Endereco (CEP, logradouro, numero, complemento, idMunicipio) values (?, ?, ?, ?, ?)";
     private static final String BUSCARTODOS = "select idEndereco, CEP, logradouro, numero, complemento, idMunicipio from public.Endereco";
     private static final String BUSCARPORID = "select idEndereco, CEP, logradouro, numero, complemento, idMunicipio from public.Endereco where idEndereco = ?";

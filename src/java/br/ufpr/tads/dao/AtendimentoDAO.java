@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author Gabriel Jesus Peres
  */
-public class AtendimentoDAO implements DAO<Atendimento> {
+public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     private static final String INSERIR = 
             "insert into public.Atendimento (idUsuario, idTipoAtendimento, idProduto, descricaoChamado, idSituacao) values (?, ?, ?, ?, ?)";
     private static final String BUSCARTODOS = 

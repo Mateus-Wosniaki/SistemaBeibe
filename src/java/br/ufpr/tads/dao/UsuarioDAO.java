@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Gabriel Jesus Peres
  */
-public class UsuarioDAO implements DAO<Usuario> {
+public class UsuarioDAO implements InterfaceDAO<Usuario> {
 
     private static final String INSERIR = 
             "insert into public.Usuario (nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao) values (?, ?, ?, ?, ?, ?, ?)";

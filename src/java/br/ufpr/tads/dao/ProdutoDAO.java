@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Gabriel Jesus Peres
  */
-public class ProdutoDAO implements DAO<Produto> {
+public class ProdutoDAO implements InterfaceDAO<Produto> {
     private static final String INSERIR = "insert into public.Produto (tituloProduto, descricaoProduto, pesoProduto, idCategoria) values (?, ?, ?, ?)";
     private static final String BUSCARTODOS = "select idProduto, tituloProduto, descricaoProduto, pesoProduto, idCategoria from public.Produto";
     private static final String BUSCARPORID = "select idProduto, tituloProduto, descricaoProduto, pesoProduto, idCategoria from public.Produto where idProduto = ?";
