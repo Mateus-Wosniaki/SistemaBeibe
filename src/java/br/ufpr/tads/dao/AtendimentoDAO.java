@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.ufpr.tads.dao;
 
 import java.sql.Connection;
@@ -31,7 +27,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     private static final String DELETAR = 
             "delete from public.Atendimento where idAtendimento = ?";
     private static final String ATUALIZAR = 
-            "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = ? where idAtendimento = ?";
+            "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = 2 where idAtendimento = ?";
     // idSituação => 1 == Em aberto ; 2 == Finalizado
     private static final String BUSCAR_ATENDIMENTOS_ABERTO = 
             "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa from public.Atendimento where idSituacao = 1";
@@ -56,19 +52,19 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
-                atendimento.setDataCriacao(rs.getDate("dataChamado"));
-                atendimento.setDataFinalizado(rs.getDate("dataFinalizado"));
+                atendimento.setAtendimentoId(rs.getInt("idatendimento"));
+                atendimento.setDataCriacao(rs.getDate("datachamado"));
+                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
-                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                atendimento.setDescricao(rs.getString("descricaochamado"));
                 
                 Usuario cliente = new Usuario();
-                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                cliente.setUsuarioId(rs.getInt("idusuario"));
                 atendimento.setCliente(cliente);
                 
                 // Realiza uma etapa extra de validação, pois Atendente pode ser nulo, 
                 // caso o status ainda esteja em aberto, por exemplo
-                int idAtendente = rs.getInt("idAtendente");
+                int idAtendente = rs.getInt("idatendente");
                 if (!rs.wasNull()) {
                     Usuario atendente = new Usuario();
                     atendente.setUsuarioId(idAtendente);
@@ -76,15 +72,15 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 }
                 
                 Produto produto = new Produto();
-                produto.setProdutoId(rs.getInt("idProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
                 atendimento.setProduto(produto);
                 
                 Situacao situacao = new Situacao();
-                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                situacao.setSituacaoId(rs.getInt("idsituacao"));
                 atendimento.setSituacao(situacao);
                 
                 TipoAtendimento tipoAtendimento = new TipoAtendimento();
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
                 atendimento.setTipoAtendimento(tipoAtendimento);
             }
             
@@ -103,19 +99,19 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             while (rs.next()) {
                 Atendimento atendimento = new Atendimento();
                 
-                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
-                atendimento.setDataCriacao(rs.getDate("dataChamado"));
-                atendimento.setDataFinalizado(rs.getDate("dataFinalizado"));
+                atendimento.setAtendimentoId(rs.getInt("idatendimento"));
+                atendimento.setDataCriacao(rs.getDate("datachamado"));
+                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
-                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                atendimento.setDescricao(rs.getString("descricaochamado"));
                 
                 Usuario cliente = new Usuario();
-                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                cliente.setUsuarioId(rs.getInt("idusuario"));
                 atendimento.setCliente(cliente);
                 
                 // Realiza uma etapa extra de validação, pois Atendente pode ser nulo, 
                 // caso o status ainda esteja em aberto, por exemplo
-                int idAtendente = rs.getInt("idAtendente");
+                int idAtendente = rs.getInt("idatendente");
                 if (!rs.wasNull()) {
                     Usuario atendente = new Usuario();
                     atendente.setUsuarioId(idAtendente);
@@ -123,15 +119,15 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 }
                 
                 Produto produto = new Produto();
-                produto.setProdutoId(rs.getInt("idProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
                 atendimento.setProduto(produto);
                 
                 Situacao situacao = new Situacao();
-                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                situacao.setSituacaoId(rs.getInt("idsituacao"));
                 atendimento.setSituacao(situacao);
                 
                 TipoAtendimento tipoAtendimento = new TipoAtendimento();
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
                 atendimento.setTipoAtendimento(tipoAtendimento);
                 
                 atendimentos.add(atendimento);
@@ -177,8 +173,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             st.setString(1, atendimento.getJustificativa());
             st.setInt(2, atendimento.getAtendente().getUsuarioId());
             st.setDate(3, new java.sql.Date(atendimento.getDataFinalizado().getTime()));
-            st.setInt(4, atendimento.getSituacao().getSituacaoId());
-            st.setInt(5, atendimento.getAtendimentoId());
+            st.setInt(4, atendimento.getAtendimentoId());
             
             st.executeUpdate();
         } catch(SQLException e) {
@@ -205,25 +200,25 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             while (rs.next()) {
                 Atendimento atendimento = new Atendimento();
                 
-                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
-                atendimento.setDataCriacao(rs.getDate("dataChamado"));
+                atendimento.setAtendimentoId(rs.getInt("idatendimento"));
+                atendimento.setDataCriacao(rs.getDate("datachamado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
-                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                atendimento.setDescricao(rs.getString("descricaochamado"));
                 
                 Usuario cliente = new Usuario();
-                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                cliente.setUsuarioId(rs.getInt("idusuario"));
                 atendimento.setCliente(cliente);
 
                 Produto produto = new Produto();
-                produto.setProdutoId(rs.getInt("idProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
                 atendimento.setProduto(produto);
                 
                 Situacao situacao = new Situacao();
-                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                situacao.setSituacaoId(rs.getInt("idsituacao"));
                 atendimento.setSituacao(situacao);
                 
                 TipoAtendimento tipoAtendimento = new TipoAtendimento();
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
                 atendimento.setTipoAtendimento(tipoAtendimento);
                 
                 atendimentos.add(atendimento);
@@ -245,19 +240,19 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             while (rs.next()) {
                 Atendimento atendimento = new Atendimento();
                 
-                atendimento.setAtendimentoId(rs.getInt("idAtendimento"));
-                atendimento.setDataCriacao(rs.getDate("dataChamado"));
-                atendimento.setDataFinalizado(rs.getDate("dataFinalizado"));
+                atendimento.setAtendimentoId(rs.getInt("idatendimento"));
+                atendimento.setDataCriacao(rs.getDate("datachamado"));
+                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
-                atendimento.setDescricao(rs.getString("descricaoChamado"));
+                atendimento.setDescricao(rs.getString("descricaochamado"));
                 
                 Usuario cliente = new Usuario();
-                cliente.setUsuarioId(rs.getInt("idUsuario"));
+                cliente.setUsuarioId(rs.getInt("idusuario"));
                 atendimento.setCliente(cliente);
                 
                 // Realiza uma etapa extra de validação, pois Atendente pode ser nulo, 
                 // caso o status ainda esteja em aberto, por exemplo
-                int idAtendente = rs.getInt("idAtendente");
+                int idAtendente = rs.getInt("idatendente");
                 if (!rs.wasNull()) {
                     Usuario atendente = new Usuario();
                     atendente.setUsuarioId(idAtendente);
@@ -265,15 +260,15 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 }
                 
                 Produto produto = new Produto();
-                produto.setProdutoId(rs.getInt("idProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
                 atendimento.setProduto(produto);
                 
                 Situacao situacao = new Situacao();
-                situacao.setSituacaoId(rs.getInt("idSituacao"));
+                situacao.setSituacaoId(rs.getInt("idsituacao"));
                 atendimento.setSituacao(situacao);
                 
                 TipoAtendimento tipoAtendimento = new TipoAtendimento();
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
                 atendimento.setTipoAtendimento(tipoAtendimento);
                 
                 atendimentos.add(atendimento);
