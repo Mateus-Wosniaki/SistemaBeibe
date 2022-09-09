@@ -1,4 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<c:if test="${empty sessionScope.login}">
+    <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+    <jsp:forward page="index.jsp"/>
+</c:if>
+
+<c:if test="${sessionScope.login.funcao.funcaoId != 2}">
+    <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+    <jsp:forward page="index.jsp"/>
+</c:if>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -140,55 +151,55 @@
                                                 <td>XXXXX</td>
                                                 <td>2011-02-12</td>
                                             </tr>
-                                                <td>Produto Vencido</td>
-                                                <td>XXXXX</td>
-                                                <td>2011-02-12</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Motivo X</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Motivo Y</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Falta de Estoque</td>
-                                                <td>XXXXX</td>
-                                                <td>2012-07-05</td>
-                                            </tr>
+                                        <td>Produto Vencido</td>
+                                        <td>XXXXX</td>
+                                        <td>2011-02-12</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Motivo X</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Motivo Y</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de Estoque</td>
+                                            <td>XXXXX</td>
+                                            <td>2012-07-05</td>
+                                        </tr>
                                         </tbody>
                                     </table
                                 </div>

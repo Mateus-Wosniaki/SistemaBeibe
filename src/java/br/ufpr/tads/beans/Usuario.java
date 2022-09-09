@@ -10,43 +10,22 @@ import java.io.Serializable;
  *
  * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
-public class Usuario implements Serializable {
-    private int usuarioId;
-    private String nomeCompleto;
+public class Usuario extends Login implements Serializable {
     private String email;
     private String cpf;
     private String telefone;
     private String senha;
     private Endereco endereco;
-    private Funcao funcao;
     
     public Usuario(){};
 
     public Usuario(int usuarioId, String nomeCompleto, String email, String cpf, String telefone, String senha, Endereco endereco, Funcao funcao) {
-        this.usuarioId = usuarioId;
-        this.nomeCompleto = nomeCompleto;
+        super(usuarioId, nomeCompleto, funcao);
         this.email = email;
         this.cpf = cpf;
         this.telefone = telefone;
         this.senha = senha;
         this.endereco = endereco;
-        this.funcao = funcao;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public String getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
     }
 
     public String getEmail() {
@@ -88,14 +67,4 @@ public class Usuario implements Serializable {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
-    public Funcao getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(Funcao funcao) {
-        this.funcao = funcao;
-    }
-    
-    
 }
