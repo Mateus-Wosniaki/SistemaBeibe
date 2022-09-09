@@ -4,10 +4,12 @@
  */
 package br.ufpr.tads.controllers;
 
-import br.ufpr.tads.beans.Usuario;
+import br.ufpr.tads.beans.Login;
+import br.ufpr.tads.exception.UsuarioException;
 import br.ufpr.tads.facade.UsuarioFacade;
+import jakarta.security.auth.message.AuthException;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,20 +38,39 @@ public class AutenticacaoServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        RequestDispatcher rdIndexJSP = getServletContext().getRequestDispatcher("/index.jsp");
         
+        // AutenticacaoServlet?action=login ou AutenticacaoServlet
         if ("login".equals(action) || action.equals("")) {
-            String login = request.getParameter("login");
-            String senha = request.getParameter("senha");
-            
             try {
-                Usuario usuario = UsuarioFacade.efetuarLogin(login, senha);
-                session.setAttribute("login", usuario);
-                session.setAttribute("role", usuario.getFuncao());
-            } catch (LoginException e) {
-                // TODO
-                e.printStackTrace();
+                String email = request.getParameter("email");
+                String senha = request.getParameter("senha");
+                
+                if (email.isEmpty() || senha.isEmpty()) {
+                    throw new AuthException("Email/Senha precisam estar preenchidos!");
+                }
+                
+                Login login = UsuarioFacade.efetuarLogin(email, senha);
+                session.setAttribute("login", login);
+                
+                // TODO: Entender qual a página para redirecionar, com base na controller
+                response.sendRedirect("IMPLEMENTAR.jsp");
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", e.getMessage());
+                rdIndexJSP.forward(request, response);
+            } catch (AuthException e) {
+                request.setAttribute("mensagem", "Email/Senha inválidos");
+                rdIndexJSP.forward(request, response);
             }
-            
+        }
+        
+        // AutenticacaoServlet?action=logout
+        if ("logout".equals(action)) {
+            if (session != null) {
+                session.invalidate();
+            }
+            request.setAttribute("mensagem", "Usuário desconectado com sucesso");
+            rdIndexJSP.forward(request, response);
         }
     }
 
