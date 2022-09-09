@@ -4,6 +4,8 @@
  */
 package br.ufpr.tads.controllers;
 
+import br.ufpr.tads.beans.Usuario;
+import br.ufpr.tads.facade.UsuarioFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,10 +13,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Gabril
+ * @author Gabriel Jesus Peres
  */
 @WebServlet(name = "AutenticacaoServlet", urlPatterns = {"/AutenticacaoServlet"})
 public class AutenticacaoServlet extends HttpServlet {
@@ -30,18 +33,23 @@ public class AutenticacaoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AutenticacaoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AutenticacaoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        HttpSession session = request.getSession();
+        String action = request.getParameter("action");
+        
+        if ("login".equals(action) || action.equals("")) {
+            String login = request.getParameter("login");
+            String senha = request.getParameter("senha");
+            
+            try {
+                Usuario usuario = UsuarioFacade.efetuarLogin(login, senha);
+                session.setAttribute("login", usuario);
+                session.setAttribute("role", usuario.getFuncao());
+            } catch (LoginException e) {
+                // TODO
+                e.printStackTrace();
+            }
+            
         }
     }
 

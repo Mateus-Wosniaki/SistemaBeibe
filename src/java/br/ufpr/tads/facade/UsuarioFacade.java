@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class UsuarioFacade {
 
-    public Usuario efetuarLogin(String login, String senha) {
+    public static Usuario efetuarLogin(String login, String senha) {
         /*
         try{
             String senhaHash = gerarHash(senha);
@@ -20,7 +20,7 @@ public class UsuarioFacade {
             Usuario usuario = usuarioDao.recuperarUsuarioLogin(login, senhaHash);
             return usuario;
         }catch(DAOException ex){
-            throw new UsuarioException("Erro buscando usuario para login", ex);
+            throw new LoginException("Erro buscando usuario para login", ex);
         }
          */
         return new Usuario(); //Colocar usuarioId e role na session dps
