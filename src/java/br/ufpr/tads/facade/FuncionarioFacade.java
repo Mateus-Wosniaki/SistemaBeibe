@@ -1,5 +1,6 @@
 package br.ufpr.tads.facade;
 
+import br.ufpr.tads.beans.Atendimento;
 import br.ufpr.tads.dao.AtendimentoDAO;
 import br.ufpr.tads.dao.ConnectionFactory;
 import br.ufpr.tads.exception.DAOException;
@@ -11,17 +12,20 @@ import br.ufpr.tads.exception.FuncionarioException;
  */
 public class FuncionarioFacade {
     
-    public static void resolverAtendimento(String justificativa) throws FuncionarioException{
-//        try{
-//            ConnectionFactory con = new ConnectionFactory();
-//            AtendimentoDAO atendimentoDAO = new AtendimentoDAO(con.getConnection());
-//            
-//            atendimentoDAO.atualizar(justificativa);
-//        }catch(DAOException ex){
-//            throw new FuncionarioException("Erro ao resolver atendimento", ex);
-//        }
-        throw new FuncionarioException("NECESSÁRIO IMPLEMENTAR: precisa ter o id do Atendimento a ser resolvido... + se possível, o objeto do Atendimento c/ a justificativa");
-        // FIXME: Ler o método atualizar de AtendimentoDAO!
-    } 
-    
+    public static void resolverAtendimento(Atendimento atendimento) throws FuncionarioException {
+        try{
+            //Objeto atendimento
+            //Tratar na controller:
+            //- Obter justificativa do campo preenchido no front
+            //- Obter atendente através do USUARIO da SESSÃO
+            //- Status não precisa (SEMPRE SERÁ RESOLVIDO)
+            
+            ConnectionFactory con = new ConnectionFactory();
+            AtendimentoDAO atendimentoDAO = new AtendimentoDAO(con.getConnection());
+            
+            //atendimentoDAO.atualizar(atendimento);
+        }catch(DAOException ex){
+            throw new FuncionarioException("Erro ao resolver atendimento", ex);
+        }
+    }
 }

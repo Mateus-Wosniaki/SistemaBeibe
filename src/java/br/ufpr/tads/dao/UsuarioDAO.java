@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.ufpr.tads.dao;
 
 import br.ufpr.tads.beans.Endereco;
@@ -31,6 +27,8 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
             "delete from public.Usuario where idUsuario = ?";
     private static final String ATUALIZAR = 
             "update public.Usuario set nomeCompleto = ?, email = ?, CPF = ?, telefone = ?, senha = ?, idEndereco = ?, idFuncao = ? where idUsuario = ?";
+    private static final String VERIFICAR_USUARIO = 
+            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario WHERE senha = ? AND email = ?";
 
     private Connection con = null;
 
@@ -50,19 +48,19 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
             ResultSet rs = st.executeQuery();
             
             if (rs.next()) {
-                usuario.setUsuarioId(rs.getInt("idUsuario"));
-                usuario.setNomeCompleto(rs.getString("nomeCompleto"));
-                usuario.setCpf(rs.getString("CPF"));
+                usuario.setUsuarioId(rs.getInt("idusuario"));
+                usuario.setNomeCompleto(rs.getString("nomecompleto"));
+                usuario.setCpf(rs.getString("cpf"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
                 usuario.setTelefone(rs.getString("telefone"));
                 
                 Funcao funcao = new Funcao();
-                funcao.setFuncaoId(rs.getInt("idFuncao"));
+                funcao.setFuncaoId(rs.getInt("idfuncao"));
                 usuario.setFuncao(funcao);
                 
                 Endereco endereco = new Endereco();
-                endereco.setEnderecoId(rs.getInt("idEndereco"));
+                endereco.setEnderecoId(rs.getInt("idendereco"));
                 usuario.setEndereco(endereco);
             }
             
@@ -83,18 +81,18 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
                 Usuario usuario = new Usuario();
                 
                 usuario.setUsuarioId(rs.getInt("id"));
-                usuario.setNomeCompleto(rs.getString("nomeCompleto"));
+                usuario.setNomeCompleto(rs.getString("nomecompleto"));
                 usuario.setCpf(rs.getString("cpf"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
                 usuario.setTelefone(rs.getString("telefone"));
                 
                 Funcao funcao = new Funcao();
-                funcao.setFuncaoId(rs.getInt("idFuncao"));
+                funcao.setFuncaoId(rs.getInt("idfuncao"));
                 usuario.setFuncao(funcao);
                 
                 Endereco endereco = new Endereco();
-                endereco.setEnderecoId(rs.getInt("idEndereco"));
+                endereco.setEnderecoId(rs.getInt("idendereco"));
                 usuario.setEndereco(endereco);
                 
                 usuarios.add(usuario);
@@ -157,6 +155,37 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
             st.executeUpdate();
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao remover o usuário: " + usuario.getNomeCompleto(), e);
+        }
+    }
+
+    public Usuario recuperarUsuarioLogin(String email, String senhaHash) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(BUSCARPORID)) {
+            Usuario usuario = null;
+            
+            st.setString(1, senhaHash);
+            st.setString(2, email);
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setUsuarioId(rs.getInt("idusuario"));
+                usuario.setNomeCompleto(rs.getString("nomecompleto"));
+                usuario.setCpf(rs.getString("cpf"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setTelefone(rs.getString("telefone"));
+                
+                Funcao funcao = new Funcao();
+                funcao.setFuncaoId(rs.getInt("idfuncao"));
+                usuario.setFuncao(funcao);
+                
+                Endereco endereco = new Endereco();
+                endereco.setEnderecoId(rs.getInt("idendereco"));
+                usuario.setEndereco(endereco);
+            }
+            return usuario;
+        } catch(SQLException e) {
+            throw new DAOException("Erro DAO: Problema ao recuperar o usuário por email e senha", e);
         }
     }
 
