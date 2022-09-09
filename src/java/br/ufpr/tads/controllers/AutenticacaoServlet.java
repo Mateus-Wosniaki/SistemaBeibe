@@ -35,24 +35,27 @@ public class AutenticacaoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
         RequestDispatcher rdIndexJSP = getServletContext().getRequestDispatcher("/index.jsp");
-        
+
         // AutenticacaoServlet?action=login ou AutenticacaoServlet
         if ("login".equals(action) || action.equals("")) {
             try {
                 String email = request.getParameter("email");
                 String senha = request.getParameter("senha");
-                
+
                 if (email.isEmpty() || senha.isEmpty()) {
-                    throw new AuthException("Email/Senha precisam estar preenchidos!");
+                    throw new AuthException();
+                }
+
+                Login login = UsuarioFacade.efetuarLogin(email, senha);
+                if (login == null) {
+                    throw new AuthException();
                 }
                 
-                Login login = UsuarioFacade.efetuarLogin(email, senha);
                 session.setAttribute("login", login);
-                
                 // TODO: Entender qual a página para redirecionar, com base na controller
                 response.sendRedirect("IMPLEMENTAR.jsp");
             } catch (UsuarioException e) {
@@ -63,7 +66,7 @@ public class AutenticacaoServlet extends HttpServlet {
                 rdIndexJSP.forward(request, response);
             }
         }
-        
+
         // AutenticacaoServlet?action=logout
         if ("logout".equals(action)) {
             if (session != null) {
