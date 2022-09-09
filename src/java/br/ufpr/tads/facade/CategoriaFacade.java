@@ -39,11 +39,8 @@ public class CategoriaFacade {
         try{
             ConnectionFactory con = new ConnectionFactory();
             CategoriaDAO categoriaDao = new CategoriaDAO(con.getConnection());
-            
-            Categoria categoria = new Categoria();
-            categoria.setCategoriaId(categoriaId);
         
-            categoriaDao.remover(categoria);
+            categoriaDao.remover(categoriaId);
         }catch(DAOException ex){
             throw new CategoriaException("Erro deletando categoria", ex);
         }

@@ -18,5 +18,5 @@ public interface InterfaceDAO<T> extends IReadonlyDAO<T> {
 
     void atualizar(T t) throws DAOException;
 
-    void remover(T t) throws DAOException; //ALTERAR PARA -> void remover(long id)
+    void remover(int id) throws DAOException; //ALTERAR PARA -> void remover(long id)
 }

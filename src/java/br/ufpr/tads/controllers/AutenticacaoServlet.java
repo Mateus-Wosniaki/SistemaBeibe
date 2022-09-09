@@ -56,7 +56,7 @@ public class AutenticacaoServlet extends HttpServlet {
                 }
                 
                 session.setAttribute("login", login);
-                // TODO: Entender qual a página para redirecionar, com base na controller
+                // TODO: Redirecionar para uma página diferente com base na role do Usuário
                 response.sendRedirect("IMPLEMENTAR.jsp");
             } catch (UsuarioException e) {
                 request.setAttribute("mensagem", e.getMessage());

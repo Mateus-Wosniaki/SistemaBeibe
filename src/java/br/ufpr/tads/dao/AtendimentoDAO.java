@@ -182,12 +182,12 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     }
 
     @Override
-    public void remover(Atendimento atendimento) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            st.setInt(1, atendimento.getAtendimentoId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DAOException("Erro DAO: Problema ao remover o atendimento: " + atendimento.getAtendimentoId(), e);
+            throw new DAOException("Erro DAO: Problema ao remover o atendimento: " + id, e);
         }
     }
 

@@ -121,12 +121,12 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
     }
 
     @Override
-    public void remover(Endereco endereco) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            st.setInt(1, endereco.getEnderecoId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DAOException("Erro DAO: Problema ao remover o endereço: " + endereco.getRua(), e);
+            throw new DAOException("Erro DAO: Problema ao remover o endereço: " + id, e);
         }
     }
 }

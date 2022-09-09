@@ -119,12 +119,12 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
     }
 
     @Override
-    public void remover(Produto produto) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            st.setInt(1, produto.getProdutoId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DAOException("Erro DAO: Problema ao remover o produto: " + produto.getDescricao(), e);
+            throw new DAOException("Erro DAO: Problema ao remover o produto: " + id, e);
         }
     }
 }
