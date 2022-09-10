@@ -4,20 +4,21 @@
  */
 package br.ufpr.tads.controllers;
 
+import br.ufpr.tads.exception.ProdutoException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.ProtocolException;
 
 /**
  *
- * @author Gabril
+ * @author Mateus Wosniaki
  */
-@WebServlet(name = "AutenticacaoServlet", urlPatterns = {"/AutenticacaoServlet"})
-public class FuncionarioServlet extends HttpServlet {
+@WebServlet(name = "ProdutoServlet", urlPatterns = {"/ProdutoServlet"})
+public class ProdutoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,19 +31,22 @@ public class FuncionarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AutenticacaoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AutenticacaoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String action = request.getParameter("action");
+
+        try {
+            if ("incluir".equals(action)) {
+            } else if ("atualizar".equals(action)) {
+            } else if ("exibir".equals(action)){
+            } else if ("deletar".equals(action)) {
+            } else {
+                //listar
+            }
+            throw new ProdutoException(); //Só para parar o erro
+        } catch (ProdutoException ex) {
+            //redirectTo("/Erro/erro.jsp", request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

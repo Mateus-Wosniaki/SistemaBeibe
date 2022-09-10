@@ -11,79 +11,9 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="sidebar" data-color="white" data-active-color="danger">
-                <div class="logo">
-                    <a href="#" class="simple-text logo-normal">
-                        BEIBE - Categoria Produtos 
-                    </a>
-                </div>
-                <div class="sidebar-wrapper" style="padding-right: 2px;">
-                    <ul class="nav">
-                        <li>
-                            <a href="index.jsp">
-                                <i class="nc-icon nc-shop"></i>
-                                <p>Início</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="detalheFuncionario.html">
-                                <i class="nc-icon nc-single-02"></i>
-                                <p>Perfil</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="atendimentoAberto.jsp">
-                                <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Atendimentos Abertos</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="todosAtendimentos.jsp">
-                                <i class="nc-icon nc-book-bookmark"></i>
-                                <p>Todos Atendimentos</p>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="exibirProdutos.html">
-                                <i class="nc-icon nc-tag-content"></i>
-                                <p>Produtos</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <%@ include file="../WEB-INF/jspf/menuFuncionario.jspf"%>
             <div class="main-panel">
-                <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                    <div class="container-fluid">
-                        <div class="navbar-wrapper">
-                            <div class="navbar-toggle">
-                                <button type="button" class="navbar-toggler">
-                                    <span class="navbar-toggler-bar bar1"></span>
-                                    <span class="navbar-toggler-bar bar2"></span>
-                                    <span class="navbar-toggler-bar bar3"></span>
-                                </button>
-                            </div>
-                            <a class="navbar-brand" href="#">SAC - Funcionario</a>
-                        </div>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                            <span class="navbar-toggler-bar navbar-kebab"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-end" id="navigation">  
-                            <ul class="navbar-nav">
-                                <li>
-                                    <a class="nav-link btn-rotate" href="#">
-                                        <i class="nc-icon nc-button-power"></i>
-                                        <p>
-                                            <span class="d-lg-none d-md-block">Logout</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <%@ include file="../WEB-INF/jspf/navbar.jspf"%>
                 <div class="content">
                     <div class="row">
                         <div class="col-md-12">

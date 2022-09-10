@@ -101,7 +101,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Nome do Produto</label>
-                                                    <input type="text" class="form-control" placeholder="Produto">
+                                                    <input type="text" class="form-control" name="nome">
                                                 </div>
                                             </div>
                                         </div>
@@ -109,13 +109,13 @@
                                             <div class="col-md-5 pr-1">
                                                 <div class="form-group">
                                                     <label>Descrição</label>
-                                                    <input type="text" class="form-control" placeholder="Descrição">
+                                                    <input type="text" class="form-control" name="descricao">
                                                 </div>
                                             </div>
                                             <div class="col-md-7 pl-1">
                                                 <div class="form-group">
                                                     <label>Peso</label>
-                                                    <input type="number" class="form-control" placeholder="Peso">
+                                                    <input type="number" class="form-control" name="number">
                                                 </div>
                                             </div>
                                         </div>
