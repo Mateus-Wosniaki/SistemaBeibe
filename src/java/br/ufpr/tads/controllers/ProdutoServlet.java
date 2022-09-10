@@ -4,14 +4,18 @@
  */
 package br.ufpr.tads.controllers;
 
+import br.ufpr.tads.beans.Categoria;
+import br.ufpr.tads.beans.Produto;
 import br.ufpr.tads.exception.ProdutoException;
+import br.ufpr.tads.facade.ProdutoFacade;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.net.ProtocolException;
+import java.util.List;
 
 /**
  *
@@ -31,22 +35,144 @@ public class ProdutoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String action = request.getParameter("action");
 
         try {
-            if ("incluir".equals(action)) {
-            } else if ("atualizar".equals(action)) {
-            } else if ("exibir".equals(action)){
-            } else if ("deletar".equals(action)) {
-            } else {
-                //listar
+            if ("formIncluir".equals(action)) {
+                redirectTo("/Funcionario/novoProduto.jsp", request, response);
             }
-            throw new ProdutoException(); //Só para parar o erro
+            else if ("formEditar".equals(action)) {
+                Produto produto = buscarProduto(request);
+                if(produto != null){
+                    request.setAttribute("produto", produto);
+                    redirectTo("/Funcionario/novoProduto.jsp", request, response);
+                }
+            }
+            else if ("incluir".equals(action)) {
+                inserirNovoProduto(request);
+                redirectTo("/ProdutoServlet", request, response);
+            } else if ("atualizar".equals(action)) {
+                alterarProduto(request);
+                redirectTo("/ProdutoServlet", request, response);
+            } else if ("exibir".equals(action)) {
+                Produto produto = buscarProduto(request);
+                if(produto != null){
+                    request.setAttribute("produto", produto);
+                    //redirectTo("/Funcionario/novoProduto.jsp", request, response); REDIRECIONAR PARA A TELA CERTA
+                }
+            } else if ("deletar".equals(action)) {
+                excluirProduto(request);
+                redirectTo("/ProdutoServlet", request, response);
+            } else {
+                List<Produto> produtos = buscarTodosProdutos();
+                request.setAttribute("produtos", produtos);
+                redirectTo("/Funcionario/exibirProdutos.jsp", request, response);
+            }
         } catch (ProdutoException ex) {
-            //redirectTo("/Erro/erro.jsp", request, response);
+            request.setAttribute("mensagem", ex.toString());
+            redirectTo("/Erro/erro.jsp", request, response);
         }
 
+    }
+
+    private void inserirNovoProduto(HttpServletRequest request) throws ProdutoException {
+        try {
+            String descricao = request.getParameter("descricao");
+            String nome = request.getParameter("nome");
+            String peso = request.getParameter("peso");
+            String categoriaId = request.getParameter("categoria");
+
+            if (!isNullOrEmpty(descricao)
+                    && !isNullOrEmpty(nome)
+                    && !isNullOrEmpty(peso)
+                    && !isNullOrEmpty(categoriaId)) {
+                Produto produto = new Produto();
+                produto.setDescricao(descricao);
+                produto.setNome(nome);
+                produto.setPeso(Double.parseDouble(peso));
+
+                Categoria categoria = new Categoria();
+                categoria.setCategoriaId(Integer.parseInt(categoriaId));
+
+                produto.setCategoria(categoria);
+
+                ProdutoFacade.criarProduto(produto);
+            }
+        } catch (NumberFormatException ex) {
+            throw new ProdutoException("Parâmetros inválidos");
+        }
+    }
+
+    private List<Produto> buscarTodosProdutos() throws ProdutoException {
+        List<Produto> produtos = ProdutoFacade.buscarTodosProdutos();
+        return produtos;
+    }
+
+    private void alterarProduto(HttpServletRequest request) throws ProdutoException {
+        try {
+            String produtoId = request.getParameter("id");
+            String descricao = request.getParameter("descricao");
+            String nome = request.getParameter("nome");
+            String peso = request.getParameter("peso");
+            String categoriaId = request.getParameter("categoria");
+
+            if (!isNullOrEmpty(descricao)
+                    && !isNullOrEmpty(nome)
+                    && !isNullOrEmpty(peso)
+                    && !isNullOrEmpty(categoriaId)
+                    && !isNullOrEmpty(produtoId)) {
+                Produto produto = new Produto();
+                produto.setProdutoId(Integer.parseInt(produtoId));
+                produto.setDescricao(descricao);
+                produto.setNome(nome);
+                produto.setPeso(Double.parseDouble(peso));
+
+                Categoria categoria = new Categoria();
+                categoria.setCategoriaId(Integer.parseInt(categoriaId));
+
+                produto.setCategoria(categoria);
+
+                ProdutoFacade.atualizarProduto(produto);
+            }
+        } catch (NumberFormatException ex) {
+            throw new ProdutoException("Parâmetros inválidos");
+        }
+    }
+
+    private Produto buscarProduto(HttpServletRequest request) throws ProdutoException {
+        try {
+            String id = request.getParameter("id");
+            if (!isNullOrEmpty(id)) {
+                int produtoId = Integer.parseInt(id);
+                Produto produto = ProdutoFacade.buscarProdutoPorId(produtoId);
+                return produto;
+            }
+            return null;
+        } catch (NumberFormatException ex) {
+            throw new ProdutoException("Parâmetro ID inválido");
+        }
+    }
+
+    private void excluirProduto(HttpServletRequest request) throws ProdutoException {
+        try {
+            String id = request.getParameter("id");
+            if (!isNullOrEmpty(id)) {
+                int produtoId = Integer.parseInt(id);
+                ProdutoFacade.deletarProduto(produtoId);
+            }
+        } catch (NumberFormatException ex) {
+            throw new ProdutoException("Parâmetro ID inválido");
+        }
+    }
+
+    private <T> boolean isNullOrEmpty(T input) {
+        return input == null || input.toString().isBlank();
+    }
+
+    private void redirectTo(String destino, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher rd = getServletContext().getRequestDispatcher(destino);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
