@@ -19,8 +19,9 @@ import java.util.List;
  * @author Gabril
  */
 public class CidadeDAO implements IReadonlyDAO<Cidade> {
-    private static final String BUSCARPORID = "select idMunicipio, nomeMunicipio, idEstado from public.Municipio where idMunicipio = ?";
-    private static final String BUSCARTODOS = "select idMunicipio, nomeMunicipio, idEstado from public.Municipio";
+    private static final String BUSCARPORID = "select idmunicipio, nomemunicipio, idestado from public.Municipio where idmunicipio = ?";
+    private static final String BUSCARTODOS = "select idmunicipio, nomemunicipio, idestado from public.Municipio";
+    private static final String BUSCAR_CIDADES_ESTADO = "select idmunicipio, nomemunicipio, idestado from public.Municipio where idestado = ?";
     
     private Connection con = null;
     
@@ -38,11 +39,11 @@ public class CidadeDAO implements IReadonlyDAO<Cidade> {
             
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                cidade.setCidadeId(rs.getInt("idMunicipio"));
-                cidade.setDescricao(rs.getString("nomeMunicipio"));
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
+                cidade.setDescricao(rs.getString("nomemunicipio"));
                 
                 Estado estado = new Estado();
-                estado.setEstadoId(rs.getInt("idEstado"));
+                estado.setEstadoId(rs.getInt("idestado"));
                 cidade.setEstado(estado);
             }
             
@@ -61,11 +62,11 @@ public class CidadeDAO implements IReadonlyDAO<Cidade> {
             while (rs.next()) {
                 Cidade cidade = new Cidade();
                 
-                cidade.setCidadeId(rs.getInt("idMunicipio"));
-                cidade.setDescricao(rs.getString("nomeMunicipio"));
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
+                cidade.setDescricao(rs.getString("nomemunicipio"));
                 
                 Estado estado = new Estado();
-                estado.setEstadoId(rs.getInt("idEstado"));
+                estado.setEstadoId(rs.getInt("idestado"));
                 cidade.setEstado(estado);
                 
                 cidades.add(cidade);
@@ -74,6 +75,30 @@ public class CidadeDAO implements IReadonlyDAO<Cidade> {
             return cidades;
         } catch(SQLException e) {
             throw new DAOException("Erro DAO: Problema ao recuperar todas cidades", e);
+        }
+    }
+
+    public List<Cidade> buscarPorEstado(int idEstado) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(BUSCAR_CIDADES_ESTADO)) {
+            st.setInt(1, idEstado);
+            List<Cidade> cidades = new ArrayList<>();
+            
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Cidade cidade = new Cidade();
+                
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
+                cidade.setDescricao(rs.getString("nomemunicipio"));
+                
+                Estado estado = new Estado();
+                estado.setEstadoId(rs.getInt("idestado"));
+                cidade.setEstado(estado);
+                
+                cidades.add(cidade);
+            }
+            return cidades;
+        } catch(SQLException e) {
+            throw new DAOException("Erro DAO: Problema ao recuperar todas cidades do estado Id: " + idEstado, e);
         }
     }
     

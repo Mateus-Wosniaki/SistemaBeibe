@@ -38,7 +38,7 @@ public class AutenticacaoServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        RequestDispatcher rdIndexJSP = getServletContext().getRequestDispatcher("/index.jsp");
+        RequestDispatcher rdIndexJSP = getServletContext().getRequestDispatcher("/Autenticacao/login.jsp");
 
         // AutenticacaoServlet?action=login ou AutenticacaoServlet
         if ("login".equals(action) || action.equals("")) {
@@ -56,8 +56,20 @@ public class AutenticacaoServlet extends HttpServlet {
                 }
                 
                 session.setAttribute("login", login);
-                // TODO: Redirecionar para uma página diferente com base na role do Usuário
-                response.sendRedirect("IMPLEMENTAR.jsp");
+                
+                // Com base na função/role -> redireciona o usuário logado para
+                // a página correspondente
+                switch(login.getFuncao().getDescricao()) {
+                    case "Cliente":
+                        response.sendRedirect("Cliente/index.jsp");
+                        break;
+                    case "Funcionário":
+                        response.sendRedirect("Funcionario/index.jsp");
+                        break;
+                    case "Gerente":
+                        response.sendRedirect("Gerente/index.jsp");
+                        break;
+                }
             } catch (UsuarioException e) {
                 request.setAttribute("mensagem", e.getMessage());
                 rdIndexJSP.forward(request, response);

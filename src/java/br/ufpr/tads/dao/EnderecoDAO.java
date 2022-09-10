@@ -19,11 +19,11 @@ import java.util.ArrayList;
  * @author Gabriel Jesus Peres
  */
 public class EnderecoDAO implements InterfaceDAO<Endereco> {
-    private static final String INSERIR = "insert into public.Endereco (CEP, logradouro, numero, complemento, idMunicipio) values (?, ?, ?, ?, ?)";
-    private static final String BUSCARTODOS = "select idEndereco, CEP, logradouro, numero, complemento, idMunicipio from public.Endereco";
-    private static final String BUSCARPORID = "select idEndereco, CEP, logradouro, numero, complemento, idMunicipio from public.Endereco where idEndereco = ?";
-    private static final String DELETAR = "delete from public.Endereco where idEndereco = ?";
-    private static final String ATUALIZAR = "update public.Endereco set CEP = ?, logradouro = ?, numero = ?, complemento = ?, idMunicipio = ? where idEndereco = ?";
+    private static final String INSERIR = "insert into public.Endereco (cep, logradouro, numero, complemento, bairro, idmunicipio) values (?, ?, ?, ?, ?, ?)";
+    private static final String BUSCARTODOS = "select idendereco, cep, logradouro, numero, complemento, bairro, idmunicipio from public.Endereco";
+    private static final String BUSCARPORID = "select idendereco, cep, logradouro, numero, complemento, bairro, idmunicipio from public.Endereco where idendereco = ?";
+    private static final String DELETAR = "delete from public.Endereco where idendereco = ?";
+    private static final String ATUALIZAR = "update public.Endereco set cep = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, idmunicipio = ? where idendereco = ?";
 
     private Connection con = null;
     
@@ -42,13 +42,14 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                endereco.setCep(rs.getString("CEP"));
+                endereco.setCep(rs.getString("cep"));
                 endereco.setRua(rs.getString("logradouro"));
                 endereco.setNumero(rs.getInt("numero"));
                 endereco.setComplemento(rs.getString("complemento"));
+                endereco.setBairro(rs.getString("bairro"));
                 
                 Cidade cidade = new Cidade();
-                cidade.setCidadeId(rs.getInt("idMunicipio"));
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
                 endereco.setCidade(cidade);
             }
             
@@ -71,9 +72,10 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
                 endereco.setRua(rs.getString("logradouro"));
                 endereco.setNumero(rs.getInt("numero"));
                 endereco.setComplemento(rs.getString("complemento"));
+                endereco.setBairro(rs.getString("bairro"));
                 
                 Cidade cidade = new Cidade();
-                cidade.setCidadeId(rs.getInt("idMunicipio"));
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
                 endereco.setCidade(cidade);
                 
                 enderecos.add(endereco);
@@ -92,7 +94,8 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
             st.setString(2, endereco.getRua());
             st.setInt(3, endereco.getNumero());
             st.setString(4, endereco.getComplemento());
-            st.setInt(5, endereco.getCidade().getCidadeId());
+            st.setString(5, endereco.getBairro());
+            st.setInt(6, endereco.getCidade().getCidadeId());
             
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
@@ -111,8 +114,9 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
             st.setString(2, endereco.getRua());
             st.setInt(3, endereco.getNumero());
             st.setString(4, endereco.getComplemento());
-            st.setInt(5, endereco.getCidade().getCidadeId());
-            st.setInt(6, endereco.getEnderecoId());
+            st.setString(5, endereco.getBairro());
+            st.setInt(6, endereco.getCidade().getCidadeId());
+            st.setInt(7, endereco.getEnderecoId());
             
             st.executeUpdate();
         } catch(SQLException e) {

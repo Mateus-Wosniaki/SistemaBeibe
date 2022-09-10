@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Jul 10, 2022, 6:10:33 PM
+    Document   : createUser
+    Created on : Sep 9, 2022, 22:06:27 PM
     Author     : Gabriel Jesus Peres
 --%>
 
@@ -15,6 +15,69 @@
         <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
         <link rel="stylesheet" href="../assets/css/login.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        <!<!-- Importações de jQuery e etc -->
+        <script src="../assets/js/core/jquery.min.js"></script>
+        <script src="../assets/js/core/popper.min.js"></script>
+        <script src="../assets/js/core/bootstrap.min.js"></script>
+        <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="../assets/js/plugins/chartjs.min.js"></script>
+        <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+        <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+        <script type="text/javascript" >
+            $(document).ready(function () {
+                getEstados();
+                $("#estado").change(function () {
+                    getCidades();
+                });
+            });
+            function getEstados() {
+                const url = "/SistemaBeibe/AJAXServlet";
+                $.ajax({
+                    url: url,
+                    data: {
+                        action: "estados"
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        // Se sucesso, preenche o combo de estado
+                        $("#estado").empty();
+                        $.each(data, function (i, obj) {
+                            $("#estado").append('<option value=' + obj.estadoId + '>' + obj.descricao + '</option>');
+                        });
+                    },
+                    error: function (request, textStatus, errorThrown) {
+                        alert(request.status + ', Erro: ' + request.statusText);
+                        // Erro
+                    }
+                });
+            }
+            function getCidades() {
+                var estadoId = $("#estado").val();
+                var url = "/SistemaBeibe/AJAXServlet";
+                $.ajax({
+                    url: url, // URL da sua Servlet
+                    data: {
+                        estadoId: estadoId,
+                        action: "cidades",
+                    }, // Parâmetro passado para a Servlet
+                    dataType: 'json',
+                    success: function (data) {
+                        // Se sucesso, limpa e preenche a combo de cidade
+                        // alert(JSON.stringify(data));
+                        $("#cidade").empty();
+                        $.each(data, function (i, obj) {
+                            $("#cidade").append('<option value=' + obj.cidadeId + '>' + obj.descricao + '</option>');
+                        });
+                    },
+                    error: function (request, textStatus, errorThrown) {
+                        alert(request.status + ', Erro: ' + request.statusText);
+                        // Erro
+                    }
+                });
+            }
+        </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -40,14 +103,14 @@
                                 <div class="row">
                                     <div class="col-md pr-1">
                                         <div class="form-group">
-                                            <label>Nome </label>
-                                            <input type="text" class="form-control"placeholder="" value="">
+                                            <label>Nome</label>
+                                            <input id="nome" name="nome" type="text" class="form-control" placeholder="" value="">
                                         </div>
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
                                             <label>Sobrenome</label>
-                                            <input type="text" class="form-control" placeholder="" value="">
+                                            <input id="sobrenome" name="sobrenome" type="text" class="form-control" placeholder="" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -55,34 +118,44 @@
                                     <div class="col-md-4 pr-1">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">CPF</label>
-                                            <input type="text" class="form-control cpf" placeholder="">
+                                            <input id="CPF" name="CPF" type="text" class="form-control cpf" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="" value="">
+                                            <input id="email" name="email" type="email" class="form-control" placeholder="" value="">
                                         </div>
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
                                             <label>Telefone</label>
-                                            <input type="text" class="form-control telefone" placeholder="" value="">
+                                            <input id="telefone" name="telefone" type="text" class="form-control telefone" placeholder="" value="">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-1 pr-1">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <select name="estado" id="estado" class="form-select">
+                                                <option selected>
+                                                    Selecione...
+                                                </option>
+                                                <c:forEach var="estado" items="${requestScope.estados}">
+                                                    <option value="${estado.estadoId}">${estado.descricao}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Cidade</label>
-                                            <input type="text" class="form-control" placeholder="" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-1 pr-1">
-                                        <div class="form-group">
-                                            <label>UF</label>
-                                            <input type="text" class="form-control" placeholder="" value="">
+                                            <select name="cidade" id="cidade" class="form-select">
+                                                <option selected value="">
+                                                    Selecione o estado...
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -90,40 +163,39 @@
                                     <div class="col-md-2 pr-1">
                                         <div class="form-group">
                                             <label>CEP</label>
-                                            <input type="text" class="form-control cep" placeholder="" value="">
+                                            <input id="CEP" name="CEP" type="text" class="form-control cep" placeholder="" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-2 pl-1">
                                         <div class="form-group">
-                                            <label>Rua</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <label>Logradouro</label>
+                                            <input id="logradouro" name="logradouro" type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md-1 pl-1">
                                         <div class="form-group">
-                                            <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="">
+                                            <label>Número</label>
+                                            <input id="numero" name="numero" type="number" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
                                             <label>Complemento</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input id="complemento" name="complemento" type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
                                             <label>Bairro</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input id="bairro" name="bairro" type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="row">
-                                        <div class="update ml-auto mr-auto">
-                                            <button type="submit" class="btn btn-primary btn-round">Cadastrar</button>
-                                        </div>
+                                <div class="row">
+                                    <div class="update ml-auto mr-auto">
+                                        <button type="submit" class="btn btn-primary btn-round">Cadastrar</button>
                                     </div>
-
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -131,17 +203,8 @@
             </div>
         </div>
     </div>
-    <script src="../assets/js/core/jquery.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-    <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
     <!-- masks -->
-    <script> 
+    <script>
         $(".telefone").mask("(00) 0000-00009");
         $(".cep").mask("00.000-000");
         $(".cpf").mask("999.999.999-99");
