@@ -46,6 +46,7 @@ CREATE TABLE public.Endereco (
   logradouro VARCHAR(128) NOT NULL,
   numero INT,
   complemento VARCHAR(30),
+  bairro VARCHAR(50),
   idMunicipio INT,
   FOREIGN KEY (idMunicipio) REFERENCES public.Municipio(idMunicipio)
 );

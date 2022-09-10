@@ -80,10 +80,7 @@ public class AtendimentoFacade {
             ConnectionFactory connF = new ConnectionFactory();
             AtendimentoDAO atendimentoDao = new AtendimentoDAO(connF.getConnection());
             
-            Atendimento atendimento = new Atendimento();
-            atendimento.setAtendimentoId(atendimentoId);
-            
-            atendimentoDao.remover(atendimento);
+            atendimentoDao.remover(atendimentoId);
         }catch(DAOException ex){
             throw new AtendimentoException("Erro deletando atendimento", ex);
         }

@@ -100,12 +100,12 @@ public class CategoriaDAO implements InterfaceDAO<Categoria> {
     }
 
     @Override
-    public void remover(Categoria categoria) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            st.setInt(1, categoria.getCategoriaId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DAOException("Erro DAO: Problema ao remover a categoria: " + categoria.getDescricao(), e);
+            throw new DAOException("Erro DAO: Problema ao remover a categoria: " + id, e);
         }
     }
 }
