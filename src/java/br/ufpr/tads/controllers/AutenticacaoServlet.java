@@ -51,31 +51,36 @@ public class AutenticacaoServlet extends HttpServlet {
                 }
 
                 Login login = UsuarioFacade.efetuarLogin(email, senha);
-                if (login == null) {
-                    throw new AuthException();
-                }
-                
-                session.setAttribute("login", login);
-                
-                // Com base na função/role -> redireciona o usuário logado para
-                // a página correspondente
-                switch(login.getFuncao().getDescricao()) {
-                    case "Cliente":
-                        response.sendRedirect("Cliente/index.jsp");
-                        break;
-                    case "Funcionário":
-                        response.sendRedirect("Funcionario/index.jsp");
-                        break;
-                    case "Gerente":
-                        response.sendRedirect("Gerente/index.jsp");
-                        break;
+
+                if (login != null) {
+                    session.setAttribute("login", login);
+
+                    // Com base na função/role -> redireciona o usuário logado para
+                    // a página correspondente
+                    switch (login.getFuncao().getFuncaoId()) {
+                        case 1:
+                            response.sendRedirect("Cliente/index.jsp");
+                            break;
+                        case 2:
+                            response.sendRedirect("Funcionario/index.jsp");
+                            break;
+                        case 3:
+                            response.sendRedirect("Gerente/index.jsp");
+                            break;
+                    }
+                } else {
+                    request.setAttribute("mensagem", "Email/Senha inválidos");
+                    rdIndexJSP.forward(request, response);
+                    return;
                 }
             } catch (UsuarioException e) {
                 request.setAttribute("mensagem", e.getMessage());
                 rdIndexJSP.forward(request, response);
+                return;
             } catch (AuthException e) {
                 request.setAttribute("mensagem", "Email/Senha inválidos");
                 rdIndexJSP.forward(request, response);
+                return;
             }
         }
 

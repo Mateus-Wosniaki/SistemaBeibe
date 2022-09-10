@@ -4,12 +4,13 @@
     Author     : Gabriel Jesus Peres
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SAC - Login</title>
+        <title>SAC - Autocadastro</title>
 
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
@@ -96,10 +97,13 @@
                 <div class="col-lg-12 ml-auto mr-auto">
                     <div class="card card-user">
                         <div class="card-header">
-                            <h5 class="card-title">Cadastrar Usuario</h5>
+                            <h5 class="card-title">Cadastrar Usuário</h5>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="login.jsp">
+                            <c:url var="formURL" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                                <c:param name="action" value="cadastro" />
+                            </c:url>
+                            <form method="POST" action="${formURL}">
                                 <div class="row">
                                     <div class="col-md pr-1">
                                         <div class="form-group">
@@ -109,8 +113,8 @@
                                     </div>
                                     <div class="col-md pl-1">
                                         <div class="form-group">
-                                            <label>Sobrenome</label>
-                                            <input id="sobrenome" name="sobrenome" type="text" class="form-control" placeholder="" value="">
+                                            <label>Senha</label>
+                                            <input id="senha" name="senha" type="password" class="form-control" placeholder="" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +209,7 @@
     </div>
     <!-- masks -->
     <script>
-        $(".telefone").mask("(00) 0000-00009");
+        $(".telefone").mask("(00) 00000-0009");
         $(".cep").mask("00.000-000");
         $(".cpf").mask("999.999.999-99");
     </script>

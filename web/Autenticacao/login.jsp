@@ -32,7 +32,10 @@
         <div class="content">
             <div class="container">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                    <form class="form" method="POST" action="AutenticacaoController?action=login">
+                    <c:url var="formURL" value="/AutenticacaoServlet" context="${pageContext.request.contextPath}" >
+                        <c:param name="action" value="login" />
+                    </c:url>
+                    <form class="form" method="POST" action="${formURL}">
                         <div class="card card-login">
                             <div class="card-header ">
                                 <div class="card-header ">

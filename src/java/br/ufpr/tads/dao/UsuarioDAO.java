@@ -18,17 +18,17 @@ import java.util.ArrayList;
 public class UsuarioDAO implements InterfaceDAO<Usuario> {
 
     private static final String INSERIR = 
-            "insert into public.Usuario (nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao) values (?, ?, ?, ?, ?, ?, ?)";
+            "insert into public.Usuario (nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao) values (?, ?, ?, ?, ?, ?, ?)";
     private static final String BUSCARTODOS = 
-            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario";
+            "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario";
     private static final String BUSCARPORID = 
-            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario where idUsuario = ?";
+            "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario where idusuario = ?";
     private static final String DELETAR = 
-            "delete from public.Usuario where idUsuario = ?";
+            "delete from public.Usuario where idusuario = ?";
     private static final String ATUALIZAR = 
-            "update public.Usuario set nomeCompleto = ?, email = ?, CPF = ?, telefone = ?, senha = ?, idEndereco = ?, idFuncao = ? where idUsuario = ?";
+            "update public.Usuario set nomecompleto = ?, email = ?, CPF = ?, telefone = ?, senha = ?, idEndereco = ?, idFuncao = ? where idusuario = ?";
     private static final String VERIFICAR_USUARIO = 
-            "select idUsuario,nomeCompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario WHERE senha = ? AND email = ?";
+            "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario WHERE senha = ? AND email = ?";
 
     private Connection con = null;
 
@@ -159,7 +159,7 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
     }
 
     public Usuario recuperarUsuarioLogin(String email, String senhaHash) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(BUSCARPORID)) {
+        try (PreparedStatement st = con.prepareStatement(VERIFICAR_USUARIO)) {
             Usuario usuario = null;
             
             st.setString(1, senhaHash);
