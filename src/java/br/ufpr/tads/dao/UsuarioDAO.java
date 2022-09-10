@@ -149,12 +149,12 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
     }
 
     @Override
-    public void remover(Usuario usuario) throws DAOException {
+    public void remover(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(DELETAR)) {
-            st.setInt(1, usuario.getUsuarioId());
+            st.setInt(1, id);
             st.executeUpdate();
         } catch(SQLException e) {
-            throw new DAOException("Erro DAO: Problema ao remover o usuário: " + usuario.getNomeCompleto(), e);
+            throw new DAOException("Erro DAO: Problema ao remover o usuário: " + id, e);
         }
     }
 

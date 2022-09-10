@@ -16,7 +16,36 @@
         <!-- CSS Files -->
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
         <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-
+        <script type="text/javascript" >
+            $(document).ready(function () {
+                $("#estado").change(function () {
+                    getCidades();
+                });
+            });
+            function getCidades() {
+                var estadoId = $("#estado").val();
+                var url = "AJAXServlet";
+                $.ajax({
+                    url: url, // URL da sua Servlet
+                    data: {
+                        estadoId: estadoId
+                    }, // Parâmetro passado para a Servlet
+                    dataType: 'json',
+                    success: function (data) {
+                        // Se sucesso, limpa e preenche a combo de cidade
+                        // alert(JSON.stringify(data));
+                        $("#cidade").empty();
+                        $.each(data, function (i, obj) {
+                            $("#cidade").append('<option value=' + obj.id + '>' + obj.nome + '</option>');
+                        });
+                    },
+                    error: function (request, textStatus, errorThrown) {
+                        alert(request.status + ', Error: ' + request.statusText);
+                        // Erro
+                    }
+                });
+            }
+        </script>
     </head>
 
     <body class="">

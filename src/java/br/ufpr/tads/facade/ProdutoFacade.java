@@ -39,11 +39,8 @@ public class ProdutoFacade {
         try{
             ConnectionFactory con = new ConnectionFactory();
             ProdutoDAO produtoDao = new ProdutoDAO(con.getConnection());
-            
-            Produto produto = new Produto();
-            produto.setProdutoId(produtoId);
         
-            produtoDao.remover(produto);
+            produtoDao.remover(produtoId);
         }catch(DAOException ex){
             throw new ProdutoException("Erro deletando produto", ex);
         }

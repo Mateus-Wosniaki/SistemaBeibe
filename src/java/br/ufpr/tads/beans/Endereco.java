@@ -16,17 +16,19 @@ public class Endereco implements Serializable {
     private int numero;
     private String rua;
     private String complemento;
+    private String bairro;
     private Cidade cidade;
     
     public Endereco(){};
 
-    public Endereco(int enderecoId, String rua, String complemento, String cep, Cidade cidade, int numero) {
+    public Endereco(int enderecoId, String rua, String complemento, String cep, String bairro, Cidade cidade, int numero) {
         this.enderecoId = enderecoId;
         this.rua = rua;
         this.complemento = complemento;
         this.cep = cep;
         this.cidade = cidade;
         this.numero = numero;
+        this.bairro = bairro;
     }
 
     public int getEnderecoId() {
@@ -75,6 +77,14 @@ public class Endereco implements Serializable {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
     
 }

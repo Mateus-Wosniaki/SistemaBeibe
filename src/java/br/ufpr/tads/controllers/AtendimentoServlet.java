@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Gabril
  */
-@WebServlet(name = "AutenticacaoServlet", urlPatterns = {"/AutenticacaoServlet"})
+@WebServlet(name = "AtendimentoServlet", urlPatterns = {"/AtendimentoServlet"})
 public class AtendimentoServlet extends HttpServlet {
 
     /**

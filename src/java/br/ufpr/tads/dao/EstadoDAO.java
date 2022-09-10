@@ -18,8 +18,8 @@ import java.util.List;
  * @author Gabril
  */
 public class EstadoDAO implements IReadonlyDAO<Estado> {
-    private static final String BUSCARPORID = "select idEstado, nomeEstado, siglaUF from public.Estado where idEstado = ?";
-    private static final String BUSCARTODOS = "select idEstado, nomeEstado, siglaUF from public.Estado";
+    private static final String BUSCARPORID = "select idestado, nomeestado, siglauf from public.Estado where idestado = ?";
+    private static final String BUSCARTODOS = "select idestado, nomeestado, siglauf from public.Estado";
     
     private Connection con = null;
     
@@ -37,9 +37,9 @@ public class EstadoDAO implements IReadonlyDAO<Estado> {
             
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                estado.setEstadoId(rs.getInt("idEstado"));
-                estado.setDescricao(rs.getString("nomeEstado"));
-                estado.setSiglaUF(rs.getString("siglaUF"));
+                estado.setEstadoId(rs.getInt("idestado"));
+                estado.setDescricao(rs.getString("nomeestado"));
+                estado.setSiglaUF(rs.getString("siglauf"));
             }
             
             return estado;
@@ -57,9 +57,9 @@ public class EstadoDAO implements IReadonlyDAO<Estado> {
             while (rs.next()) {
                 Estado estado = new Estado();
                 
-                estado.setEstadoId(rs.getInt("idEstado"));
-                estado.setDescricao(rs.getString("nomeEstado"));
-                estado.setSiglaUF(rs.getString("siglaUF"));
+                estado.setEstadoId(rs.getInt("idestado"));
+                estado.setDescricao(rs.getString("nomeestado"));
+                estado.setSiglaUF(rs.getString("siglauf"));
                 
                 estados.add(estado);
             }

@@ -1,14 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<c:if test="${empty sessionScope.login}">
-    <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
-    <jsp:forward page="index.jsp"/>
-</c:if>
-
-<c:if test="${sessionScope.login.funcao.funcaoId != 2}">
-    <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
-    <jsp:forward page="index.jsp"/>
-</c:if>
+<c:choose>
+    <c:when test="${empty sessionScope.login}">
+        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+    <c:when test="${sessionScope.login.funcao.funcaoId != 2}">
+        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+</c:choose>
 
 <!DOCTYPE html>
 <html lang="pt-br">
