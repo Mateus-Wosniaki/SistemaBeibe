@@ -13,17 +13,9 @@ import br.ufpr.tads.exception.FuncionarioException;
 public class FuncionarioFacade {
     
     public static void resolverAtendimento(Atendimento atendimento) throws FuncionarioException {
-        try{
-            //Objeto atendimento
-            //Tratar na controller:
-            //- Obter justificativa do campo preenchido no front
-            //- Obter atendente através do USUARIO da SESSÃO
-            //- Status não precisa (SEMPRE SERÁ RESOLVIDO)
-            
-            ConnectionFactory con = new ConnectionFactory();
+        try (ConnectionFactory con = new ConnectionFactory()){
             AtendimentoDAO atendimentoDAO = new AtendimentoDAO(con.getConnection());
-            
-            //atendimentoDAO.atualizar(atendimento);
+            atendimentoDAO.atualizar(atendimento);
         }catch(DAOException ex){
             throw new FuncionarioException("Erro ao resolver atendimento", ex);
         }

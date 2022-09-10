@@ -25,23 +25,35 @@ public class CategoriaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
         String action = request.getParameter("action");
 
         try {
-            if ("incluir".equals(action)) {
+            if("formIncluir".equals(action)){
+                redirectTo("/Funcionario/novaCategoria.jsp", request, response);
+            }
+            else if ("formEditar".equals(action)) {
+                Categoria categoria = buscarCategoriaParaEdicao(request);
+                if(categoria != null){
+                    request.setAttribute("categoria", categoria);
+                    redirectTo("/Funcionario/novaCategoria.jsp", request, response);
+                }
+            }
+            else if ("incluir".equals(action)) {
                 inserirNovaCategoria(request);
+                redirectTo("/CategoriaServlet", request, response);
             } else if ("atualizar".equals(action)) {
                 alterarCategoria(request);
+                redirectTo("/CategoriaServlet", request, response);
             } else if ("deletar".equals(action)) {
                 excluirCategoria(request);
+                redirectTo("/CategoriaServlet", request, response);
             } else {
                 List<Categoria> categorias = buscarTodasCategorias();
                 request.setAttribute("categorias", categorias);
                 redirectTo("/Funcionario/categoriasProduto.jsp", request, response);
             }
         } catch (CategoriaException ex) {
+            request.setAttribute("mensagem", ex.toString());
             redirectTo("/Erro/erro.jsp", request, response);
         }
 
@@ -56,7 +68,21 @@ public class CategoriaServlet extends HttpServlet {
             CategoriaFacade.criarCategoria(categoria);
         }
     }
-
+    
+    private Categoria buscarCategoriaParaEdicao(HttpServletRequest request) throws CategoriaException {
+        try {
+            String id = request.getParameter("id");
+            if (!isNullOrEmpty(id)) {
+                int idCategoria = Integer.parseInt(id);
+                Categoria categoria = CategoriaFacade.buscarCategoriaPorId(idCategoria);
+                return categoria;
+            }
+            return null;
+        } catch (NumberFormatException ex) {
+            throw new CategoriaException("Parâmetro ID inválido");
+        }
+    }   
+    
     private List<Categoria> buscarTodasCategorias() throws CategoriaException {
         List<Categoria> categorias = CategoriaFacade.buscarTodosCategorias();
         return categorias;
@@ -91,10 +117,7 @@ public class CategoriaServlet extends HttpServlet {
     }
 
     private <T> boolean isNullOrEmpty(T input) {
-        if (input == null || input.toString().isBlank()) {
-            return true;
-        }
-        return false;
+        return input == null || input.toString().isBlank();
     }
 
     private void redirectTo(String destino, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

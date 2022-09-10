@@ -15,12 +15,6 @@
                 </a>
             </li>
             <li>
-                <a href="detalheGerente.jsp">
-                    <i class="nc-icon nc-single-02"></i>
-                    <p>Perfil</p>
-                </a>
-            </li>
-            <li>
                 <a href="listaColaborador.jsp">
                     <i class="nc-icon nc-circle-10"></i>
                     <p>Colaboradores</p>
