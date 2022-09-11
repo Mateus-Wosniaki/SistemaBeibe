@@ -26,59 +26,8 @@
         <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-        <script type="text/javascript" >
-            $(document).ready(function () {
-                getEstados();
-                $("#estado").change(function () {
-                    getCidades();
-                });
-            });
-            function getEstados() {
-                const url = "/SistemaBeibe/AJAXServlet";
-                $.ajax({
-                    url: url,
-                    data: {
-                        action: "estados"
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        // Se sucesso, preenche o combo de estado
-                        $("#estado").empty();
-                        $.each(data, function (i, obj) {
-                            $("#estado").append('<option value=' + obj.estadoId + '>' + obj.descricao + '</option>');
-                        });
-                    },
-                    error: function (request, textStatus, errorThrown) {
-                        alert(request.status + ', Erro: ' + request.statusText);
-                        // Erro
-                    }
-                });
-            }
-            function getCidades() {
-                var estadoId = $("#estado").val();
-                var url = "/SistemaBeibe/AJAXServlet";
-                $.ajax({
-                    url: url, // URL da sua Servlet
-                    data: {
-                        estadoId: estadoId,
-                        action: "cidades",
-                    }, // Parâmetro passado para a Servlet
-                    dataType: 'json',
-                    success: function (data) {
-                        // Se sucesso, limpa e preenche a combo de cidade
-                        // alert(JSON.stringify(data));
-                        $("#cidade").empty();
-                        $.each(data, function (i, obj) {
-                            $("#cidade").append('<option value=' + obj.cidadeId + '>' + obj.descricao + '</option>');
-                        });
-                    },
-                    error: function (request, textStatus, errorThrown) {
-                        alert(request.status + ', Erro: ' + request.statusText);
-                        // Erro
-                    }
-                });
-            }
-        </script>
+        <!-- Arquivo JS da página -->
+        <script src="../assets/js/createUser.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -154,7 +103,7 @@
                                     </div>
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
-                                            <label>Cidade</label>
+                                            <label for="cidade">Cidade</label>
                                             <select name="cidade" id="cidade" class="form-select">
                                                 <option selected value="">
                                                     Selecione o estado...

@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 7 de set. de 2022, 20:17:56
-    Author     : Gabril
+    Author     : Gabriel Jesus Peres
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
