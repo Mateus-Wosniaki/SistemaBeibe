@@ -1,15 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package br.ufpr.tads.controllers;
 
+import br.ufpr.tads.beans.Atendimento;
 import br.ufpr.tads.beans.Cidade;
 import br.ufpr.tads.beans.Endereco;
 import br.ufpr.tads.beans.Funcao;
+import br.ufpr.tads.beans.Login;
+import br.ufpr.tads.beans.Produto;
+import br.ufpr.tads.beans.Situacao;
+import br.ufpr.tads.beans.TipoAtendimento;
 import br.ufpr.tads.beans.Usuario;
+import br.ufpr.tads.exception.AtendimentoException;
 import br.ufpr.tads.exception.ParametroFormularioException;
+import br.ufpr.tads.exception.ProdutoException;
 import br.ufpr.tads.exception.UsuarioException;
+import br.ufpr.tads.facade.AtendimentoFacade;
+import br.ufpr.tads.facade.ProdutoFacade;
 import br.ufpr.tads.facade.UsuarioFacade;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -18,6 +23,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -41,8 +49,175 @@ public class ClienteServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
+        // Verifica se o usuário está logado
+        HttpSession session = request.getSession();
+        if (session.getAttribute("login") == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Autenticacao/login.jsp");
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            rd.forward(request, response);
+        }
+
         String action = request.getParameter("action");
         RequestDispatcher erroJSP = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+
+        Login login = (Login) session.getAttribute("login");
+
+        if ("index".equals(action) || action == null) {
+            try {
+                List<Atendimento> atendimentos = AtendimentoFacade.buscarAtendimentosPorCliente(login.getUsuarioId());
+                request.setAttribute("atendimentos", atendimentos);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/index.jsp");
+                rd.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de atendimentos: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("atendimento".equals(action)) {
+            try {
+                int idAtendimento = Integer.parseInt(request.getParameter("atendimento"));
+
+                Atendimento atendimento = AtendimentoFacade.buscarAtendimentoPorId(idAtendimento);
+                request.setAttribute("atendimento", atendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/serviceResume.jsp");
+                rd.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar o ID do Atendimento selecionado: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do atendimento selecionado: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("perfil".equals(action)) {
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                request.setAttribute("usuario", usuario);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/updateUser.jsp");
+                rd.forward(request, response);
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("update".equals(action)) {
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                
+                String nomeCompleto = validarInput(request.getParameter("nome"));
+                usuario.setNomeCompleto(nomeCompleto);
+                
+                String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
+                usuario.setTelefone(telefone);
+                
+                String CEP = validarInput(request.getParameter("cep")).replaceAll("[^0-9]", "");
+                usuario.getEndereco().setCep(CEP);
+                
+                String logradouro = validarInput(request.getParameter("logradouro"));
+                usuario.getEndereco().setRua(logradouro);
+                
+                int numero = Integer.parseInt(request.getParameter("numero"));
+                usuario.getEndereco().setNumero(numero);
+                
+                String complemento = validarInput(request.getParameter("complemento"));
+                usuario.getEndereco().setComplemento(complemento);
+                
+                String bairro = validarInput(request.getParameter("bairro"));
+                usuario.getEndereco().setBairro(bairro);
+                
+                UsuarioFacade.atualizarUsuario(usuario);
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao atualizar ou buscar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            } catch (ParametroFormularioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do formulário: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("formAtendimento".equals(action)) {
+            try {
+                List<Produto> produtos = ProdutoFacade.buscarTodosProdutos();
+                request.setAttribute("produtos", produtos);
+
+                List<TipoAtendimento> tiposAtendimento = AtendimentoFacade.buscarTodosTiposAtendimento();
+                request.setAttribute("tiposAtendimento", tiposAtendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/createService.jsp");
+                rd.forward(request, response);
+            } catch (ProdutoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de produtos: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de tipos de atendimento: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("novoAtendimento".equals(action)) {
+            Atendimento atendimento = new Atendimento();
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                atendimento.setCliente(usuario);
+
+                atendimento.setDataCriacao(new Date());
+
+                String descricao = validarInput(request.getParameter("descricao"));
+                atendimento.setDescricao(descricao);
+
+                int idProduto = Integer.parseInt(request.getParameter("produto"));
+                Produto produto = ProdutoFacade.buscarProdutoPorId(idProduto);
+                atendimento.setProduto(produto);
+
+                int idTipoAtendimento = Integer.parseInt(request.getParameter("tipo"));
+                TipoAtendimento tipoAtendimento = AtendimentoFacade.buscarTipoAtendimento(idTipoAtendimento);
+                atendimento.setTipoAtendimento(tipoAtendimento);
+
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoId(1); // Situação Em Aberto por padrão
+                atendimento.setSituacao(situacao);
+
+                AtendimentoFacade.criarAtendimento(atendimento);
+                response.sendRedirect("ClienteServlet?action=index");
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao criar o atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao converter o ID do produto/tipo de atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (ProdutoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar o produto: " + e);
+                erroJSP.forward(request, response);
+            } catch (ParametroFormularioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a descrição, do formulário: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
+
+        if ("excluirAtendimento".equals(action)) {
+            try {
+                int idAtendimento = Integer.parseInt(request.getParameter("idAtendimento"));
+                AtendimentoFacade.deletarAtendimento(idAtendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/index.jsp");
+                rd.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao converter o ID do atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao excluir o atendimento: " + e);
+                erroJSP.forward(request, response);
+            }
+        }
 
         if ("cadastro".equals(action)) {
             try {
@@ -55,14 +230,14 @@ public class ClienteServlet extends HttpServlet {
                 String CPF = validarCPFouTelefone(request.getParameter("CPF"), "CPF");
                 String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
                 String senha = validarInput(request.getParameter("senha"));
-                
+
                 // Set de atributos básicos do bean de Usuário
                 usuario.setNomeCompleto(nomeCompleto);
                 usuario.setEmail(email);
                 usuario.setCpf(CPF);
                 usuario.setTelefone(telefone);
                 usuario.setSenha(senha);
-                
+
                 // Bean de endereço
                 Endereco endereco = new Endereco();
 
