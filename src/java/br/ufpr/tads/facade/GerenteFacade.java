@@ -4,37 +4,47 @@
  */
 package br.ufpr.tads.facade;
 
+import br.ufpr.tads.beans.Categoria;
 import br.ufpr.tads.dao.ConnectionFactory;
+import br.ufpr.tads.dao.GerenteDAO;
 import br.ufpr.tads.exception.DAOException;
 import br.ufpr.tads.exception.GerenteException;
+import java.util.Map;
 
 /**
  *
  * @author Mateus Wosniaki
  */
 public class GerenteFacade {
-/*
-    public static void buscarAtendimentosResolvidos() throws GerenteException {
+
+    
+    public static int buscarAtendimentosResolvidos() throws GerenteException {
         try ( ConnectionFactory con = new ConnectionFactory()) {
             GerenteDAO gerenteDao = new GerenteDAO(con.getConnection());
-            gerenteDao.buscarAtendimentosResolvidos();
+            return gerenteDao.buscarTotalAtendimentosResolvidos();
         } catch (DAOException ex) {
             throw new GerenteException("Erro buscando atendimentos resolvidos", ex);
         }
     }
-  */
+     
+    public static Map<Integer,Double> buscarRelacaoAtendimentosAbertosPorTotal() throws GerenteException {
+        try ( ConnectionFactory con = new ConnectionFactory()) {
+            GerenteDAO gerenteDao = new GerenteDAO(con.getConnection());
+            return gerenteDao.buscarRelacaoAtendimentosAbertosPeloTotal();
+        } catch (DAOException ex) {
+            throw new GerenteException("Erro buscando relacao atendimentos", ex);
+        }
+    }
+    
+    public static Map<Categoria, String> buscarRelacaoAtendimentoPorCategoria() throws GerenteException {
+        try ( ConnectionFactory con = new ConnectionFactory()) {
+            GerenteDAO gerenteDao = new GerenteDAO(con.getConnection());
+            Map<Categoria, String> relacaoPorCategoria = gerenteDao.buscarRelacaoAtendimentoPorCategoria();
+            return relacaoPorCategoria;
+        } catch (DAOException ex) {
+            throw new GerenteException("Erro buscando relacao atendimentos", ex);
+        }
+    }
+    
+    //Geracao de relatorio
 }
-
-/*
-getAdministrativeResume - Tela inicial
-{
-getResolvedServices - Recuperar atendimentos realizados.
-getOpenedServices - Pegar atendimentos abertos
-getPorcentageServices - Pegar porcentagem de atendimentos abertos / total
-getServicesByCategory - Pegar resolvidos / total por categoria
-}
-getStaff - Pegar funcionário
-createStaff - Criar funcionário
-updateStaff - Atualizar funcionário
-getAllStaffs - Buscar todos funcionário
-*/

@@ -30,7 +30,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             "update public.Atendimento set justificativa = ?, idAtendente = ?, dataFinalizado = ?, idSituacao = 2 where idAtendimento = ?";
     // idSituação => 1 == Em aberto ; 2 == Finalizado
     private static final String BUSCAR_ATENDIMENTOS_ABERTO = 
-            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa from public.Atendimento where idSituacao = 1";
+            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa from public.Atendimento where idSituacao = 1 ORDER BY dataChamado";
     private static final String BUSCAR_ATENDIMENTOS_CLIENTE = 
             "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa,idAtendente,dataFinalizado from public.Atendimento where idCliente = ?";
 

@@ -74,7 +74,7 @@ public class UsuarioFacade {
     public static List<Usuario> buscarColaboradores() throws UsuarioException {
         try(ConnectionFactory conFac = new ConnectionFactory()){
             UsuarioDAO usuarioDao = new UsuarioDAO(conFac.getConnection());
-            List<Usuario> colaboradores = usuarioDao.buscarTodos();
+            List<Usuario> colaboradores = usuarioDao.buscarTodosColaboradores();
             return colaboradores;
         }catch(DAOException ex){
             throw new UsuarioException("Erro buscando colaboradores", ex);

@@ -21,6 +21,8 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
             "insert into public.Usuario (nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao) values (?, ?, ?, ?, ?, ?, ?)";
     private static final String BUSCARTODOS = 
             "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario";
+    private static final String BUSCAR_TODOS_COLABORADORES = 
+            "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario WHERE idFuncao != 1";
     private static final String BUSCARPORID = 
             "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario where idusuario = ?";
     private static final String DELETAR = 
@@ -73,6 +75,39 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
     @Override
     public List<Usuario> buscarTodos() throws DAOException {
         try (PreparedStatement st = con.prepareStatement(BUSCARTODOS)) {
+            List<Usuario> usuarios = new ArrayList<>();
+            
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                
+                usuario.setUsuarioId(rs.getInt("id"));
+                usuario.setNomeCompleto(rs.getString("nomecompleto"));
+                usuario.setCpf(rs.getString("cpf"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setTelefone(rs.getString("telefone"));
+                
+                Funcao funcao = new Funcao();
+                funcao.setFuncaoId(rs.getInt("idfuncao"));
+                usuario.setFuncao(funcao);
+                
+                Endereco endereco = new Endereco();
+                endereco.setEnderecoId(rs.getInt("idendereco"));
+                usuario.setEndereco(endereco);
+                
+                usuarios.add(usuario);
+            }
+            
+            return usuarios;
+        } catch(SQLException e) {
+            throw new DAOException("Erro DAO: Problema ao recuperar todos usuários", e);
+        }
+    }
+    
+    public List<Usuario> buscarTodosColaboradores() throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(BUSCAR_TODOS_COLABORADORES)) {
             List<Usuario> usuarios = new ArrayList<>();
             
             ResultSet rs = st.executeQuery();
