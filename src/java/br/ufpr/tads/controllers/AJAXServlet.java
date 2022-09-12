@@ -6,9 +6,11 @@ package br.ufpr.tads.controllers;
 
 import br.ufpr.tads.beans.Cidade;
 import br.ufpr.tads.beans.Estado;
+import br.ufpr.tads.beans.Funcao;
 import br.ufpr.tads.dao.CidadeDAO;
 import br.ufpr.tads.dao.ConnectionFactory;
 import br.ufpr.tads.dao.EstadoDAO;
+import br.ufpr.tads.dao.FuncaoDAO;
 import br.ufpr.tads.exception.DAOException;
 import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
@@ -41,9 +43,9 @@ public class AJAXServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         RequestDispatcher paginaErro = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
-        
+
         if ("estados".equals(action)) {
-            try ( ConnectionFactory con = new ConnectionFactory() ) {
+            try ( ConnectionFactory con = new ConnectionFactory()) {
                 // Traz do banco de dados a lista de cidades do estado
                 List<Estado> listaEstados = new EstadoDAO(con.getConnection()).buscarTodos();
                 // Transforma a lista de cidades em JSON
@@ -62,7 +64,7 @@ public class AJAXServlet extends HttpServlet {
         if ("cidades".equals(action)) {
             String estadoId = request.getParameter("estadoId");
 
-            try ( ConnectionFactory con = new ConnectionFactory() ) {
+            try ( ConnectionFactory con = new ConnectionFactory()) {
                 // Tenta converter o parametro em um int válido
                 int idEstado = Integer.parseInt(estadoId);
 
@@ -76,12 +78,29 @@ public class AJAXServlet extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json);
-                
+
             } catch (NumberFormatException e) {
                 request.setAttribute("mensagem", "Erro AJAXServlet: Há algum erro no parâmetro do Estado ID" + e.getMessage());
                 paginaErro.forward(request, response);
             } catch (DAOException e) {
                 request.setAttribute("mensagem", "Erro AJAXServlet: Houve algum problema ao recuperar a lista de cidades" + e.getMessage());
+                paginaErro.forward(request, response);
+            }
+        }
+
+        if ("funcoes".equals(action)) {
+            try ( ConnectionFactory con = new ConnectionFactory()) {
+                // Traz do banco de dados a lista de cidades do estado
+                List<Funcao> listaFuncoes = new FuncaoDAO(con.getConnection()).buscarTodos();
+                // Transforma a lista de cidades em JSON
+                String json = new Gson().toJson(listaFuncoes);
+
+                // Retorna o JSON
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+            } catch (DAOException e) {
+                request.setAttribute("mensagem", "Erro AJAXServlet: Houve algum problema ao recuperar a lista de funções" + e.getMessage());
                 paginaErro.forward(request, response);
             }
         }

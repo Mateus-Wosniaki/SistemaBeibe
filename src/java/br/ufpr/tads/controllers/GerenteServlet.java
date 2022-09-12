@@ -67,25 +67,28 @@ public class GerenteServlet extends HttpServlet {
                 redirectTo("/Gerente/todosAtendimentos.jsp", request, response);
             } else if ("cadastrar".equals(action)) {
                 cadastrarColaborador(request, response);
+                redirectTo("/GerenteServlet?action=listarColaboradores", request, response);
             } else if ("editar".equals(action)) {
                 editarColaborador(request, response);
+                redirectTo("/GerenteServlet?listarColaboradores", request, response);
             } else if ("formCadastrar".equals(action)) {
-                redirectTo("/Gerente/cadastroColaborador", request, response);
+                redirectTo("/Gerente/cadastroColaborador.jsp", request, response);
             } else if ("formEditar".equals(action)) {
                 Usuario usuario = buscarUsuario(request);
                 if (usuario != null) {
                     request.setAttribute("usuario", usuario);
+                    request.setAttribute("form", "alterar");
                     redirectTo("/Gerente/cadastroColaborador.jsp", request, response);
                 }
             } else if ("formExibir".equals(action)) {
                 Usuario usuario = buscarUsuario(request);
                 if (usuario != null) {
                     request.setAttribute("usuario", usuario);
-                    //redirectTo("/Gerente/.jsp", request, response);
+                    redirectTo("/Gerente/exibirColaborador.jsp", request, response);
                 }
             } else if ("listarColaboradores".equals(action)) {
                 List<Usuario> usuarios = buscarColaboradores();
-                request.setAttribute("usuarios", usuarios);
+                request.setAttribute("colaboradores", usuarios);
                 redirectTo("/Gerente/listaColaborador.jsp", request, response);
             } else {
                 montarInformacoesAdministrativas(request);
@@ -162,6 +165,7 @@ public class GerenteServlet extends HttpServlet {
         try {
             Usuario usuario = tratarUsuarioPreenchido(request);
             usuario.setUsuarioId(Integer.parseInt(request.getParameter("id")));
+            usuario.getEndereco().setEnderecoId(Integer.parseInt(request.getParameter("estadoId")));
             UsuarioFacade.atualizarUsuario(usuario);
         } catch (NumberFormatException ex) {
             request.setAttribute("mensagem", "Id do colaborador inválido: " + ex.getMessage());
@@ -179,14 +183,14 @@ public class GerenteServlet extends HttpServlet {
         try {
             Usuario usuario = new Usuario();
 
-            String funcaoId = validarInput(request.getParameter("funcao"));
+            String funcaoId = request.getParameter("funcao");
             Funcao funcao = new Funcao();
             funcao.setFuncaoId(Integer.parseInt(funcaoId));
             usuario.setFuncao(funcao);
 
             String nomeCompleto = validarInput(request.getParameter("nome"));
             String email = validarEmail(request.getParameter("email"));
-            String CPF = validarCPFouTelefone(request.getParameter("CPF"), "CPF");
+            String CPF = validarCPFouTelefone(request.getParameter("cpf"), "CPF");
             String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
             String senha = validarInput(request.getParameter("senha"));
 
@@ -200,7 +204,7 @@ public class GerenteServlet extends HttpServlet {
             // Bean de endereço
             Endereco endereco = new Endereco();
 
-            String CEP = validarInput(request.getParameter("CEP")).replaceAll("[^0-9]", "");
+            String CEP = validarInput(request.getParameter("cep")).replaceAll("[^0-9]", "");
             String logradouro = validarInput(request.getParameter("logradouro"));
             String bairro = validarInput(request.getParameter("bairro"));
             String complemento = validarInput(request.getParameter("complemento"));

@@ -1,6 +1,7 @@
 package br.ufpr.tads.facade;
 
 import br.ufpr.tads.beans.Usuario;
+import br.ufpr.tads.dao.CidadeDAO;
 import br.ufpr.tads.dao.ConnectionFactory;
 import br.ufpr.tads.dao.EnderecoDAO;
 import br.ufpr.tads.dao.UsuarioDAO;
@@ -45,6 +46,8 @@ public class UsuarioFacade {
     public static void atualizarUsuario(Usuario usuario) throws UsuarioException {
         try(ConnectionFactory conFac = new ConnectionFactory()){
             usuario.setSenha(gerarHash(usuario.getSenha())); 
+            EnderecoDAO enderecoDao = new EnderecoDAO(conFac.getConnection());
+            enderecoDao.atualizar(usuario.getEndereco());
             UsuarioDAO usuarioDao = new UsuarioDAO(conFac.getConnection());
             usuarioDao.atualizar(usuario);
         }catch(DAOException ex){
@@ -65,6 +68,7 @@ public class UsuarioFacade {
         try(ConnectionFactory conFac = new ConnectionFactory()){
             UsuarioDAO usuarioDao = new UsuarioDAO(conFac.getConnection());
             Usuario usuario = usuarioDao.buscar(usuarioId);
+            usuario.setSenha("");
             return usuario;
         }catch(DAOException ex){
             throw new UsuarioException("Erro buscando usuario", ex);

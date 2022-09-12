@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    getFuncoes();
     getEstados();
     $("#estado").change(function () {
         getCidades();
@@ -52,3 +53,25 @@ function getCidades() {
     });
 }
 
+function getFuncoes() {
+    const url = "/SistemaBeibe/AJAXServlet";
+    $.ajax({
+        url: url, // URL da sua Servlet
+        data: {
+            action: "funcoes"
+        }, // Parâmetro passado para a Servlet
+        dataType: 'json',
+        success: function (data) {
+            // Se sucesso, limpa e preenche a combo de cidade
+            // alert(JSON.stringify(data));
+            $("#funcao").empty();
+            $.each(data, function (i, obj) {
+                $("#funcao").append('<option value=' + obj.funcaoId + '>' + obj.descricao + '</option>');
+            });
+        },
+        error: function (request, textStatus, errorThrown) {
+            alert(request.status + ', Erro: ' + request.statusText);
+            // Erro
+        }
+    });
+}

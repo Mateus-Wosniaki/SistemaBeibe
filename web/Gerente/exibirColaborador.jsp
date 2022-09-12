@@ -21,11 +21,8 @@
             <div class="main-panel">
                 <%@ include file="../WEB-INF/jspf/navbar.jspf"%>
                 <div class="content">
-                    <h5>${form == 'alterar' ? 'Editar': 'Cadastrar'} Colaborador</h5>
-                    <c:url var="urlPost" value="/GerenteServlet" context="${pageContext.request.contextPath}" >
-                        <c:param name="action" value="${form == 'alterar' ? 'editar' : 'cadastrar'}" />
-                    </c:url>
-                    <form method="POST" action="${urlPost}">
+                    <h5>Exibir Colaborador</h5>
+                    <form>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
@@ -35,10 +32,8 @@
                                                 <div class="form-group">
                                                     <label>Função</label>
                                                     <div class="dropdown bootstrap-select dropup">
-                                                        <select name="funcao" id="funcao" class="form-control">
-                                                            <c:forEach var="funcao" items="${requestScope.funcoes}">
-                                                                <option value="${funcao.funcaoId}">${funcao.descricao}</option>
-                                                            </c:forEach>
+                                                        <select name="funcao" id="funcao" class="form-control" disabled="true">
+                                                            <option selected value="${usuario.funcao.funcaoId}">${usuario.funcao.descricao}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -59,8 +54,9 @@
                                                 id="nome"
                                                 name="nome"
                                                 type="text" 
+                                                disabled
                                                 class="form-control pl-1"
-                                                value="${form == 'alterar' ? usuario.nomeCompleto : ''}"
+                                                value="${usuario.nomeCompleto}"
                                                 >
                                         </div>
                                     </div>
@@ -70,10 +66,10 @@
                                             <input
                                                 id="senha"
                                                 name="senha"
-                                                required
+                                                disabled
                                                 type="password" 
                                                 class="form-control"
-                                                value="${form == 'alterar' ? usuario.senha : ''}"
+                                                value="${usuario.senha}"
                                                 >
                                         </div>
                                     </div>
@@ -85,10 +81,10 @@
                                             <input 
                                                 id="cpf" 
                                                 name="cpf" 
-                                                ${form == 'alterar' ? 'disabled' : ''}
+                                                disabled
                                                 type="text" 
                                                 class="form-control cpf" 
-                                                value="${form == 'alterar' ? usuario.cpf : ''}"
+                                                value="${usuario.cpf}"
                                                 >
                                         </div>
                                     </div>
@@ -97,10 +93,10 @@
                                             <label>Email</label>
                                             <input 
                                                 type="email" 
-                                                ${form == 'alterar' ? 'disabled' : ''}
+                                                disabled
                                                 name="email"
                                                 class="form-control" 
-                                                value="${form == 'alterar' ? usuario.email : ''}"
+                                                value="${usuario.email}"
                                                 >
                                         </div>
                                     </div>
@@ -110,9 +106,10 @@
                                             <input 
                                                 id="telefone" 
                                                 name="telefone" 
+                                                disabled
                                                 type="text" 
                                                 class="form-control telefone" 
-                                                value="${form == 'alterar' ? usuario.telefone : ''}"
+                                                value="${usuario.telefone}"
                                                 >
                                         </div>
                                     </div>
@@ -123,10 +120,8 @@
                                         <div class="form-group">
                                             <label>Estado</label>
                                             <div class="dropdown bootstrap-select dropup">
-                                                <select name="estado" id="estado" class="form-control">
-                                                    <c:forEach var="estado" items="${requestScope.estados}">
-                                                        <option value="${estado.estadoId}">${estado.descricao}</option>
-                                                    </c:forEach>
+                                                <select name="estado" id="estado" class="form-control" disabled="true">
+                                                    <option selected value="${usuario.endereco.cidade.estado.estadoId}">${usuario.endereco.cidade.estado.descricao}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -135,10 +130,8 @@
                                         <div class="form-group">
                                             <label for="cidade">Cidade</label>
                                             <div class="dropdown bootstrap-select dropup">
-                                                <select name="cidade" id="cidade" class="form-control">
-                                                    <option selected value="">
-                                                        Selecione o estado...
-                                                    </option>
+                                                <select name="cidade" id="cidade" class="form-control" disabled="true">
+                                                    <option selected value="${usuario.endereco.cidade.cidadeId}">${usuario.endereco.cidade.descricao}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -151,9 +144,10 @@
                                             <input 
                                                 id="cep" 
                                                 name="cep" 
+                                                disabled
                                                 type="text" 
                                                 class="form-control cep" 
-                                                value="${form == 'alterar' ? usuario.endereco.cep : ''}"
+                                                value="${usuario.endereco.cep}"
                                                 >
                                         </div>
                                     </div>
@@ -164,8 +158,9 @@
                                                 id="logradouro" 
                                                 name="logradouro" 
                                                 type="text" 
+                                                disabled
                                                 class="form-control" 
-                                                value="${form == 'alterar' ? usuario.endereco.rua : ''}"
+                                                value="${usuario.endereco.rua}"
                                                 >
                                         </div>
                                     </div>
@@ -176,8 +171,9 @@
                                                 id="numero" 
                                                 name="numero" 
                                                 type="text" 
+                                                disabled
                                                 class="form-control" 
-                                                value="${form == 'alterar' ? usuario.endereco.numero : ''}"
+                                                value="${usuario.endereco.numero}"
                                                 >
                                         </div>
                                     </div>
@@ -188,8 +184,9 @@
                                                 id="complemento" 
                                                 name="complemento" 
                                                 type="text" 
+                                                disabled
                                                 class="form-control" 
-                                                value="${form == 'alterar' ? usuario.endereco.complemento : ''}"
+                                                value="${usuario.endereco.complemento}"
                                                 >
                                         </div>
                                     </div>
@@ -199,16 +196,16 @@
                                             <input 
                                                 id="bairro"
                                                 name="bairro"
+                                                disabled
                                                 type="text"
                                                 class="form-control" 
-                                                value="${form == 'alterar' ? usuario.endereco.bairro : ''}"
+                                                value="${usuario.endereco.bairro}"
                                                 >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="update ml-auto mr-auto">
-                                        <button type="submit" class="btn btn-primary btn-round">${form == 'alterar' ? 'Atualizar' : 'Incluir'} usuário</button>
                                         <c:url var="voltarURL" value="/GerenteServlet" context="${pageContext.request.contextPath}" >
                                             <c:param name="action" value="listarColaboradores" />
                                         </c:url>
@@ -227,7 +224,6 @@
             <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-            <script src="./assets/js/createUser.js"></script>
             <script>
                 $(".telefone").mask("(00) 00000-0009");
                 $(".cep").mask("00.000-000");
