@@ -4,11 +4,11 @@
 
 <c:choose>
     <c:when test="${empty sessionScope.login}">
-        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <c:set var="mensagem" value="UsuÃ¡rio deve se autenticar para acessar o sistema" scope="request"/>
         <jsp:forward page="/Autenticacao/login.jsp" />
     </c:when>
     <c:when test="${sessionScope.login.funcao.funcaoId != 2}">
-        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <c:set var="mensagem" value="VocÃª nÃ£o possui autorizaÃ§Ã£o necessÃ¡ria para acessar o conteÃºdo da pÃ¡gina" scope="request"/>
         <jsp:forward page="/Autenticacao/login.jsp" />
     </c:when>
 </c:choose>
@@ -35,7 +35,6 @@
                                 <div class="card-body">
                                     <c:url var="novaCategoriaURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
                                         <c:param name="action" value="formIncluir" />
-                                        <c:param name="id" value="${requestScope.categoria.categoriaId}" />
                                     </c:url>
                                     <a href="${novaCategoriaURL}" class="btn btn-primary">
                                         <i class="fa fa-plus"></i>
@@ -65,17 +64,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:url var="viewURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
-                                                <c:param name="action" value="formEditar" />
-                                                <c:param name="id" value="${requestScope.categoria.categoriaId}" />
-                                            </c:url>
-                                            <c:url var="removerURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
-                                                <c:param name="action" value="deletar" />
-                                                <c:param name="id" value="${requestScope.categoria.categoriaId}" />
-                                            </c:url>
                                             <c:forEach items="${requestScope.categorias}" var="categoria" >
+                                                <c:url var="viewURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                                                    <c:param name="action" value="formEditar" />
+                                                    <c:param name="id" value="${categoria.categoriaId}" />
+                                                </c:url>
+                                                <c:url var="removerURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                                                    <c:param name="action" value="deletar" />
+                                                    <c:param name="id" value="${categoria.categoriaId}" />
+                                                </c:url>
                                                 <tr>
-                                                    <td><a href="${viewURL}">${requestScope.categoria.descricao}</a></td>
+                                                    <td><a href="${viewURL}">${categoria.descricao}</a></td>
                                                     <td class="text-right">
                                                         <a href="${view}" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
                                                         <a href="${removerURL}"

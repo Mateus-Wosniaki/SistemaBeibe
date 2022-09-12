@@ -42,8 +42,8 @@ public class CategoriaDAO implements InterfaceDAO<Categoria> {
             ResultSet rs = st.executeQuery();
             
             if (rs.next()) {
-                categoria.setCategoriaId(rs.getInt("idCategoria"));
-                categoria.setDescricao(rs.getString("nomeCategoria"));
+                categoria.setCategoriaId(rs.getInt("idcategoria"));
+                categoria.setDescricao(rs.getString("nomecategoria"));
             }
             
             return categoria;
@@ -61,8 +61,8 @@ public class CategoriaDAO implements InterfaceDAO<Categoria> {
             while(rs.next()) {
                 Categoria categoria = new Categoria();
                 
-                categoria.setCategoriaId(rs.getInt("idCategoria"));
-                categoria.setDescricao(rs.getString("nomeCategoria"));
+                categoria.setCategoriaId(rs.getInt("idcategoria"));
+                categoria.setDescricao(rs.getString("nomecategoria"));
                 
                 categorias.add(categoria);
             }

@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class ProdutoDAO implements InterfaceDAO<Produto> {
     private static final String INSERIR = "insert into public.Produto (tituloProduto, descricaoProduto, pesoProduto, idCategoria) values (?, ?, ?, ?)";
-    private static final String BUSCARTODOS = "select idProduto, tituloProduto, descricaoProduto, pesoProduto, idCategoria from public.Produto";
-    private static final String BUSCARPORID = "select idProduto, tituloProduto, descricaoProduto, pesoProduto, idCategoria from public.Produto where idProduto = ?";
+    private static final String BUSCARTODOS = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria";
+    private static final String BUSCARPORID = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria where p.idProduto = ?";
     private static final String DELETAR = "delete from public.Produto where idProduto = ?";
     private static final String ATUALIZAR = "update public.Produto set tituloProduto = ?, descricaoProduto = ?, pesoProduto = ?, idCategoria = ? where idProduto = ?";
 
@@ -42,13 +42,15 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                produto.setProdutoId(rs.getInt("idProduto"));
-                produto.setNome(rs.getString("tituloProduto"));
-                produto.setDescricao("descricaoProduto");
-                produto.setPeso(rs.getDouble("pesoProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
+                produto.setNome(rs.getString("tituloproduto"));
+                produto.setDescricao("descricaoproduto");
+                produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();
-                categoria.setCategoriaId(rs.getInt("idCategoria"));
+                categoria.setCategoriaId(rs.getInt("idcategoria"));
+                categoria.setDescricao(rs.getString("nomecategoria"));
+                
                 produto.setCategoria(categoria);
             }
             
@@ -67,13 +69,15 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             if (rs.next()) {
                 Produto produto = new Produto();
                 
-                produto.setProdutoId(rs.getInt("idProduto"));
-                produto.setNome(rs.getString("tituloProduto"));
-                produto.setDescricao("descricaoProduto");
-                produto.setPeso(rs.getDouble("pesoProduto"));
+                produto.setProdutoId(rs.getInt("idproduto"));
+                produto.setNome(rs.getString("tituloproduto"));
+                produto.setDescricao("descricaoproduto");
+                produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();
-                categoria.setCategoriaId(rs.getInt("idCategoria"));
+                categoria.setCategoriaId(rs.getInt("idcategoria"));
+                categoria.setDescricao(rs.getString("nomecategoria"));
+                
                 produto.setCategoria(categoria);
                 
                 produtos.add(produto);
