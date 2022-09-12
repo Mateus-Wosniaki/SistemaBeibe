@@ -4,8 +4,8 @@
     Author     : Gabriel Jesus Peres
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:choose>
@@ -55,7 +55,14 @@
                                         <h4 class="my-1"><i class="nc-icon nc-support-17 text-danger mx-4"></i></h4>
                                     </div>
                                     <h5 class="card-title">
-                                        Listagem de Atendimentos
+                                        <c:choose>
+                                            <c:when test="${mostrarAbertoEmAmarelo}">
+                                                Lista de todos os Atendimentos
+                                            </c:when>
+                                            <c:otherwise>
+                                                Lista de Atendimentos em Aberto
+                                            </c:otherwise>
+                                        </c:choose>
                                     </h5>
                                 </div>
                                 <div class="card-body ">
@@ -73,31 +80,24 @@
                                                     <c:param name="action" value="viewAtendimento" />
                                                     <c:param name="id" value="${atendimento.atendimentoId}" />
                                                 </c:url>
+                                                <c:set var="atendimentoCritico" value="${dataCritica.after(atendimento.dataCriacao)}" />
+                                                <c:set var="isAtendimentoAberto" value="${atendimento.situacao.situacaoId == 1}" />
                                                 <c:choose>
-                                                    <c:when test="${empty mostrarAbertoEmAmarelo}">
+                                                    <c:when test="${!atendimentoCritico and empty mostrarAbertoEmAmarelo}">
                                                         <tr>
                                                     </c:when>
-                                                    <c:when test="${atendimento.situacao.situacaoId == 1 && true}">
-                                                        <tr class="text-danger">
+                                                    <c:when test="${atendimentoCritico and isAtendimentoAberto}">
+                                                        <tr class="text-danger font-weight-bold">
                                                     </c:when>
-                                                    <c:when test="${atendimento.situacao.situacaoId == 1}">
-                                                        <tr class="text-warning">
+                                                    <c:when test="${!atendimentoCritico and isAtendimentoAberto}">
+                                                        <tr class="text-warning font-weight-bold">
                                                     </c:when>
                                                 </c:choose>
-                                                    <td>
-                                                        <c:if test="${atendimento.situacao.situacaoId == 1}" >
-                                                            <a href="${view}">
-                                                            </c:if>
-                                                            ${atendimento.cliente.nomeCompleto}
-                                                            <c:if test="${atendimento.situacao.situacaoId == 1}" >
-                                                            </a>
-                                                        </c:if>
-                                                    </td>
+                                                    <td>${atendimento.cliente.nomeCompleto}</td>
                                                     <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" />
-                                                    <!-- TODO: Incluir validação para COR da data -->
                                                     <td>${dataCriacao}</td>
                                                     <td>
-                                                        <c:if test="${atendimento.situacao.situacaoId == 1}" >
+                                                        <c:if test="${isAtendimentoAberto}" >
                                                             <a href="${view}" class="btn btn-warning edit">
                                                                 Resolver
                                                             </a>

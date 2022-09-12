@@ -19,7 +19,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -63,17 +65,25 @@ public class FuncionarioServlet extends HttpServlet {
         try {
             if ("index".equals(action) || action == null) {
                 
-                List<Atendimento> atendimentosEmAberto = buscarAtendimentosAbertos();
+                DateTime dt = new DateTime().minusDays(7);
+                Date dataCritica = dt.toDate();
+                request.setAttribute("dataCritica", dataCritica);
                 
+                List<Atendimento> atendimentosEmAberto = buscarAtendimentosAbertos();
                 request.setAttribute("atendimentos", atendimentosEmAberto);
+                
                 redirectTo("/Funcionario/atendimentos.jsp", request, response);
                 
             } else if ("list".equals(action)) {
                 
+                DateTime dt = new DateTime().minusDays(7);
+                Date dataCritica = dt.toDate();
+                request.setAttribute("dataCritica", dataCritica);
+                request.setAttribute("mostrarAbertoEmAmarelo", true);
+                
                 List<Atendimento> atendimentos = buscarTodosAtendimentos();
                 
                 request.setAttribute("atendimentos", atendimentos);
-                request.setAttribute("mostrarAbertoEmAmarelo", true);
                 redirectTo("/Funcionario/atendimentos.jsp", request, response);
                 
             } else if ("resolverAtendimento".equals(action)) {
