@@ -5,6 +5,7 @@
 package br.ufpr.tads.controllers;
 
 import br.ufpr.tads.beans.Categoria;
+import br.ufpr.tads.beans.Login;
 import br.ufpr.tads.exception.CategoriaException;
 import br.ufpr.tads.facade.CategoriaFacade;
 import jakarta.servlet.RequestDispatcher;
@@ -14,49 +15,86 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
 @WebServlet(name = "CategoriaServlet", urlPatterns = {"/CategoriaServlet"})
 public class CategoriaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        
+        // Verifica se o usuário está logado
+        HttpSession session = request.getSession();
+        if (session.getAttribute("login") == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            rd.forward(request, response);
+        }
+        
+        Login login = (Login) session.getAttribute("login");
+        
+        // Se o login for de uma pessoa não-autorizada, redireciona para erro.jsp
+        if (login.getFuncao().getFuncaoId() != 2) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
+            rd.forward(request, response);
+        }
 
         try {
-            if("formIncluir".equals(action)){
-                redirectTo("/Funcionario/novaCategoria.jsp", request, response);
-            }
-            else if ("formEditar".equals(action)) {
-                Categoria categoria = buscarCategoriaParaEdicao(request);
-                if(categoria != null){
-                    request.setAttribute("categoria", categoria);
-                    redirectTo("/Funcionario/novaCategoria.jsp", request, response);
-                }
-            }
-            else if ("incluir".equals(action)) {
-                inserirNovaCategoria(request);
-                redirectTo("/CategoriaServlet", request, response);
-            } else if ("atualizar".equals(action)) {
-                alterarCategoria(request);
-                redirectTo("/CategoriaServlet", request, response);
-            } else if ("deletar".equals(action)) {
-                excluirCategoria(request);
-                redirectTo("/CategoriaServlet", request, response);
-            } else {
+            if ("index".equals(action) || action == null) {
+                
                 List<Categoria> categorias = buscarTodasCategorias();
                 request.setAttribute("categorias", categorias);
                 redirectTo("/Funcionario/categoriasProduto.jsp", request, response);
+                
+            } else if("formIncluir".equals(action)) {
+                
+                redirectTo("/Funcionario/novaCategoria.jsp", request, response);
+                
+            }
+            else if ("formEditar".equals(action)) {
+                
+                Categoria categoria = buscarCategoriaParaEdicao(request);
+                
+                if (categoria == null) {
+                    request.setAttribute("mensagem", "Erro ao recuperar a categoria para edição");
+                    redirectTo("/Erro/erro.jsp", request, response);
+                }
+                
+                request.setAttribute("categoria", categoria);
+                redirectTo("/Funcionario/novaCategoria.jsp", request, response);
+                
+            } else if ("cadastrarCategoria".equals(action)) {
+                
+                inserirNovaCategoria(request);
+                redirectTo("/CategoriaServlet?action=index", request, response);
+                
+            } else if ("atualizarCategoria".equals(action)) {
+                
+                alterarCategoria(request);
+                redirectTo("/CategoriaServlet?action=index", request, response);
+                
+            } else if ("deletar".equals(action)) {
+                
+                excluirCategoria(request);
+                redirectTo("/CategoriaServlet?action=index", request, response);
+                
+            } else {
+                request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
+                redirectTo("/Erro/erro.jsp", request, response);
             }
         } catch (CategoriaException ex) {
             request.setAttribute("mensagem", ex.toString());
             redirectTo("/Erro/erro.jsp", request, response);
         }
-
     }
 
     private void inserirNovaCategoria(HttpServletRequest request) throws CategoriaException {

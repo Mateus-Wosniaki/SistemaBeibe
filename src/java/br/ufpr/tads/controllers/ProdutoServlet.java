@@ -5,8 +5,11 @@
 package br.ufpr.tads.controllers;
 
 import br.ufpr.tads.beans.Categoria;
+import br.ufpr.tads.beans.Login;
 import br.ufpr.tads.beans.Produto;
+import br.ufpr.tads.exception.CategoriaException;
 import br.ufpr.tads.exception.ProdutoException;
+import br.ufpr.tads.facade.CategoriaFacade;
 import br.ufpr.tads.facade.ProdutoFacade;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -15,11 +18,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Mateus Wosniaki, Gabriel Jesus Peres
  */
 @WebServlet(name = "ProdutoServlet", urlPatterns = {"/ProdutoServlet"})
 public class ProdutoServlet extends HttpServlet {
@@ -35,45 +41,77 @@ public class ProdutoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        request.setCharacterEncoding("UTF-8");
 
+        // Verifica se o usuário está logado
+        HttpSession session = request.getSession();
+        if (session.getAttribute("login") == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            rd.forward(request, response);
+        }
+        
+        Login login = (Login) session.getAttribute("login");
         String action = request.getParameter("action");
+        
+        // Se o login não for de uma pessoa autorizada, redireciona para erro.jsp
+        if (login.getFuncao().getFuncaoId() != 2) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
+            rd.forward(request, response);
+        }
 
         try {
-            if ("formIncluir".equals(action)) {
+            if ("index".equals(action) || action == null) {
+                
+                List<Produto> produtos = buscarTodosProdutos();
+                request.setAttribute("produtos", produtos);
+                redirectTo("/Funcionario/exibirProdutos.jsp", request, response);
+                
+            } else if ("formIncluir".equals(action)) {
+                
+                List<Categoria> categorias = CategoriaFacade.buscarTodosCategorias();
+                request.setAttribute("categorias", categorias);
+                
                 redirectTo("/Funcionario/novoProduto.jsp", request, response);
-            }
-            else if ("formEditar".equals(action)) {
+                
+            } else if ("formEditar".equals(action)) {
+                
+                List<Categoria> categorias = CategoriaFacade.buscarTodosCategorias();
+                request.setAttribute("categorias", categorias);
+                
                 Produto produto = buscarProduto(request);
                 if(produto != null){
                     request.setAttribute("produto", produto);
                     redirectTo("/Funcionario/novoProduto.jsp", request, response);
                 }
-            }
-            else if ("incluir".equals(action)) {
+                
+            } else if ("incluir".equals(action)) {
+                
                 inserirNovoProduto(request);
-                redirectTo("/ProdutoServlet", request, response);
+                redirectTo("/ProdutoServlet?action=index", request, response);
+                
             } else if ("atualizar".equals(action)) {
+                
                 alterarProduto(request);
-                redirectTo("/ProdutoServlet", request, response);
-            } else if ("exibir".equals(action)) {
-                Produto produto = buscarProduto(request);
-                if(produto != null){
-                    request.setAttribute("produto", produto);
-                    //redirectTo("/Funcionario/novoProduto.jsp", request, response); REDIRECIONAR PARA A TELA CERTA
-                }
+                redirectTo("/ProdutoServlet?action=index", request, response);
+                
             } else if ("deletar".equals(action)) {
+                
                 excluirProduto(request);
-                redirectTo("/ProdutoServlet", request, response);
+                redirectTo("/ProdutoServlet?action=index", request, response);
+                
             } else {
-                List<Produto> produtos = buscarTodosProdutos();
-                request.setAttribute("produtos", produtos);
-                redirectTo("/Funcionario/exibirProdutos.jsp", request, response);
+                request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
+                redirectTo("/Erro/erro.jsp", request, response);
             }
         } catch (ProdutoException ex) {
             request.setAttribute("mensagem", ex.toString());
             redirectTo("/Erro/erro.jsp", request, response);
+        } catch (CategoriaException ex) {
+            Logger.getLogger(ProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private void inserirNovoProduto(HttpServletRequest request) throws ProdutoException {

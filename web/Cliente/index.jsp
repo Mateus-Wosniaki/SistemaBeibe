@@ -62,7 +62,7 @@
                                     </h5>
                                 </div>
                                 <div class="card-body ">
-                                    <table id="example" class="display" style="width:100%">
+                                    <table id="tabela" class="display" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Tipo Atendimento</th>
@@ -102,24 +102,5 @@
         <script src="./assets/js/core/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    "pagingType": "full_numbers",
-                    "lengthMenu": [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, "All"]
-                    ],
-                    responsive: true,
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Filtrar"
-                    }
-
-                });
-
-                var table = $('#datatable').DataTable();
-            });
-        </script>
     </body>
 </html>

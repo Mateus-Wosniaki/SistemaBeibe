@@ -1,39 +1,47 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="sidebar" data-color="white" data-active-color="danger">
     <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
             FUNCIONÁRIO
         </a>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
-                <a href="index.jsp">
-                    <i class="nc-icon nc-shop"></i>
-                    <p>Início</p>
-                </a>
+                <c:url var="index" value="/FuncionarioServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="index" />
+                </c:url>
+                <a href="${index}">
+                <i class="nc-icon nc-shop"></i>
+                <p>Início</p>
+            </a>
             </li>
             <li>
-                <a href="atendimentoAberto.jsp">
-                    <i class="nc-icon nc-book-bookmark"></i>
-                    <p>Atendimentos Abertos</p>
-                </a>
-            </li>
-            <li>
-                <a href="todosAtendimentos.jsp">
+                <c:url var="list" value="/FuncionarioServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="list" />
+                </c:url>
+                <a href="${list}">
                     <i class="nc-icon nc-book-bookmark"></i>
                     <p>Todos Atendimentos</p>
                 </a>
             </li>
             <li>
-                <a href="exibirProdutos.jsp">
+                <c:url var="produtos" value="/ProdutoServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="index" />
+                </c:url>
+                <a href="${produtos}">
                     <i class="nc-icon nc-tag-content"></i>
                     <p>Produtos</p>
                 </a>
             </li>
             <li>
-                <a href="exibirCategorias.jsp">
+                <c:url var="categorias" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="index" />
+                </c:url>
+                <a href="${categorias}">
                     <i class="nc-icon nc-tag-content"></i>
                     <p>Categorias</p>
                 </a>
