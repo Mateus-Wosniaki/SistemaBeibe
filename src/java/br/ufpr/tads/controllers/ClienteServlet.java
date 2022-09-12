@@ -52,7 +52,7 @@ public class ClienteServlet extends HttpServlet {
         // Verifica se o usuário está logado
         HttpSession session = request.getSession();
         if (session.getAttribute("login") == null) {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Autenticacao/login.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
             request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
             rd.forward(request, response);
         }
@@ -61,6 +61,13 @@ public class ClienteServlet extends HttpServlet {
         RequestDispatcher erroJSP = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
 
         Login login = (Login) session.getAttribute("login");
+        
+        // Se o login não for de uma pessoa autorizada, redireciona para erro.jsp
+        if (login.getFuncao().getFuncaoId() != 1) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
+            rd.forward(request, response);
+        }
 
         if ("index".equals(action) || action == null) {
             try {
@@ -73,9 +80,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de atendimentos: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("atendimento".equals(action)) {
+        } else if ("atendimento".equals(action)) {
             try {
                 int idAtendimento = Integer.parseInt(request.getParameter("atendimento"));
 
@@ -91,9 +96,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do atendimento selecionado: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("perfil".equals(action)) {
+        } else if ("perfil".equals(action)) {
             try {
                 Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
                 request.setAttribute("usuario", usuario);
@@ -104,9 +107,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("update".equals(action)) {
+        } else if ("update".equals(action)) {
             try {
                 Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
                 
@@ -139,9 +140,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do formulário: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("formAtendimento".equals(action)) {
+        } else if ("formAtendimento".equals(action)) {
             try {
                 List<Produto> produtos = ProdutoFacade.buscarTodosProdutos();
                 request.setAttribute("produtos", produtos);
@@ -158,9 +157,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de tipos de atendimento: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("novoAtendimento".equals(action)) {
+        } else if ("novoAtendimento".equals(action)) {
             Atendimento atendimento = new Atendimento();
             try {
                 Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
@@ -201,9 +198,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a descrição, do formulário: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("excluirAtendimento".equals(action)) {
+        } else if ("excluirAtendimento".equals(action)) {
             try {
                 int idAtendimento = Integer.parseInt(request.getParameter("idAtendimento"));
                 AtendimentoFacade.deletarAtendimento(idAtendimento);
@@ -217,9 +212,7 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao excluir o atendimento: " + e);
                 erroJSP.forward(request, response);
             }
-        }
-
-        if ("cadastro".equals(action)) {
+        } else if ("cadastro".equals(action)) {
             try {
                 Usuario usuario = new Usuario();
                 Funcao funcao = new Funcao(1, "Cliente");
@@ -272,6 +265,9 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao cadastrar o Usuário: " + e.getMessage());
                 erroJSP.forward(request, response);
             }
+        } else {
+            request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
+            erroJSP.forward(request, response);
         }
     }
 
