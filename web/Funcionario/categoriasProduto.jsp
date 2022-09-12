@@ -1,12 +1,26 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.login}">
+        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+    <c:when test="${sessionScope.login.funcao.funcaoId != 2}">
+        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+</c:choose>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listagem Categoria de Produto</title>
+        <title>BEIBE - Categorias</title>
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./assets/css/paper-dashboard.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     </head>
     <body>
@@ -15,6 +29,22 @@
             <div class="main-panel">
                 <%@ include file="../WEB-INF/jspf/navbar.jspf"%>
                 <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <c:url var="novaCategoriaURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                                        <c:param name="action" value="formIncluir" />
+                                        <c:param name="id" value="${requestScope.categoria.categoriaId}" />
+                                    </c:url>
+                                    <a href="${novaCategoriaURL}" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i>
+                                        Nova Categoria
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card ">
@@ -31,59 +61,32 @@
                                         <thead>
                                             <tr>
                                                 <th>Nome Categorias</th>
-
-                                                <th class="disabled-sorting text-right">A��es</th>
+                                                <th class="disabled-sorting text-right">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><a href="#">Cabelo M/F</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">Manicure</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">Design de Sombrancelha</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">Maquiagem</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">Skincare</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#">Barba</a></td>
-
-                                                <td class="text-right">
-                                                    <a href="#" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-link btn-icon btn-m remove"><i class="fa fa-times"></i></a>
-                                                </td>
-                                            </tr>
+                                            <c:url var="viewURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                                                <c:param name="action" value="formEditar" />
+                                                <c:param name="id" value="${requestScope.categoria.categoriaId}" />
+                                            </c:url>
+                                            <c:url var="removerURL" value="/CategoriaServlet" context="${pageContext.request.contextPath}" >
+                                                <c:param name="action" value="deletar" />
+                                                <c:param name="id" value="${requestScope.categoria.categoriaId}" />
+                                            </c:url>
+                                            <c:forEach items="${requestScope.categorias}" var="categoria" >
+                                                <tr>
+                                                    <td><a href="${viewURL}">${requestScope.categoria.descricao}</a></td>
+                                                    <td class="text-right">
+                                                        <a href="${view}" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="${removerURL}"
+                                                           onclick="return confirm('Você realmente deseja remover essa categoria?');" 
+                                                           class="btn btn-danger btn-link btn-icon btn-m remove"
+                                                           >
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -91,27 +94,14 @@
                         </div>
                     </div>
                 </div>
-                <footer class="footer footer-black  footer-white ">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="credits ml-auto">
-                                <span class="copyright">
-                                    BEIBE - Beauty Embuste Ind�stria de Beleza e Est�tica - <script>
-                                        document.write(new Date().getFullYear());
-                                    </script>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
-        <script src="../assets/js/core/jquery.min.js"></script>
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-        <script src="../assets/js/plugins/chartjs.min.js"></script>
-        <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-        <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+        <script src="./assets/js/core/jquery.min.js"></script>
+        <script src="./assets/js/core/popper.min.js"></script>
+        <script src="./assets/js/core/bootstrap.min.js"></script>
+        <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="./assets/js/plugins/chartjs.min.js"></script>
+        <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+        <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
     </body>
 </html>

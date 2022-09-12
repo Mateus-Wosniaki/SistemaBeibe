@@ -12,9 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>BEIBE - Login</title>
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
-        <link rel="stylesheet" href="../assets/css/login.css"/>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./assets/css/paper-dashboard.min.css"/>
+        <link rel="stylesheet" href="./assets/css/login.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     </head>
     <body>
@@ -25,17 +25,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="createUser.jsp">Cadastro</a>
+                    <c:url var="createUserURL" value="/AutenticacaoServlet" context="${pageContext.request.contextPath}" >
+                        <c:param name="action" value="create" />
+                    </c:url>
+                    <a class="nav-link" href="${createUserURL}">Cadastro</a>
                 </div>
             </div>
         </nav>
         <div class="content">
             <div class="container">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                    <c:url var="formURL" value="/AutenticacaoServlet" context="${pageContext.request.contextPath}" >
+                    <c:url var="loginURL" value="/AutenticacaoServlet" context="${pageContext.request.contextPath}" >
                         <c:param name="action" value="login" />
                     </c:url>
-                    <form class="form" method="POST" action="${formURL}">
+                    <form class="form" method="POST" action="${loginURL}">
                         <div class="card card-login">
                             <div class="card-header ">
                                 <div class="card-header ">
@@ -93,12 +96,12 @@
                 </div>
             </div>
         </footer>
-        <script src="../assets/js/core/jquery.min.js"></script>
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-        <script src="../assets/js/plugins/chartjs.min.js"></script>
-        <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-        <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+        <script src="./assets/js/core/jquery.min.js"></script>
+        <script src="./assets/js/core/popper.min.js"></script>
+        <script src="./assets/js/core/bootstrap.min.js"></script>
+        <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="./assets/js/plugins/chartjs.min.js"></script>
+        <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+        <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
     </body>
 </html>

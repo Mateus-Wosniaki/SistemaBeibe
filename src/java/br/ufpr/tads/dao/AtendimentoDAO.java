@@ -32,7 +32,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     private static final String BUSCAR_ATENDIMENTOS_ABERTO = 
             "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa from public.Atendimento where idSituacao = 1 ORDER BY dataChamado";
     private static final String BUSCAR_ATENDIMENTOS_CLIENTE = 
-            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa,idAtendente,dataFinalizado from public.Atendimento where idCliente = ?";
+            "select idAtendimento,idUsuario,idTipoAtendimento,dataChamado,idProduto,descricaoChamado,idSituacao,justificativa,idAtendente,dataFinalizado from public.Atendimento where idUsuario = ?";
 
     private Connection con = null;
     

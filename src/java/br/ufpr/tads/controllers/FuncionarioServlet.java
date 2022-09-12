@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  *
- * @author Gabril
+ * @author Gabriel Jesus Peres, Mateus Wosniaki
  */
 @WebServlet(name = "FuncionarioServlet", urlPatterns = {"/FuncionarioServlet"})
 public class FuncionarioServlet extends HttpServlet {
@@ -40,37 +40,71 @@ public class FuncionarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
 
+        // Verifica se o usuário está logado
+        HttpSession session = request.getSession();
+        if (session.getAttribute("login") == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            rd.forward(request, response);
+        }
+        
+        Login login = (Login) session.getAttribute("login");
+        String action = request.getParameter("action");
+        
+        // Se o login não for de uma pessoa autorizada, redireciona para erro.jsp
+        if (login.getFuncao().getFuncaoId() != 2) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
+            rd.forward(request, response);
+        }
+        
         try {
-            if ("atendimentosAbertos".equals(action)) {
-                List<Atendimento> atendimentosAbertos = buscarAtendimentosAbertos(request);
-                request.setAttribute("atendimentosAbertos", atendimentosAbertos);
-                redirectTo("/Funcionario/atendimentoAberto.jsp", request, response);
-            } else if ("todosAtendimentos".equals(action)) {
-                List<Atendimento> atendimentos = buscarTodosAtendimentos(request);
+            if ("index".equals(action) || action == null) {
+                
+                List<Atendimento> atendimentosEmAberto = buscarAtendimentosAbertos();
+                
+                request.setAttribute("atendimentos", atendimentosEmAberto);
+                redirectTo("/Funcionario/atendimentos.jsp", request, response);
+                
+            } else if ("list".equals(action)) {
+                
+                List<Atendimento> atendimentos = buscarTodosAtendimentos();
+                
                 request.setAttribute("atendimentos", atendimentos);
-                redirectTo("/Funcionario/todosAtendimentos.jsp", request, response);
+                request.setAttribute("mostrarAbertoEmAmarelo", true);
+                redirectTo("/Funcionario/atendimentos.jsp", request, response);
+                
             } else if ("resolverAtendimento".equals(action)) {
+                
                 resolverAtendimento(request);
-                redirectTo("/FuncionarioServlet?action=atendimentosAbertos", request, response);
-            } else if ("acessarAtendimento".equals(action)) {
-                Atendimento atendimento = acessarAtendimento(request);
-                if (atendimento != null) {
-                    request.setAttribute("atendimento", atendimento);
-                    redirectTo("/Funcionario/resumoAtendimento.jsp", request, response);
-                }
+                redirectTo("/FuncionarioServlet?action=index", request, response);
+                
+            } else if ("viewAtendimento".equals(action)) {
+                
+                int idCliente = Integer.parseInt(request.getParameter("id"));
+                Atendimento atendimento = acessarAtendimento(idCliente);
+
+                request.setAttribute("atendimento", atendimento);
+                redirectTo("/Funcionario/resumoAtendimento.jsp", request, response);
+                
             } else {
-                request.setAttribute("mensagem", "Nenhuma ação inserida");
+                
+                request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
                 redirectTo("/Erro/erro.jsp", request, response);
+                
             }
         } catch (FuncionarioException ex) {
             request.setAttribute("mensagem", ex.toString());
             redirectTo("/Erro/erro.jsp", request, response);
+        } catch (NumberFormatException e) {
+            request.setAttribute("mensagem", "Erro ao converter o parâmetro em inteiro: " + e.getMessage());
+            redirectTo("/Erro/erro.jsp", request, response);
         }
     }
 
-    private List<Atendimento> buscarAtendimentosAbertos(HttpServletRequest request) throws FuncionarioException {
+    private List<Atendimento> buscarAtendimentosAbertos() throws FuncionarioException {
         try {
             List<Atendimento> atendimentosAbertos = AtendimentoFacade.buscarTodosAtendimentosAbertos();
             return atendimentosAbertos; //DEVE ESTAR -> ORDER BY DESC
@@ -79,7 +113,7 @@ public class FuncionarioServlet extends HttpServlet {
         }
     }
 
-    private List<Atendimento> buscarTodosAtendimentos(HttpServletRequest request) throws FuncionarioException {
+    private List<Atendimento> buscarTodosAtendimentos() throws FuncionarioException {
         try {
             List<Atendimento> todosAtendimentos = AtendimentoFacade.buscarTodosAtendimentos();
             return todosAtendimentos; //DEVE ESTAR -> ORDER BY DESC
@@ -88,15 +122,10 @@ public class FuncionarioServlet extends HttpServlet {
         }
     }
 
-    private Atendimento acessarAtendimento(HttpServletRequest request) throws FuncionarioException {
+    private Atendimento acessarAtendimento(int atendimentoId) throws FuncionarioException {
         try {
-            String id = request.getParameter("id");
-            if (!isNullOrEmpty(id)) {
-                int atendimentoId = Integer.parseInt(id);
-                Atendimento atendimento = AtendimentoFacade.buscarAtendimentoPorId(atendimentoId);
-                return atendimento; //DEVE ESTAR -> ORDER BY DESC
-            }
-            return null;
+            Atendimento atendimento = AtendimentoFacade.buscarAtendimentoPorId(atendimentoId);
+            return atendimento;
         } catch (AtendimentoException ex) {
             throw new FuncionarioException("[FUNCIONÁRIO] Falha ao buscar atendimento específico");
         }
@@ -123,9 +152,9 @@ public class FuncionarioServlet extends HttpServlet {
                 FuncionarioFacade.resolverAtendimento(atendimentoResolvido);
             }
         } catch (NumberFormatException ex) {
-            throw new FuncionarioException("Parâmetros inválidos");
+            throw new FuncionarioException("Parâmetros inválidos: " + ex.getMessage());
         }catch (Exception ex){
-            throw new FuncionarioException("Erro ao resolver atendimento");
+            throw new FuncionarioException("Erro ao resolver atendimento: " + ex.getMessage());
         }
     }
 

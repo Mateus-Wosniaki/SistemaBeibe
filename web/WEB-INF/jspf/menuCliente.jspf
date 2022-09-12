@@ -1,5 +1,7 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="sidebar" data-color="white" data-active-color="danger">
     <div class="logo">
         <a href="#" class="simple-text logo-normal">
@@ -9,22 +11,31 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
-                <a href="index.jsp">
-                    <i class="nc-icon nc-shop"></i>
-                    <p>Início</p>
-                </a>
+            <c:url var="index" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                <c:param name="action" value="index" />
+            </c:url>
+            <a href="${index}">
+                <i class="nc-icon nc-shop"></i>
+                <p>Início</p>
+            </a>
             </li>
             <li>
-                <a href="updateUser.jsp">
+                <c:url var="perfil" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="perfil" />
+                </c:url>
+                <a href="${perfil}">
                     <i class="nc-icon nc-single-02"></i>
                     <p>Perfil</p>
                 </a>
             </li>
             <li>
-                <a href="createService.jsp">
-                    <i class="nc-icon nc-book-bookmark"></i>
-                    <p>Novo Atendimento</p>
-                </a>
+                <c:url var="formAtendimento" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                    <c:param name="action" value="formAtendimento" />
+                </c:url>
+                <a href="${formAtendimento}">
+                <i class="nc-icon nc-book-bookmark"></i>
+                <p>Novo Atendimento</p>
+            </a>
             </li>
         </ul>
     </div>
