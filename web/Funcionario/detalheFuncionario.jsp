@@ -31,13 +31,7 @@
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>Nome</label>
-                                                        <input type="text" class="form-control" disabled="" value="Matheus W">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2 pl-3">
-                                                    <div class="form-group">
-                                                        <label>Sobrenome</label>
-                                                        <input type="text" class="form-control" disabled="" value="W">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.nomeCompleto}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -45,19 +39,19 @@
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>CPF</label>
-                                                        <input type="text" class="form-control" disabled="" value="800.395.88-89">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.cpf}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>E-mail</label>
-                                                        <input type="text" class="form-control" disabled="" value="chingulo1@outlook.com">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.email}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Telefone</label>
-                                                        <input type="text" class="form-control" disabled="" value="(41) 99845-3333">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.telefone}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -65,13 +59,13 @@
                                                 <div class="col-md-3 pr-1">
                                                     <div class="form-group">
                                                         <label>Cidade</label>
-                                                        <input type="text" class="form-control" disabled="" value="Curitiba">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.cidade.cidadeId}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1 pl-3">
                                                     <div class="form-group">
-                                                        <label>UF</label>
-                                                        <input type="text" class="form-control" disabled="" value="PR">
+                                                        <label>Estado</label>
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.cidade.estado.estadoId}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,31 +73,31 @@
                                                 <div class="col-md-2 pr-1">
                                                     <div class="form-group">
                                                         <label>CEP</label>
-                                                        <input type="text" class="form-control" disabled="" value="81070-342">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.cep}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pr-1">
                                                     <div class="form-group">
                                                         <label>Rua</label>
-                                                        <input type="text" class="form-control" disabled="" value="Marechal Anor">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.rua}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1 pl-1">
                                                     <div class="form-group">
                                                         <label>Número</label>
-                                                        <input type="text" class="form-control" disabled="" value="342">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.numero}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Complemento</label>
-                                                        <input type="text" class="form-control" disabled="" value="2">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.complemento}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 pl-1">
                                                     <div class="form-group">
                                                         <label>Bairro</label>
-                                                        <input type="text" class="form-control" disabled="" value="Bacacheri">
+                                                        <input type="text" class="form-control" disabled="" value="${funcionario.endereco.bairro}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +122,6 @@
                     </div>
                 </footer>
             </div>
-            
             <script src="./assets/js/core/jquery.min.js"></script>
             <script src="./assets/js/core/popper.min.js"></script>
             <script src="./assets/js/core/bootstrap.min.js"></script>

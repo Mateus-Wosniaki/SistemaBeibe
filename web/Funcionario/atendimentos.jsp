@@ -64,14 +64,14 @@
                                             <tr>
                                                 <th>Atendimento</th>
                                                 <th>Data Criação</th>
-                                                <th>Resolver</th>
+                                                <th>Ação</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${atendimentos}" var="atendimento" >
                                                 <c:url var="view" value="/FuncionarioServlet" context="${pageContext.request.contextPath}" >
                                                     <c:param name="action" value="viewAtendimento" />
-                                                    <c:param name="id" value="${atendimento.cliente.usuarioId}" />
+                                                    <c:param name="id" value="${atendimento.atendimentoId}" />
                                                 </c:url>
                                                 <c:choose>
                                                     <c:when test="${empty mostrarAbertoEmAmarelo}">
@@ -98,8 +98,8 @@
                                                     <td>${dataCriacao}</td>
                                                     <td>
                                                         <c:if test="${atendimento.situacao.situacaoId == 1}" >
-                                                            <a href="${view}" class="btn btn-warning btn-link btn-icon edit">
-                                                                Resolver<i class="fa fa-edit"></i>
+                                                            <a href="${view}" class="btn btn-warning edit">
+                                                                Resolver
                                                             </a>
                                                         </c:if>
                                                     </td>

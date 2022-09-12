@@ -105,7 +105,7 @@
                                                         type="text" 
                                                         class="form-control" 
                                                         disabled 
-                                                        value="${atendimento.produto.descricao}"
+                                                        value="${atendimento.produto.nome}"
                                                         >
                                                 </div>
                                             </div>

@@ -1,5 +1,6 @@
 package br.ufpr.tads.dao;
 
+import br.ufpr.tads.beans.Cidade;
 import br.ufpr.tads.beans.Endereco;
 import br.ufpr.tads.beans.Funcao;
 import br.ufpr.tads.beans.Usuario;
@@ -24,7 +25,7 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
     private static final String BUSCAR_TODOS_COLABORADORES = 
             "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario WHERE idFuncao != 1";
     private static final String BUSCARPORID = 
-            "select idusuario,nomecompleto,email,CPF,telefone,senha,idEndereco,idFuncao from public.Usuario where idusuario = ?";
+            "select u.idusuario,u.nomecompleto,u.email,u.CPF,u.telefone,u.senha,u.idEndereco,e.logradouro,e.numero,e.complemento,e.idmunicipio,e.cep,e.bairro,u.idFuncao from Usuario u inner join Endereco e on e.idEndereco = u.idEndereco where u.idusuario = ?";
     private static final String DELETAR = 
             "delete from public.Usuario where idusuario = ?";
     private static final String ATUALIZAR = 
@@ -63,6 +64,16 @@ public class UsuarioDAO implements InterfaceDAO<Usuario> {
                 
                 Endereco endereco = new Endereco();
                 endereco.setEnderecoId(rs.getInt("idendereco"));
+                endereco.setCep(rs.getString("cep"));
+                endereco.setRua(rs.getString("logradouro"));
+                endereco.setNumero(rs.getInt("numero"));
+                endereco.setComplemento(rs.getString("complemento"));
+                endereco.setBairro(rs.getString("bairro"));
+                
+                Cidade cidade = new Cidade();
+                cidade.setCidadeId(rs.getInt("idmunicipio"));
+                
+                endereco.setCidade(cidade);
                 usuario.setEndereco(endereco);
             }
             
