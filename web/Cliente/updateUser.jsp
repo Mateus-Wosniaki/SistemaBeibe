@@ -4,11 +4,11 @@
 <c:choose>
     <c:when test="${empty sessionScope.login}">
         <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
-        <jsp:forward page="/Autenticacao/login.jsp" />
+        <jsp:forward page="/AutenticacaoServlet?action=index" />
     </c:when>
     <c:when test="${sessionScope.login.funcao.funcaoId != 1}">
         <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
-        <jsp:forward page="/Autenticacao/login.jsp" />
+        <jsp:forward page="/AutenticacaoServlet?action=index" />
     </c:when>
 </c:choose>
 
@@ -16,8 +16,8 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+        <link rel="icon" type="image/png" href="./assets/img/favicon.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
             BEIBE - Editar Usuario
@@ -27,18 +27,18 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
         <!-- CSS Files -->
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+        <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
         <!--   Core JS Files   -->
-        <script src="../assets/js/core/jquery.min.js"></script>
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="./assets/js/core/jquery.min.js"></script>
+        <script src="./assets/js/core/popper.min.js"></script>
+        <script src="./assets/js/core/bootstrap.min.js"></script>
+        <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
         <!-- Arquivo JS da página -->
-        <script src="../assets/js/createUser.js"></script>
+        <script src="./assets/js/createUser.js"></script>
     </head>
     <body>
         <div class="wrapper ">
@@ -68,7 +68,7 @@
                                                         name="nome"
                                                         type="text" 
                                                         class="form-control pl-1"
-                                                        placeholder="${usuario.nomeCompleto}" 
+                                                        value="${usuario.nomeCompleto}" 
                                                     >
                                                 </div>
                                             </div>
@@ -83,7 +83,7 @@
                                                         readonly 
                                                         type="text" 
                                                         class="form-control cpf" 
-                                                        placeholder="${usuario.cpf}"
+                                                        value="${usuario.cpf}"
                                                         >
                                                 </div>
                                             </div>
@@ -94,7 +94,7 @@
                                                         type="email" 
                                                         readonly 
                                                         class="form-control" 
-                                                        placeholder="${usuario.email}"
+                                                        value="${usuario.email}"
                                                         >
                                                 </div>
                                             </div>
@@ -106,7 +106,7 @@
                                                         name="telefone" 
                                                         type="text" 
                                                         class="form-control telefone" 
-                                                        placeholder="${usuario.telefone}"
+                                                        value="${usuario.telefone}"
                                                         >
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                                         name="cep" 
                                                         type="text" 
                                                         class="form-control" 
-                                                        placeholder="${usuario.endereco.cep}"
+                                                        value="${usuario.endereco.cep}"
                                                         >
                                                 </div>
                                             </div>
@@ -157,7 +157,7 @@
                                                         name="logradouro" 
                                                         type="text" 
                                                         class="form-control" 
-                                                        placeholder="${usuario.endereco.rua}" 
+                                                        value="${usuario.endereco.rua}" 
                                                         >
                                                 </div>
                                             </div>
@@ -169,7 +169,7 @@
                                                         name="numero" 
                                                         type="text" 
                                                         class="form-control" 
-                                                        placeholder="${usuario.endereco.numero}"
+                                                        value="${usuario.endereco.numero}"
                                                         >
                                                 </div>
                                             </div>
@@ -181,7 +181,7 @@
                                                         name="complemento" 
                                                         type="text" 
                                                         class="form-control" 
-                                                        placeholder="${usuario.endereco.complemento}"
+                                                        value="${usuario.endereco.complemento}"
                                                         >
                                                 </div>
                                             </div>
@@ -193,7 +193,7 @@
                                                         name="bairro"
                                                         type="text"
                                                         class="form-control" 
-                                                        placeholder="${usuario.endereco.bairro}"
+                                                        value="${usuario.endereco.bairro}"
                                                         >
                                                 </div>
                                             </div>

@@ -5,11 +5,11 @@
 <c:choose>
     <c:when test="${empty sessionScope.login}">
         <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
-        <jsp:forward page="/Autenticacao/login.jsp" />
+        <jsp:forward page="/AutenticacaoServlet?action=index" />
     </c:when>
     <c:when test="${sessionScope.login.funcao.funcaoId != 1}">
         <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
-        <jsp:forward page="/Autenticacao/login.jsp" />
+        <jsp:forward page="/AutenticacaoServlet?action=index" />
     </c:when>
 </c:choose>
 
@@ -26,8 +26,8 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
         <!-- CSS Files -->
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+        <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
     </head>
     <body class="">
@@ -45,7 +45,7 @@
                                     <c:url var="novoAtendimento" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
                                         <c:param name="action" value="formAtendimento" />
                                     </c:url>
-                                    <a href="${novoAtendimento}}" class="btn btn-primary">
+                                    <a href="${novoAtendimento}" class="btn btn-primary">
                                         <i class="fa fa-plus"></i>
                                         Novo atendimento
                                     </a>
@@ -97,9 +97,9 @@
             </div>
         </div
         <!--   Core JS Files   -->
-        <script src="../assets/js/core/jquery.min.js"></script>
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
+        <script src="./assets/js/core/jquery.min.js"></script>
+        <script src="./assets/js/core/popper.min.js"></script>
+        <script src="./assets/js/core/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <script>

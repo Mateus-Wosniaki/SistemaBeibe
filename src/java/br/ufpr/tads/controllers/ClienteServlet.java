@@ -52,7 +52,7 @@ public class ClienteServlet extends HttpServlet {
         // Verifica se o usuário está logado
         HttpSession session = request.getSession();
         if (session.getAttribute("login") == null) {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Autenticacao/login.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
             request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
             rd.forward(request, response);
         }

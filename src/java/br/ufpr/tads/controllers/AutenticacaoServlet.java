@@ -39,9 +39,17 @@ public class AutenticacaoServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
         RequestDispatcher rdIndexJSP = getServletContext().getRequestDispatcher("/Autenticacao/login.jsp");
+        
+        if ("index".equals(action) || action == null) {
+            rdIndexJSP.forward(request, response);
+        }
+        
+        if ("create".equals(action)) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Autenticacao/createUser.jsp");
+            rd.forward(request, response);
+        }
 
-        // AutenticacaoServlet?action=login ou AutenticacaoServlet
-        if ("login".equals(action) || action.equals("")) {
+        if ("login".equals(action)) {
             try {
                 String email = request.getParameter("email");
                 String senha = request.getParameter("senha");
@@ -59,13 +67,13 @@ public class AutenticacaoServlet extends HttpServlet {
                     // a página correspondente
                     switch (login.getFuncao().getFuncaoId()) {
                         case 1:
-                            response.sendRedirect("Cliente/index.jsp");
+                            response.sendRedirect("ClienteServlet?action=index");
                             break;
                         case 2:
-                            response.sendRedirect("Funcionario/index.jsp");
+                            response.sendRedirect("FuncionarioServlet?action=index");
                             break;
                         case 3:
-                            response.sendRedirect("Gerente/index.jsp");
+                            response.sendRedirect("GerenteServlet?action=index");
                             break;
                     }
                 } else {
