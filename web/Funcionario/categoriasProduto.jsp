@@ -76,7 +76,7 @@
                                                 <tr>
                                                     <td><a href="${viewURL}">${categoria.descricao}</a></td>
                                                     <td class="text-right">
-                                                        <a href="${view}" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="${viewURL}" class="btn btn-warning btn-link btn-icon btn-m edit"><i class="fa fa-edit"></i></a>
                                                         <a href="${removerURL}"
                                                            onclick="return confirm('Você realmente deseja remover essa categoria?');" 
                                                            class="btn btn-danger btn-link btn-icon btn-m remove"
