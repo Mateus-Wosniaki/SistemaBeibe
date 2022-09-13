@@ -6,14 +6,11 @@ package br.ufpr.tads.dao;
 
 import br.ufpr.tads.beans.Categoria;
 import java.sql.Connection;
-import br.ufpr.tads.beans.Produto;
 import br.ufpr.tads.exception.DAOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +19,7 @@ import java.util.Map;
  */
 public class GerenteDAO {
     private static final String BUSCAR_RESOLVIDOS = "SELECT COUNT(*) as totalResolvidos FROM atendimento WHERE idSituacao = 2";
-    private static final String BUSCAR_ATENDIMENTO_POR_TOTAL = "SELECT COUNT(*) as abertos, CAST((COUNT(*)::decimal / (SELECT COUNT(*) FROM Atendimento)::decimal) AS decimal(10,3)) * 100 AS porcentagem FROM Atendimento a WHERE a.idsituacao = 1";
+    private static final String BUSCAR_ATENDIMENTO_POR_TOTAL = "SELECT COUNT(*) as abertos, CAST(COUNT(*)::decimal / coalesce(NULLIF((SELECT COUNT(*) FROM Atendimento),0),1)::decimal * 100 AS decimal(10,2)) AS porcentagem FROM Atendimento a WHERE a.idsituacao = 1";
     private static final String BUSCAR_RELACAO_CATEGORIA = "select t.idcategoria, t.nomeCategoria, COUNT(*) as abertos, t.TotalCategoria\n" +
                                                             " from (SELECT a.idsituacao, c.idcategoria, c.nomeCategoria, COUNT(c.idcategoria) OVER (PARTITION BY c.idcategoria) as TotalCategoria FROM Atendimento a\n" +
                                                             " INNER JOIN Produto p on p.idproduto = a.idproduto\n" +
