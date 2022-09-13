@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-1 pr-1">
+                                    <div class="col-md-3 pr-1">
                                         <div class="form-group">
                                             <label>Estado</label>
                                             <select name="estado" id="estado" class="form-control">
@@ -104,7 +104,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 pr-1">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="cidade">Cidade</label>
                                             <select name="cidade" id="cidade" class="form-control">
@@ -114,33 +114,33 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2 pr-1">
+                                    <div class="col-md-3 pl-1">
                                         <div class="form-group">
                                             <label for="cep">CEP</label>
                                             <input id="CEP" name="CEP" type="text" class="form-control cep" placeholder="" value="">
                                         </div>
                                     </div>
-                                    <div class="col-md-2 pl-1">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 pr-1">
                                         <div class="form-group">
                                             <label for="logradouro">Logradouro</label>
                                             <input id="logradouro" name="logradouro" type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
-                                    <div class="col-md-1 pl-1">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="numero">Número</label>
                                             <input id="numero" name="numero" type="number" class="form-control" placeholder="">
                                         </div>
                                     </div>
-                                    <div class="col-md pl-1">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="complemento">Complemento</label>
                                             <input id="complemento" name="complemento" type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
-                                    <div class="col-md pl-1">
+                                    <div class="col-md-2 pl-1">
                                         <div class="form-group">
                                             <label for="bairro">Bairro</label>
                                             <input id="bairro" name="bairro" type="text" class="form-control" placeholder="">
