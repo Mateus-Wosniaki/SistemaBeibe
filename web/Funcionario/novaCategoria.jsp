@@ -64,7 +64,7 @@
                                                         type="text" 
                                                         class="form-control" 
                                                         placeholder="Categoria"
-                                                        value="${categoria.categoriaId}"
+                                                        value="${categoria.descricao}"
                                                         >
                                                 </div>
                                             </div>

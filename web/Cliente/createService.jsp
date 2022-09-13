@@ -95,7 +95,7 @@
                                                         </option>
                                                         <c:forEach items="${produtos}" var="produto">
                                                             <option value="${produto.produtoId}">
-                                                                ${produto.descricao}
+                                                                ${produto.nome}
                                                             </option>
                                                         </c:forEach>
                                                     </select>

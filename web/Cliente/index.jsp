@@ -42,10 +42,10 @@
                         <div class="col-md-12">
                             <div class="card ">
                                 <div class="card-body">
-                                    <c:url var="novoAtendimento" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                                    <c:url var="newServiceURL" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
                                         <c:param name="action" value="formAtendimento" />
                                     </c:url>
-                                    <a href="${novoAtendimento}" class="btn btn-primary">
+                                    <a href="${newServiceURL}" class="btn btn-primary">
                                         <i class="fa fa-plus"></i>
                                         Novo atendimento
                                     </a>
@@ -62,28 +62,30 @@
                                     </h5>
                                 </div>
                                 <div class="card-body ">
-                                    <table id="tabela" class="display" style="width:100%">
+                                    <table id="tabela" class="display table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Tipo Atendimento</th>
+                                                <th>Produto</th>
                                                 <th>Status</th>
                                                 <th>Data</th>
                                                 <th>Ação</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${atendimentos}" var="atendimento">
+                                            <c:forEach var="atendimento" items="${atendimentos}">
                                                 <tr>
                                                     <td>${atendimento.tipoAtendimento.descricao}</td>
+                                                    <td>${atendimento.produto.nome}</td>
                                                     <td>${atendimento.situacao.descricao}</td>
                                                     <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" />
                                                     <td>${dataCriacao}</td>
                                                     <td class="text-center">
-                                                        <c:url var="visualizar" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
+                                                        <c:url var="viewURL" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
                                                             <c:param name="action" value="atendimento" />
                                                             <c:param name="atendimento" value="${atendimento.atendimentoId}" />
                                                         </c:url>
-                                                        <a href="${visualizar}"><i class="fa fa-eye"></i></a>
+                                                        <a href="${viewURL}"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

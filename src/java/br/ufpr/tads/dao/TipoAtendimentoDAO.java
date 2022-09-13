@@ -34,11 +34,12 @@ public class TipoAtendimentoDAO implements IReadonlyDAO<TipoAtendimento> {
     public TipoAtendimento buscar(int id) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(BUSCARPORID)) {
             TipoAtendimento tipoAtendimento = new TipoAtendimento();
+            st.setInt(1, id);
             
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
-                tipoAtendimento.setDescricao(rs.getString("descTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
+                tipoAtendimento.setDescricao(rs.getString("desctipoatendimento"));
             }
             
             return tipoAtendimento;
@@ -56,8 +57,8 @@ public class TipoAtendimentoDAO implements IReadonlyDAO<TipoAtendimento> {
             while (rs.next()) {
                 TipoAtendimento tipoAtendimento = new TipoAtendimento();
                 
-                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idTipoAtendimento"));
-                tipoAtendimento.setDescricao(rs.getString("descTipoAtendimento"));
+                tipoAtendimento.setTipoAtendimentoId(rs.getInt("idtipoatendimento"));
+                tipoAtendimento.setDescricao(rs.getString("desctipoatendimento"));
                 
                 tiposAtendimento.add(tipoAtendimento);
             }

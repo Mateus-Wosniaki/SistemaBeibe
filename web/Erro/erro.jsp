@@ -10,9 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>BEIBE - Erro 500</title>
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../assets/css/paper-dashboard.min.css"/>
-        <link rel="stylesheet" href="../assets/css/login.css"/>
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="./assets/css/paper-dashboard.min.css"/>
+        <link rel="stylesheet" href="./assets/css/login.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     </head>
     <body>
@@ -35,12 +35,12 @@
                 Em caso de problemas, contactar administrador: ${configuracao.email}
             </footer>
         </div>
-        <script src="../assets/js/core/jquery.min.js"></script>
-        <script src="../assets/js/core/popper.min.js"></script>
-        <script src="../assets/js/core/bootstrap.min.js"></script>
-        <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-        <script src="../assets/js/plugins/chartjs.min.js"></script>
-        <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-        <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+        <script src="./assets/js/core/jquery.min.js"></script>
+        <script src="./assets/js/core/popper.min.js"></script>
+        <script src="./assets/js/core/bootstrap.min.js"></script>
+        <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <script src="./assets/js/plugins/chartjs.min.js"></script>
+        <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+        <script src="./assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
     </body>
 </html>

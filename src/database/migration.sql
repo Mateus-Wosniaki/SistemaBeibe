@@ -68,7 +68,7 @@ CREATE TABLE public.Atendimento (
   idAtendimento SERIAL PRIMARY KEY,
   idUsuario INT NOT NULL,
   idTipoAtendimento INT NOT NULL,
-  dataChamado TIMESTAMP NOT NULL DEFAULT CURRENT_DATE,
+  dataChamado TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   idProduto INT,
   descricaoChamado TEXT,
   idSituacao INT NOT NULL,

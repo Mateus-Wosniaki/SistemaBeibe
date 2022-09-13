@@ -53,7 +53,8 @@
                                                 <div class="col-md-4 pr-1">
                                                     <div class="form-group">
                                                         <label>Data de Criação</label>
-                                                        <input readonly type="text" class="form-control" value="27/07/2022 23:50:23">
+                                                        <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy" />
+                                                        <input readonly type="text" class="form-control" value="${dataCriacao}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -61,13 +62,13 @@
                                                 <div class="col-md-8 pr-1">
                                                     <div class="form-group">
                                                         <label>Cliente</label>
-                                                        <input type="text" class="form-control" disabled="" value="Mateus">
+                                                        <input type="text" class="form-control" disabled value="${atendimento.cliente.nomeCompleto}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 pl-1">
                                                     <div class="form-group">
                                                         <label>Situação</label>
-                                                        <input type="email" class="form-control" disabled="" value="ABERTO">
+                                                        <input type="email" class="form-control" disabled value="${atendimento.situacao.descricao}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,13 +76,13 @@
                                                 <div class="col-md-6 pr-1">
                                                     <div class="form-group">
                                                         <label>Produto</label>
-                                                        <input type="text" class="form-control" disabled="" value="Remédio XPTO">
+                                                        <input type="text" class="form-control" disabled value="${atendimento.produto.nome}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 pl-1">
                                                     <div class="form-group">
                                                         <label>Tipo Atendimento</label>
-                                                        <input type="text" class="form-control" disabled="" value="Falta de Estoque">
+                                                        <input type="text" class="form-control" disabled value="${atendimento.tipoAtendimento.descricao}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -89,7 +90,9 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Descrição</label>
-                                                        <textarea class="form-control textarea" disabled="">Preciso realizar o consumo do remédio XPTO, porém o mesmo não se encontra disponível</textarea>
+                                                        <textarea class="form-control textarea" disabled>
+                                                            ${atendimento.descricao}
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
