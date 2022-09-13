@@ -7,6 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<c:choose>
+    <c:when test="${empty sessionScope.login}">
+        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+    <c:when test="${sessionScope.login.funcao.funcaoId != 3}">
+        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+</c:choose>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

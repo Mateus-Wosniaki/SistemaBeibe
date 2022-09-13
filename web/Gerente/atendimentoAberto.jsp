@@ -8,6 +8,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+
+<c:choose>
+    <c:when test="${empty sessionScope.login}">
+        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+    <c:when test="${sessionScope.login.funcao.funcaoId != 3}">
+        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+</c:choose>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,8 +49,9 @@
                                     <table class="table table-striped table-bordered" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Atendimento</th>
-                                                <th>Produto</th>
+                                                <th>Atendimento ID</th>
+                                                <th>Cliente</th>
+                                                <th>Tipo atendimento</th>
                                                 <th>Data Criação</th>
                                             </tr>
                                         </thead>
@@ -48,7 +60,8 @@
                                             <c:forEach items="${listaAtendimentosAbertos}" var="atendimento">
                                                 <tr>
                                                     <td><c:out value="${atendimento.atendimentoId}" /></td>
-                                                    <td><c:out value="${atendimento.produto.produtoId}" /></td>
+                                                    <td><c:out value="${atendimento.cliente.nomeCompleto}" /></td>
+                                                    <td><c:out value="${atendimento.tipoAtendimento.descricao}" /></td>
                                                     <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : ""}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" /></td>
                                                 </tr>
                                             </c:forEach>
