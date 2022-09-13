@@ -58,32 +58,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${requestScope.produtos}" var="p">
-                                            <tr>
+                                            <c:forEach items="${requestScope.produtos}" var="produto">
                                                 <c:url var="editarURL" value="/ProdutoServlet" context="${pageContext.request.contextPath}" >
-                                                        <c:param name="action" value="formEditar" />
-                                                        <c:param name="id" value="${p.produtoId}" />
-                                                    </c:url>
-                                                <td><a href="${editarURL}">${p.nome}</a></td>
-                                                <td>${p.categoria.descricao}</td>
-                                                <td>${p.peso}g</td>
-                                                <td>${p.descricao}</td>
-                                                <td class="text-right">
-                                                    <a href="${editarURL}" class="btn btn-warning btn-link btn-icon btn-m edit">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <c:url var="removerURL" value="/ProdutoServlet" context="${pageContext.request.contextPath}" >
-                                                        <c:param name="action" value="deletar" />
-                                                        <c:param name="id" value="${p.produtoId}" />
-                                                    </c:url>
-                                                    <a href="${removerURL}"
-                                                       onclick="return confirm('Você realmente deseja remover esse produto?');"
-                                                       class="btn btn-danger btn-link btn-icon btn-m remove"
-                                                    >
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                    <c:param name="action" value="formEditar" />
+                                                    <c:param name="id" value="${produto.produtoId}" />
+                                                </c:url>
+                                                <tr>
+                                                    <td><a href="${editarURL}">${produto.nome}</a></td>
+                                                    <td>${produto.categoria.descricao}</td>
+                                                    <td>${produto.peso}g</td>
+                                                    <td>${produto.descricao}</td>
+                                                    <td class="text-right">
+                                                        <a href="${editarURL}" class="btn btn-warning btn-link btn-icon btn-m edit">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        <c:url var="removerURL" value="/ProdutoServlet" context="${pageContext.request.contextPath}" >
+                                                            <c:param name="action" value="deletar" />
+                                                            <c:param name="id" value="${produto.produtoId}" />
+                                                        </c:url>
+                                                        <a href="${removerURL}"
+                                                           onclick="return confirm('Você realmente deseja remover esse produto?');"
+                                                           class="btn btn-danger btn-link btn-icon btn-m remove"
+                                                        >
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>

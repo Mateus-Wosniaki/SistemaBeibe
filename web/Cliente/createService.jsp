@@ -80,7 +80,8 @@
                                                     <input 
                                                         name="situacao"
                                                         id="situacao"
-                                                        readonly type="text" 
+                                                        readonly 
+                                                        type="text" 
                                                         class="form-control" 
                                                         placeholder="Aberto"
                                                     >
@@ -89,7 +90,7 @@
                                             <div class="col-md pl-1">
                                                 <div class="form-group">
                                                     <label for="produto">Produto</label>
-                                                    <select name="produto" id="produto" class="form-select">
+                                                    <select name="produto" id="produto" class="form-control">
                                                         <option selected>
                                                             Selecione o produto...
                                                         </option>
@@ -104,7 +105,7 @@
                                             <div class="col-md pl-1">
                                                 <div class="form-group">
                                                     <label for="tipo">Tipo</label>
-                                                    <select name="tipo" id="tipo" class="form-select">
+                                                    <select name="tipo" id="tipo" class="form-control">
                                                         <option selected>
                                                             Selecione o tipo...
                                                         </option>

@@ -53,7 +53,7 @@
                                                     <label>Data de Criação</label>
                                                     <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy" />
                                                     <input 
-                                                        disabled 
+                                                        readonly 
                                                         type="text" 
                                                         class="form-control" 
                                                         value="${dataCriacao}"
@@ -65,7 +65,7 @@
                                                     <label>Data de Solução</label>
                                                     <fmt:formatDate value="${atendimento.dataFinalizado}" var="dataFinalizado" pattern="dd/MM/yyyy" />
                                                     <input 
-                                                        disabled 
+                                                        readonly 
                                                         type="text" 
                                                         class="form-control" 
                                                         value="${dataFinalizado}"
@@ -80,7 +80,7 @@
                                                     <input 
                                                         type="text" 
                                                         class="form-control" 
-                                                        disabled
+                                                        readonly
                                                         value="${atendimento.cliente.nomeCompleto}"
                                                         >
                                                 </div>
@@ -91,7 +91,7 @@
                                                     <input 
                                                         type="text" 
                                                         class="form-control" 
-                                                        disabled 
+                                                        readonly 
                                                         value="${atendimento.situacao.descricao}"
                                                         >
                                                 </div>
@@ -104,7 +104,7 @@
                                                     <input 
                                                         type="text" 
                                                         class="form-control" 
-                                                        disabled 
+                                                        readonly 
                                                         value="${atendimento.produto.nome}"
                                                         >
                                                 </div>
@@ -115,7 +115,7 @@
                                                     <input 
                                                         type="text" 
                                                         class="form-control" 
-                                                        disabled 
+                                                        readonly 
                                                         value="${atendimento.tipoAtendimento.descricao}"
                                                         >
                                                 </div>
@@ -125,9 +125,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Descrição</label>
-                                                    <textarea class="form-control textarea" disabled>
-                                                        ${atendimento.descricao}
-                                                    </textarea>
+                                                    <textarea class="form-control textarea" disabled>${atendimento.descricao}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,10 +136,8 @@
                                                     <textarea 
                                                         class="form-control textarea" 
                                                         name="solucao" 
-                                                        disabled
-                                                        >
-                                                        ${atendimento.justificativa}
-                                                    </textarea>
+                                                        readonly
+                                                    >${atendimento.justificativa}</textarea>
                                                 </div>
                                             </div>
                                         </div>

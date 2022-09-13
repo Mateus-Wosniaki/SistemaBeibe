@@ -115,7 +115,7 @@
                                             <div class="col-md-1 pr-1">
                                                 <div class="form-group">
                                                     <label>Estado</label>
-                                                    <select name="estado" id="estado" class="form-select">
+                                                    <select name="estado" id="estado" class="form-control">
                                                         <option selected>
                                                             Selecione...
                                                         </option>
@@ -128,7 +128,7 @@
                                             <div class="col-md-6 pr-1">
                                                 <div class="form-group">
                                                     <label for="cidade">Cidade</label>
-                                                    <select name="cidade" id="cidade" class="form-select">
+                                                    <select name="cidade" id="cidade" class="form-control">
                                                         <option selected value="">
                                                             Selecione o estado...
                                                         </option>

@@ -47,6 +47,7 @@
                                     <div class="card-body">
                                         <c:url var="resolverAtendimento" value="/FuncionarioServlet" context="${pageContext.request.contextPath}" >
                                             <c:param name="action" value="resolverAtendimento" />
+                                            <c:param name="id" value="${atendimento.atendimentoId}" />
                                         </c:url>
                                         <form method="POST" action="${resolverAtendimento}">
                                             <div class="row">
@@ -62,13 +63,13 @@
                                                 <div class="col-md-8 pr-1">
                                                     <div class="form-group">
                                                         <label>Cliente</label>
-                                                        <input type="text" class="form-control" disabled value="${atendimento.cliente.nomeCompleto}">
+                                                        <input type="text" class="form-control" readonly value="${atendimento.cliente.nomeCompleto}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 pl-1">
                                                     <div class="form-group">
                                                         <label>Situação</label>
-                                                        <input type="email" class="form-control" disabled value="${atendimento.situacao.descricao}">
+                                                        <input type="email" class="form-control" readonly value="${atendimento.situacao.descricao}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,13 +77,13 @@
                                                 <div class="col-md-6 pr-1">
                                                     <div class="form-group">
                                                         <label>Produto</label>
-                                                        <input type="text" class="form-control" disabled value="${atendimento.produto.nome}">
+                                                        <input type="text" class="form-control" readonly value="${atendimento.produto.nome}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 pl-1">
                                                     <div class="form-group">
                                                         <label>Tipo Atendimento</label>
-                                                        <input type="text" class="form-control" disabled value="${atendimento.tipoAtendimento.descricao}">
+                                                        <input type="text" class="form-control" readonly value="${atendimento.tipoAtendimento.descricao}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,9 +91,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Descrição</label>
-                                                        <textarea class="form-control textarea" disabled>
-                                                            ${atendimento.descricao}
-                                                        </textarea>
+                                                        <textarea class="form-control textarea" readonly>${atendimento.descricao}</textarea>
                                                     </div>
                                                 </div>
                                             </div>

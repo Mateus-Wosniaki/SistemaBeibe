@@ -4,8 +4,8 @@
     Author     : Gabriel Jesus Peres
 --%>
 
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -63,17 +63,12 @@
                                     </div>
                                     <input type="password" placeholder="Senha" class="form-control" id="senha" name="senha">
                                 </div>
-                                <br />
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="keepsession" checked="">
-                                            <span class="form-check-sign"></span>
-                                            Mantenha-me conectado
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
+                            <c:if test="${!empty mensagem}">
+                                <div class="alert alert-danger" role="alert">
+                                    ${mensagem}
+                                </div>
+                            </c:if>
                             <div class="card-footer ">
                                 <button type="submit" class="btn btn-warning btn-round btn-block mb-3">Entrar</button>
                             </div>

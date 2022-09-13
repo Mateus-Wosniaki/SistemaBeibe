@@ -43,6 +43,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:param name="action" value="atualizar" />
+                                <c:param name="id" value="${categoria.categoriaId}" />
                             </c:otherwise>
                         </c:choose>
                     </c:url>
@@ -61,7 +62,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="categoria">Categoria</label>
-                                                    <select name="categoria" id="categoria" class="form-select">
+                                                    <select name="categoria" id="categoria" class="form-control">
                                                         <option>Selecione uma categoria</option>
                                                         <c:forEach var="categoria" items="${requestScope.categorias}">
                                                             <option 

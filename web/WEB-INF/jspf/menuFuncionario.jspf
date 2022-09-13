@@ -16,7 +16,7 @@
                 </c:url>
                 <a href="${index}">
                 <i class="nc-icon nc-shop"></i>
-                <p>Início</p>
+                <p>Atendimentos em Aberto</p>
             </a>
             </li>
             <li>

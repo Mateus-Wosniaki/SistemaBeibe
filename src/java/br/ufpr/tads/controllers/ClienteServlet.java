@@ -1,9 +1,6 @@
 package br.ufpr.tads.controllers;
 
 import br.ufpr.tads.beans.Atendimento;
-import br.ufpr.tads.beans.Cidade;
-import br.ufpr.tads.beans.Endereco;
-import br.ufpr.tads.beans.Funcao;
 import br.ufpr.tads.beans.Login;
 import br.ufpr.tads.beans.Produto;
 import br.ufpr.tads.beans.Situacao;
@@ -26,7 +23,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -212,59 +208,6 @@ public class ClienteServlet extends HttpServlet {
                 request.setAttribute("mensagem", "Ocorreu um erro ao excluir o atendimento: " + e);
                 erroJSP.forward(request, response);
             }
-        } else if ("cadastro".equals(action)) {
-            try {
-                Usuario usuario = new Usuario();
-                Funcao funcao = new Funcao(1, "Cliente");
-                usuario.setFuncao(funcao);
-
-                String nomeCompleto = validarInput(request.getParameter("nome"));
-                String email = validarEmail(request.getParameter("email"));
-                String CPF = validarCPFouTelefone(request.getParameter("CPF"), "CPF");
-                String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
-                String senha = validarInput(request.getParameter("senha"));
-
-                // Set de atributos básicos do bean de Usuário
-                usuario.setNomeCompleto(nomeCompleto);
-                usuario.setEmail(email);
-                usuario.setCpf(CPF);
-                usuario.setTelefone(telefone);
-                usuario.setSenha(senha);
-
-                // Bean de endereço
-                Endereco endereco = new Endereco();
-
-                String CEP = validarInput(request.getParameter("CEP")).replaceAll("[^0-9]", "");
-                String logradouro = validarInput(request.getParameter("logradouro"));
-                String bairro = validarInput(request.getParameter("bairro"));
-                String complemento = validarInput(request.getParameter("complemento"));
-                int idCidade = Integer.parseInt(request.getParameter("cidade"));
-                int numero = Integer.parseInt(request.getParameter("numero"));
-
-                Cidade cidade = new Cidade();
-                cidade.setCidadeId(idCidade);
-
-                // Define o bean de Endereço do Usuário
-                endereco.setCidade(cidade);
-                endereco.setCep(CEP);
-                endereco.setRua(logradouro);
-                endereco.setNumero(numero);
-                endereco.setBairro(bairro);
-                endereco.setComplemento(complemento);
-                // Set esse bean no obj. usuário
-                usuario.setEndereco(endereco);
-
-                UsuarioFacade.cadastrarUsuario(usuario);
-            } catch (NumberFormatException e) {
-                request.setAttribute("mensagem", "Ocorreu um erro ao converter o parâmetro do formulário em número: " + e.getMessage());
-                erroJSP.forward(request, response);
-            } catch (ParametroFormularioException e) {
-                request.setAttribute("mensagem", "Ocorreu um erro durante a validação de parâmetros do formulário: " + e.getMessage());
-                erroJSP.forward(request, response);
-            } catch (UsuarioException e) {
-                request.setAttribute("mensagem", "Ocorreu um erro ao cadastrar o Usuário: " + e.getMessage());
-                erroJSP.forward(request, response);
-            }
         } else {
             request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
             erroJSP.forward(request, response);
@@ -280,20 +223,7 @@ public class ClienteServlet extends HttpServlet {
         }
         return input.trim();
     }
-
-    private static String validarEmail(String email) throws ParametroFormularioException {
-        if (email == null || email.isBlank()) {
-            throw new ParametroFormularioException("O email não pode ser vazio");
-        }
-
-        boolean isEmailValido = Pattern.compile("^(.+)@(.+)$").matcher(email.trim()).matches();
-        if (!isEmailValido) {
-            throw new ParametroFormularioException("Email inválido");
-        }
-
-        return email.trim();
-    }
-
+    
     private static String validarCPFouTelefone(String str, String tipo) throws ParametroFormularioException {
 
         if (str == null || str.isBlank()) {
