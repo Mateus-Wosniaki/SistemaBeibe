@@ -1,0 +1,43 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="sidebar" data-color="white" data-active-color="danger">
+    <div class="logo">
+        <a href="#" class="simple-text logo-normal">
+            GERENTE
+        </a>
+    </div>
+    <div class="sidebar-wrapper" style="padding-right: 2px;">
+        <ul class="nav">
+            <li>
+                <a href="GerenteServlet">
+                    <i class="nc-icon nc-shop"></i>
+                    <p>Início</p>
+                </a>
+            </li>
+            <li>
+                <a href="GerenteServlet?action=a">
+                    <i class="nc-icon nc-circle-10"></i>
+                    <p>Colaboradores</p>
+                </a>
+            </li>
+            <li>
+                <a href="GerenteServlet?action=atendimentosAbertos">
+                    <i class="nc-icon nc-book-bookmark"></i>
+                    <p>Atendimentos Abertos</p>
+                </a>
+            </li>
+            <li>
+                <a href="GerenteServlet?action=todosAtendimentos">
+                    <i class="nc-icon nc-book-bookmark"></i>
+                    <p>Todos Atendimentos</p>
+                </a>
+            </li>
+            <li>
+                <a href="relatorios.jsp">
+                    <i class="nc-icon nc-paper"></i>
+                    <p>Relatórios</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

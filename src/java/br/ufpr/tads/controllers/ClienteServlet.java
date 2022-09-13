@@ -1,25 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package br.ufpr.tads.controllers;
 
+import br.ufpr.tads.beans.Atendimento;
+import br.ufpr.tads.beans.Cidade;
+import br.ufpr.tads.beans.Endereco;
+import br.ufpr.tads.beans.Funcao;
+import br.ufpr.tads.beans.Login;
+import br.ufpr.tads.beans.Produto;
+import br.ufpr.tads.beans.Situacao;
+import br.ufpr.tads.beans.TipoAtendimento;
+import br.ufpr.tads.beans.Usuario;
+import br.ufpr.tads.exception.AtendimentoException;
+import br.ufpr.tads.exception.ParametroFormularioException;
+import br.ufpr.tads.exception.ProdutoException;
+import br.ufpr.tads.exception.UsuarioException;
+import br.ufpr.tads.facade.AtendimentoFacade;
+import br.ufpr.tads.facade.ProdutoFacade;
+import br.ufpr.tads.facade.UsuarioFacade;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
- * @author Mateus Wosniaki
+ * @author Gabriel Jesus Peres
  */
 @WebServlet(name = "ClienteServlet", urlPatterns = {"/ClienteServlet"})
 public class ClienteServlet extends HttpServlet {
@@ -35,22 +46,264 @@ public class ClienteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            Path path = Paths.get(getServletContext().getRealPath("/Cliente"));
-            List<String> linhasArquivo = Files.readAllLines(path);
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ClienteServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ClienteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        request.setCharacterEncoding("UTF-8");
+
+        // Verifica se o usuário está logado
+        HttpSession session = request.getSession();
+        if (session.getAttribute("login") == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
+            request.setAttribute("mensagem", "Usuário deve se autenticar para acessar o sistema");
+            rd.forward(request, response);
         }
+
+        String action = request.getParameter("action");
+        RequestDispatcher erroJSP = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+
+        Login login = (Login) session.getAttribute("login");
+        
+        // Se o login não for de uma pessoa autorizada, redireciona para erro.jsp
+        if (login.getFuncao().getFuncaoId() != 1) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
+            rd.forward(request, response);
+        }
+
+        if ("index".equals(action) || action == null) {
+            try {
+                List<Atendimento> atendimentos = AtendimentoFacade.buscarAtendimentosPorCliente(login.getUsuarioId());
+                request.setAttribute("atendimentos", atendimentos);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/index.jsp");
+                rd.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de atendimentos: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("atendimento".equals(action)) {
+            try {
+                int idAtendimento = Integer.parseInt(request.getParameter("atendimento"));
+
+                Atendimento atendimento = AtendimentoFacade.buscarAtendimentoPorId(idAtendimento);
+                request.setAttribute("atendimento", atendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/serviceResume.jsp");
+                rd.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar o ID do Atendimento selecionado: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do atendimento selecionado: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("perfil".equals(action)) {
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                request.setAttribute("usuario", usuario);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/updateUser.jsp");
+                rd.forward(request, response);
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("update".equals(action)) {
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                
+                String nomeCompleto = validarInput(request.getParameter("nome"));
+                usuario.setNomeCompleto(nomeCompleto);
+                
+                String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
+                usuario.setTelefone(telefone);
+                
+                String CEP = validarInput(request.getParameter("cep")).replaceAll("[^0-9]", "");
+                usuario.getEndereco().setCep(CEP);
+                
+                String logradouro = validarInput(request.getParameter("logradouro"));
+                usuario.getEndereco().setRua(logradouro);
+                
+                int numero = Integer.parseInt(request.getParameter("numero"));
+                usuario.getEndereco().setNumero(numero);
+                
+                String complemento = validarInput(request.getParameter("complemento"));
+                usuario.getEndereco().setComplemento(complemento);
+                
+                String bairro = validarInput(request.getParameter("bairro"));
+                usuario.getEndereco().setBairro(bairro);
+                
+                UsuarioFacade.atualizarUsuario(usuario);
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao atualizar ou buscar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            } catch (ParametroFormularioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do formulário: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("formAtendimento".equals(action)) {
+            try {
+                List<Produto> produtos = ProdutoFacade.buscarTodosProdutos();
+                request.setAttribute("produtos", produtos);
+
+                List<TipoAtendimento> tiposAtendimento = AtendimentoFacade.buscarTodosTiposAtendimento();
+                request.setAttribute("tiposAtendimento", tiposAtendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/createService.jsp");
+                rd.forward(request, response);
+            } catch (ProdutoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de produtos: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a lista de tipos de atendimento: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("novoAtendimento".equals(action)) {
+            Atendimento atendimento = new Atendimento();
+            try {
+                Usuario usuario = UsuarioFacade.buscarUsuarioPorId(login.getUsuarioId());
+                atendimento.setCliente(usuario);
+
+                atendimento.setDataCriacao(new Date());
+
+                String descricao = validarInput(request.getParameter("descricao"));
+                atendimento.setDescricao(descricao);
+
+                int idProduto = Integer.parseInt(request.getParameter("produto"));
+                Produto produto = ProdutoFacade.buscarProdutoPorId(idProduto);
+                atendimento.setProduto(produto);
+
+                int idTipoAtendimento = Integer.parseInt(request.getParameter("tipo"));
+                TipoAtendimento tipoAtendimento = AtendimentoFacade.buscarTipoAtendimento(idTipoAtendimento);
+                atendimento.setTipoAtendimento(tipoAtendimento);
+
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoId(1); // Situação Em Aberto por padrão
+                atendimento.setSituacao(situacao);
+
+                AtendimentoFacade.criarAtendimento(atendimento);
+                response.sendRedirect("ClienteServlet?action=index");
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao criar o atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao converter o ID do produto/tipo de atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (ProdutoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar o produto: " + e);
+                erroJSP.forward(request, response);
+            } catch (ParametroFormularioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao recuperar a descrição, do formulário: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("excluirAtendimento".equals(action)) {
+            try {
+                int idAtendimento = Integer.parseInt(request.getParameter("idAtendimento"));
+                AtendimentoFacade.deletarAtendimento(idAtendimento);
+
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/index.jsp");
+                rd.forward(request, response);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao converter o ID do atendimento: " + e);
+                erroJSP.forward(request, response);
+            } catch (AtendimentoException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao excluir o atendimento: " + e);
+                erroJSP.forward(request, response);
+            }
+        } else if ("cadastro".equals(action)) {
+            try {
+                Usuario usuario = new Usuario();
+                Funcao funcao = new Funcao(1, "Cliente");
+                usuario.setFuncao(funcao);
+
+                String nomeCompleto = validarInput(request.getParameter("nome"));
+                String email = validarEmail(request.getParameter("email"));
+                String CPF = validarCPFouTelefone(request.getParameter("CPF"), "CPF");
+                String telefone = validarCPFouTelefone(request.getParameter("telefone"), "telefone");
+                String senha = validarInput(request.getParameter("senha"));
+
+                // Set de atributos básicos do bean de Usuário
+                usuario.setNomeCompleto(nomeCompleto);
+                usuario.setEmail(email);
+                usuario.setCpf(CPF);
+                usuario.setTelefone(telefone);
+                usuario.setSenha(senha);
+
+                // Bean de endereço
+                Endereco endereco = new Endereco();
+
+                String CEP = validarInput(request.getParameter("CEP")).replaceAll("[^0-9]", "");
+                String logradouro = validarInput(request.getParameter("logradouro"));
+                String bairro = validarInput(request.getParameter("bairro"));
+                String complemento = validarInput(request.getParameter("complemento"));
+                int idCidade = Integer.parseInt(request.getParameter("cidade"));
+                int numero = Integer.parseInt(request.getParameter("numero"));
+
+                Cidade cidade = new Cidade();
+                cidade.setCidadeId(idCidade);
+
+                // Define o bean de Endereço do Usuário
+                endereco.setCidade(cidade);
+                endereco.setCep(CEP);
+                endereco.setRua(logradouro);
+                endereco.setNumero(numero);
+                endereco.setBairro(bairro);
+                endereco.setComplemento(complemento);
+                // Set esse bean no obj. usuário
+                usuario.setEndereco(endereco);
+
+                UsuarioFacade.cadastrarUsuario(usuario);
+            } catch (NumberFormatException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao converter o parâmetro do formulário em número: " + e.getMessage());
+                erroJSP.forward(request, response);
+            } catch (ParametroFormularioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro durante a validação de parâmetros do formulário: " + e.getMessage());
+                erroJSP.forward(request, response);
+            } catch (UsuarioException e) {
+                request.setAttribute("mensagem", "Ocorreu um erro ao cadastrar o Usuário: " + e.getMessage());
+                erroJSP.forward(request, response);
+            }
+        } else {
+            request.setAttribute("mensagem", "404 - A página que você procura não existe (Action incorreta informada para a Controller)");
+            erroJSP.forward(request, response);
+        }
+    }
+
+    private static String validarInput(String input) throws ParametroFormularioException {
+        if (input == null || input.isBlank()) {
+            throw new ParametroFormularioException("Parâmetro não pode ser vazio");
+        }
+        if (input.trim().length() < 3) {
+            throw new ParametroFormularioException("Parâmetro precisa ter mais do que 3 letras");
+        }
+        return input.trim();
+    }
+
+    private static String validarEmail(String email) throws ParametroFormularioException {
+        if (email == null || email.isBlank()) {
+            throw new ParametroFormularioException("O email não pode ser vazio");
+        }
+
+        boolean isEmailValido = Pattern.compile("^(.+)@(.+)$").matcher(email.trim()).matches();
+        if (!isEmailValido) {
+            throw new ParametroFormularioException("Email inválido");
+        }
+
+        return email.trim();
+    }
+
+    private static String validarCPFouTelefone(String str, String tipo) throws ParametroFormularioException {
+
+        if (str == null || str.isBlank()) {
+            throw new ParametroFormularioException("O " + tipo + " não pode ser vazio");
+        }
+        if (str.trim().replaceAll("[^0-9]", "").length() != 11) {
+            throw new ParametroFormularioException("O " + tipo + " precisa ter 11 dígitos");
+        }
+
+        return str.trim().replaceAll("[^0-9]", "");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
