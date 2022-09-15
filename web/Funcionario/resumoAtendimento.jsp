@@ -54,7 +54,7 @@
                                                 <div class="col-md-4 pr-1">
                                                     <div class="form-group">
                                                         <label>Data de Criação</label>
-                                                        <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy" />
+                                                        <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy H:mm:ss" />
                                                         <input readonly type="text" class="form-control" value="${dataCriacao}">
                                                     </div>
                                                 </div>

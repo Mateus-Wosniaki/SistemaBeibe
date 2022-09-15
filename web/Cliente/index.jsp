@@ -78,7 +78,7 @@
                                                     <td>${atendimento.tipoAtendimento.descricao}</td>
                                                     <td>${atendimento.produto.nome}</td>
                                                     <td>${atendimento.situacao.descricao}</td>
-                                                    <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" />
+                                                    <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" />
                                                     <td>${dataCriacao}</td>
                                                     <td class="text-center">
                                                         <c:url var="viewURL" value="/ClienteServlet" context="${pageContext.request.contextPath}" >

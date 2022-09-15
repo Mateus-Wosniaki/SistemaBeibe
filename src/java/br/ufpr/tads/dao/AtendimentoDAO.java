@@ -53,8 +53,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -104,8 +104,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -209,7 +209,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -253,8 +253,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 

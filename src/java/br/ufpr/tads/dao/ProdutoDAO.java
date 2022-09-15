@@ -44,7 +44,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             if (rs.next()) {
                 produto.setProdutoId(rs.getInt("idproduto"));
                 produto.setNome(rs.getString("tituloproduto"));
-                produto.setDescricao("descricaoproduto");
+                produto.setDescricao(rs.getString("descricaoproduto"));
                 produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();
@@ -71,7 +71,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
                 
                 produto.setProdutoId(rs.getInt("idproduto"));
                 produto.setNome(rs.getString("tituloproduto"));
-                produto.setDescricao("descricaoproduto");
+                produto.setDescricao(rs.getString("descricaoproduto"));
                 produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();

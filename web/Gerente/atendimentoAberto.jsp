@@ -62,7 +62,7 @@
                                                     <td><c:out value="${atendimento.atendimentoId}" /></td>
                                                     <td><c:out value="${atendimento.cliente.nomeCompleto}" /></td>
                                                     <td><c:out value="${atendimento.tipoAtendimento.descricao}" /></td>
-                                                    <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : ""}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" /></td>
+                                                    <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : ""}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

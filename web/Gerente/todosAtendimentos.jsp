@@ -56,17 +56,26 @@
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${listaAtendimentos}" var="atendimento">
+                                                <c:set var="isAtendimentoAberto" value="${atendimento.situacao.situacaoId == 1}" />
                                                 <tr>
                                                     <td><c:out value="${atendimento.atendimentoId}" /></td>
                                                     <td><c:out value="${atendimento.cliente.nomeCompleto}" /></td>
                                                     <td><c:out value="${atendimento.tipoAtendimento.descricao}" /></td>
-                                                    <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : 'class=text-warning'}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" /></td>
-                                                </tr>
-                                            </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${isAtendimentoAberto}">
+                                                            <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : 'class=text-warning'}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <td><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>

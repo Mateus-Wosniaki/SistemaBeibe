@@ -43,7 +43,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:param name="action" value="atualizar" />
-                                <c:param name="id" value="${categoria.categoriaId}" />
+                                <c:param name="id" value="${produto.produtoId}" />
                             </c:otherwise>
                         </c:choose>
                     </c:url>
