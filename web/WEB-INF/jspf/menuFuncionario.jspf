@@ -10,13 +10,13 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active">
+            <li>
                 <c:url var="index" value="/FuncionarioServlet" context="${pageContext.request.contextPath}" >
                     <c:param name="action" value="index" />
                 </c:url>
                 <a href="${index}">
                 <i class="nc-icon nc-shop"></i>
-                <p>Início</p>
+                <p>Atendimentos em Aberto</p>
             </a>
             </li>
             <li>

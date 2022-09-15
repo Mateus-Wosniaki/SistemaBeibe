@@ -94,7 +94,7 @@
                                                     </c:when>
                                                 </c:choose>
                                                     <td>${atendimento.cliente.nomeCompleto}</td>
-                                                    <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" />
+                                                    <fmt:formatDate var="dataCriacao" value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" />
                                                     <td>${dataCriacao}</td>
                                                     <td>
                                                         <c:if test="${isAtendimentoAberto}" >

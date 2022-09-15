@@ -1,14 +1,16 @@
 CREATE TABLE public.Categoria (
   idCategoria SERIAL PRIMARY KEY,
-  nomeCategoria VARCHAR(50) NOT NULL UNIQUE
+  nomeCategoria VARCHAR(50) NOT NULL UNIQUE,
+  deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE public.Produto (
   idProduto SERIAL PRIMARY KEY,
   tituloProduto VARCHAR(128) UNIQUE NOT NULL,
   descricaoProduto VARCHAR(250),
-  pesoProduto DECIMAL(5,2) DEFAULT 0.0,
+  pesoProduto DECIMAL(10,2) DEFAULT 0.0,
   idCategoria INT,
+  deleted BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (idCategoria) REFERENCES public.Categoria(idCategoria)
 );
 
@@ -60,6 +62,7 @@ CREATE TABLE public.Usuario (
   senha VARCHAR(250) NOT NULL,
   idEndereco INT,
   idFuncao INT,
+  deleted BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (idEndereco) REFERENCES public.Endereco(idEndereco),
   FOREIGN KEY (idFuncao) REFERENCES public.Funcao(idFuncao)
 );

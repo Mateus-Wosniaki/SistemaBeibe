@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li>
-                <a href="GerenteServlet?action=a">
+                <a href="GerenteServlet?action=listarColaboradores">
                     <i class="nc-icon nc-circle-10"></i>
                     <p>Colaboradores</p>
                 </a>
@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li>
-                <a href="relatorios.jsp">
+                <a href="GerenteServlet?action=relatorios">
                     <i class="nc-icon nc-paper"></i>
                     <p>Relatórios</p>
                 </a>

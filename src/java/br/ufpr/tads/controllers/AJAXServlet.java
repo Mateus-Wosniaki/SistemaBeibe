@@ -86,10 +86,6 @@ public class AJAXServlet extends HttpServlet {
             }
         }
 
-        if ("categoria".equals(action)) {
-            // TODO: Implementar import do comboBox para produto
-        }
-
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

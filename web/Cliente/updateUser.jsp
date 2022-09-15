@@ -60,7 +60,7 @@
                                     </c:url>
                                     <form method="POST" action="${atualizarURL}">
                                         <div class="row">
-                                            <div class="col-md pr-1">
+                                            <div class="col-md-5 pr-1">
                                                 <div class="form-group">
                                                     <label for="nome">Nome</label>
                                                     <input
@@ -69,12 +69,21 @@
                                                         type="text" 
                                                         class="form-control pl-1"
                                                         value="${usuario.nomeCompleto}" 
-                                                    >
+                                                        >
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 pr-1">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Email</label>
+                                                    <input 
+                                                        type="email" 
+                                                        readonly 
+                                                        class="form-control" 
+                                                        value="${usuario.email}"
+                                                        >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 pl-1">
                                                 <div class="form-group">
                                                     <label for="cpf">CPF</label>
                                                     <input 
@@ -87,18 +96,9 @@
                                                         >
                                                 </div>
                                             </div>
-                                            <div class="col-md pl-1">
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <input 
-                                                        type="email" 
-                                                        readonly 
-                                                        class="form-control" 
-                                                        value="${usuario.email}"
-                                                        >
-                                                </div>
-                                            </div>
-                                            <div class="col-md pl-1">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label for="telefone">Telefone</label>
                                                     <input 
@@ -110,12 +110,10 @@
                                                         >
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-1 pr-1">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Estado</label>
-                                                    <select name="estado" id="estado" class="form-select">
+                                                    <select name="estado" id="estado" class="form-control">
                                                         <option selected>
                                                             Selecione...
                                                         </option>
@@ -125,10 +123,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 pr-1">
+                                            <div class="col-md-4 pl-1">
                                                 <div class="form-group">
                                                     <label for="cidade">Cidade</label>
-                                                    <select name="cidade" id="cidade" class="form-select">
+                                                    <select name="cidade" id="cidade" class="form-control">
                                                         <option selected value="">
                                                             Selecione o estado...
                                                         </option>
@@ -137,7 +135,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-2 pr-1">
+                                            <div class="col-md-3 pr-1">
                                                 <div class="form-group">
                                                     <label for="cep">CEP</label>
                                                     <input 
@@ -149,7 +147,7 @@
                                                         >
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 pl-1">
+                                            <div class="col-md-6 pl-1">
                                                 <div class="form-group">
                                                     <label for="logradouro">Logradouro</label>
                                                     <input 
@@ -161,7 +159,7 @@
                                                         >
                                                 </div>
                                             </div>
-                                            <div class="col-md-1 pl-1">
+                                            <div class="col-md-2 pl-1">
                                                 <div class="form-group">
                                                     <label for="numero">Número</label>
                                                     <input 
@@ -173,7 +171,9 @@
                                                         >
                                                 </div>
                                             </div>
-                                            <div class="col-md pl-1">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label for="complemento">Complemento</label>
                                                     <input 
@@ -185,7 +185,7 @@
                                                         >
                                                 </div>
                                             </div>
-                                            <div class="col-md pl-1">
+                                            <div class="col-md-4 pl-1">
                                                 <div class="form-group">
                                                     <label for="bairro">Bairro</label>
                                                     <input 

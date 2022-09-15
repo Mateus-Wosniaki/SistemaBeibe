@@ -21,7 +21,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     private static final String INSERIR = 
             "insert into public.Atendimento (idUsuario, idTipoAtendimento, idProduto, descricaoChamado, idSituacao) values (?, ?, ?, ?, ?)";
     private static final String BUSCARTODOS = 
-            "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario";
+            "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario ORDER BY a.dataChamado";
     private static final String BUSCARPORID = 
             "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario where a.idAtendimento = ?";
     private static final String DELETAR = 
@@ -32,7 +32,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
     private static final String BUSCAR_ATENDIMENTOS_ABERTO = 
             "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario where a.idSituacao = 1 ORDER BY a.dataChamado";
     private static final String BUSCAR_ATENDIMENTOS_CLIENTE = 
-            "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario where a.idUsuario = ?";
+            "select a.idAtendimento,a.idUsuario,u.nomecompleto,a.idTipoAtendimento,t.desctipoatendimento,a.dataChamado,a.idProduto,p.tituloproduto,a.descricaoChamado,a.idSituacao,s.descsituacao,a.justificativa,a.idAtendente,a.dataFinalizado from Atendimento a inner join tipoAtendimento t on t.idTipoAtendimento = a.idTipoAtendimento inner join produto p on p.idProduto = a.idProduto inner join situacao s on s.idSituacao = a.idSituacao inner join usuario u on u.idUsuario = a.idUsuario where a.idUsuario = ? ORDER BY a.dataChamado DESC";
 
     private Connection con = null;
     
@@ -53,8 +53,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -104,8 +104,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -209,7 +209,7 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 
@@ -253,8 +253,8 @@ public class AtendimentoDAO implements InterfaceDAO<Atendimento> {
                 Atendimento atendimento = new Atendimento();
                 
                 atendimento.setAtendimentoId(rs.getInt("idatendimento"));
-                atendimento.setDataCriacao(rs.getDate("datachamado"));
-                atendimento.setDataFinalizado(rs.getDate("datafinalizado"));
+                atendimento.setDataCriacao(rs.getTimestamp("datachamado"));
+                atendimento.setDataFinalizado(rs.getTimestamp("datafinalizado"));
                 atendimento.setJustificativa(rs.getString("justificativa"));
                 atendimento.setDescricao(rs.getString("descricaochamado"));
                 

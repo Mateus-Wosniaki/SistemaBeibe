@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class ProdutoDAO implements InterfaceDAO<Produto> {
     private static final String INSERIR = "insert into public.Produto (tituloProduto, descricaoProduto, pesoProduto, idCategoria) values (?, ?, ?, ?)";
-    private static final String BUSCARTODOS = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria";
-    private static final String BUSCARPORID = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria where p.idProduto = ?";
-    private static final String DELETAR = "delete from public.Produto where idProduto = ?";
+    private static final String BUSCARTODOS = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria WHERE p.deleted = false";
+    private static final String BUSCARPORID = "select p.idProduto, p.tituloProduto, p.descricaoProduto, p.pesoProduto, p.idCategoria, c.nomeCategoria from public.Produto p inner join Categoria c on c.idCategoria = p.idCategoria where p.idProduto = ? AND p.deleted = false";
+    private static final String DELETAR = "UPDATE Produto SET deleted = true where idProduto = ?";
     private static final String ATUALIZAR = "update public.Produto set tituloProduto = ?, descricaoProduto = ?, pesoProduto = ?, idCategoria = ? where idProduto = ?";
 
     private Connection con = null;
@@ -44,7 +44,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             if (rs.next()) {
                 produto.setProdutoId(rs.getInt("idproduto"));
                 produto.setNome(rs.getString("tituloproduto"));
-                produto.setDescricao("descricaoproduto");
+                produto.setDescricao(rs.getString("descricaoproduto"));
                 produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();
@@ -66,12 +66,12 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             List<Produto> produtos = new ArrayList<>();
             
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Produto produto = new Produto();
                 
                 produto.setProdutoId(rs.getInt("idproduto"));
                 produto.setNome(rs.getString("tituloproduto"));
-                produto.setDescricao("descricaoproduto");
+                produto.setDescricao(rs.getString("descricaoproduto"));
                 produto.setPeso(rs.getDouble("pesoproduto"));
                 
                 Categoria categoria = new Categoria();

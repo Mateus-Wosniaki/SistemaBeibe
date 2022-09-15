@@ -158,6 +158,7 @@ public class FuncionarioServlet extends HttpServlet {
                 atendimentoResolvido.setAtendimentoId(Integer.parseInt(atendimentoId));
                 atendimentoResolvido.setJustificativa(justificativa);
                 atendimentoResolvido.setAtendente(atendente);
+                atendimentoResolvido.setDataFinalizado(new DateTime().toDate());
 
                 FuncionarioFacade.resolverAtendimento(atendimentoResolvido);
             }

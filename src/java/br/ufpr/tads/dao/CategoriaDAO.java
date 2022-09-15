@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class CategoriaDAO implements InterfaceDAO<Categoria> {
     private static final String INSERIR = "insert into public.Categoria (nomeCategoria) values (?)";
-    private static final String BUSCARTODOS = "select idCategoria, nomeCategoria from public.Categoria";
-    private static final String BUSCARPORID = "select idCategoria, nomeCategoria from public.Categoria where idCategoria = ?";
-    private static final String DELETAR = "delete from public.Categoria where idCategoria = ?";
+    private static final String BUSCARTODOS = "select idCategoria, nomeCategoria from public.Categoria WHERE deleted = false";
+    private static final String BUSCARPORID = "select idCategoria, nomeCategoria from public.Categoria where idCategoria = ? and deleted = false";
+    private static final String DELETAR = "UPDATE Categoria SET deleted = true where idCategoria = ?";
     private static final String ATUALIZAR = "update public.Categoria set nomeCategoria = ? where idCategoria = ?";
 
     private Connection con = null;

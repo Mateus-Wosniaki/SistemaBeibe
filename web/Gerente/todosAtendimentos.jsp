@@ -8,6 +8,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+<c:choose>
+    <c:when test="${empty sessionScope.login}">
+        <c:set var="mensagem" value="Usuário deve se autenticar para acessar o sistema" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+    <c:when test="${sessionScope.login.funcao.funcaoId != 3}">
+        <c:set var="mensagem" value="Você não possui autorização necessária para acessar o conteúdo da página" scope="request"/>
+        <jsp:forward page="/Autenticacao/login.jsp" />
+    </c:when>
+</c:choose>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -40,21 +50,32 @@
                                             <tr>
                                                 <th>Atendimento</th>
                                                 <th>Produto</th>
+                                                <th>Tipo atendimento</th>
                                                 <th>Data Criação</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${listaAtendimentos}" var="atendimento">
+                                                <c:set var="isAtendimentoAberto" value="${atendimento.situacao.situacaoId == 1}" />
                                                 <tr>
                                                     <td><c:out value="${atendimento.atendimentoId}" /></td>
-                                                    <td><c:out value="${atendimento.produto.produtoId}" /></td>
-                                                    <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : 'class=text-warning'}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy" /></td>
-                                                </tr>
-                                            </c:forEach>
+                                                    <td><c:out value="${atendimento.cliente.nomeCompleto}" /></td>
+                                                    <td><c:out value="${atendimento.tipoAtendimento.descricao}" /></td>
+                                                    <c:choose>
+                                                        <c:when test="${isAtendimentoAberto}">
+                                                            <td ${dataSeteDiasAtras.after(atendimento.dataCriacao) ? 'class=text-danger' : 'class=text-warning'}><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <td><fmt:formatDate value="${atendimento.dataCriacao}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>

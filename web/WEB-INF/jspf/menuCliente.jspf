@@ -10,7 +10,7 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active">
+            <li>
             <c:url var="index" value="/ClienteServlet" context="${pageContext.request.contextPath}" >
                 <c:param name="action" value="index" />
             </c:url>
