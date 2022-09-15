@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li>
-                <a href="relatorios.jsp">
+                <a href="GerenteServlet?action=relatorios">
                     <i class="nc-icon nc-paper"></i>
                     <p>Relatórios</p>
                 </a>

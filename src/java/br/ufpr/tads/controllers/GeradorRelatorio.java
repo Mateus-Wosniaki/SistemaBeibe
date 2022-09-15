@@ -15,13 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.HashMap;
 import org.joda.time.DateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import java.sql.Timestamp;
@@ -42,12 +40,10 @@ public class GeradorRelatorio extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
-        response.setContentType("text/html;charset=UTF-8");
-
+            throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
         if (session.getAttribute("login") == null) {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/AutenticacaoServlet?action=index");
@@ -62,12 +58,14 @@ public class GeradorRelatorio extends HttpServlet {
             request.setAttribute("mensagem", "Você não possui permissão para acessar o conteúdo");
             rd.forward(request, response);
         }
+        
         String action = request.getParameter("action");
+        String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+        
         try ( ConnectionFactory con = new ConnectionFactory()) {
             if ("funcRelatorio".equals(action)) {
                 String jasper = request.getContextPath() + "/assets/relatorios/relatorio_funcionarios.jasper";
-                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                System.out.println(host + jasper);
+                
                 // URL para acesso ao relatório
                 URL jasperURL = new URL(host + jasper);
 
@@ -93,8 +91,6 @@ public class GeradorRelatorio extends HttpServlet {
                 Timestamp tsFim = new Timestamp(date2.getMillis());
 
                 String jasper = request.getContextPath() + "/assets/relatorios/relatorios_atendimento_data.jasper";
-                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                System.out.println(host + jasper);
 
                 URL jasperURL = new URL(host + jasper);
 
@@ -112,8 +108,6 @@ public class GeradorRelatorio extends HttpServlet {
                 }
             } else if ("relReclamados".equals(action)) {
                 String jasper = request.getContextPath() + "/assets/relatorios/relatorio_produtos_mais_reclamados.jasper";
-                String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                System.out.println(host + jasper);
 
                 URL jasperURL = new URL(host + jasper);
 
@@ -132,10 +126,7 @@ public class GeradorRelatorio extends HttpServlet {
                 String valor = request.getParameter("select");
 
                 if (valor.equals("todos")) {
-
                     String jasper = request.getContextPath() + "/assets/relatorios/todas_reclamacoes_z.jasper";
-                    String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                    System.out.println(host + jasper);
 
                     URL jasperURL = new URL(host + jasper);
 
@@ -151,8 +142,6 @@ public class GeradorRelatorio extends HttpServlet {
 
                 } else if (valor.equals("abertos")) {
                     String jasper = request.getContextPath() + "/assets/relatorios/todas_reclamacoes.jasper";
-                    String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                    System.out.println(host + jasper);
 
                     URL jasperURL = new URL(host + jasper);
 
@@ -166,36 +155,34 @@ public class GeradorRelatorio extends HttpServlet {
                         OutputStream ops = response.getOutputStream();
                         ops.write(bytes);
                     }
-
                 } else if (valor.equals("finalizados")) {
                     String jasper = request.getContextPath() + "/assets/relatorios/todas_reclamacoes.jasper";
-                    String host = "http://" + request.getServerName() + ":" + request.getServerPort();
-                    System.out.println(host + jasper);
+
                     HashMap params = new HashMap();
                     URL jasperURL = new URL(host + jasper);
                     params.put("VALOR", 2);
                     byte[] bytes = JasperRunManager.runReportToPdf(jasperURL.openStream(), params, con.getConnection());
+                    
                     if (bytes != null) {
-
                         response.setContentType("application/pdf");
 
                         OutputStream ops = response.getOutputStream();
                         ops.write(bytes);
                     }
-
                 }
-
             }
-
         } catch (DAOException e) {
-            request.setAttribute("mensagem", "Erro de DAO : " + e.getMessage());
-            request.getRequestDispatcher("Erro/erro.jsp").forward(request, response);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Erro de DAO: " + e);
+            rd.forward(request, response);
         } catch (JRException e) {
-            request.setAttribute("mensagem", "Erro no Jasper : " + e.getMessage());
-            request.getRequestDispatcher("Erro/erro.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("mensagem", "Erro em algo mais, contate o ADM! : " + e.getMessage());
-            request.getRequestDispatcher("Erro/erro.jsp").forward(request, response);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Erro no Jasper: " + e);
+            rd.forward(request, response);
+        } catch (FileNotFoundException e) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/Erro/erro.jsp");
+            request.setAttribute("mensagem", "Arquivo não encontrado: " + e);
+            rd.forward(request, response);
         }
     }
 
@@ -211,11 +198,7 @@ public class GeradorRelatorio extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(GeradorRelatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -229,11 +212,7 @@ public class GeradorRelatorio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(GeradorRelatorio.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
