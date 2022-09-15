@@ -99,7 +99,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Solução</label>
-                                                        <textarea class="form-control textarea" name="solucao"></textarea>
+                                                        <textarea class="form-control textarea" name="justificativa"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
