@@ -177,7 +177,7 @@ public class ClienteServlet extends HttpServlet {
                 atendimento.setSituacao(situacao);
 
                 AtendimentoFacade.criarAtendimento(atendimento);
-                response.sendRedirect("ClienteServlet?action=index");
+                response.sendRedirect("/ClienteServlet?action=index");
             } catch (UsuarioException e) {
                 request.setAttribute("mensagem", "Ocorreu um erro ao recuperar as informações do usuário: " + e);
                 erroJSP.forward(request, response);
@@ -199,7 +199,7 @@ public class ClienteServlet extends HttpServlet {
                 int idAtendimento = Integer.parseInt(request.getParameter("idAtendimento"));
                 AtendimentoFacade.deletarAtendimento(idAtendimento);
 
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/Cliente/index.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClienteServlet?action=index");
                 rd.forward(request, response);
             } catch (NumberFormatException e) {
                 request.setAttribute("mensagem", "Ocorreu um erro ao converter o ID do atendimento: " + e);

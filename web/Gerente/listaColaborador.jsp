@@ -64,8 +64,8 @@
                                                     <td class="telefone"><c:out value="${colaborador.telefone}" /></td>
                                                     <td><c:out value="${colaborador.funcao.descricao}" /></td>
                                                     <c:choose>
-                                                        <c:when test="${session.login.usuarioId == colaborador.usuarioId}">
-                                                            <td> N/A </td>
+                                                        <c:when test="${sessionScope.login.usuarioId == colaborador.usuarioId}">
+                                                            <td class="text-right"> N/A </td>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <td class="text-right">

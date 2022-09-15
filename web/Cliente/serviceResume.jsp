@@ -51,7 +51,7 @@
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Data de Criação</label>
-                                                    <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy" />
+                                                    <fmt:formatDate value="${atendimento.dataCriacao}" var="dataCriacao" pattern="dd/MM/yyyy HH:mm:ss" />
                                                     <input 
                                                         readonly 
                                                         type="text" 
@@ -63,7 +63,7 @@
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Data de Solução</label>
-                                                    <fmt:formatDate value="${atendimento.dataFinalizado}" var="dataFinalizado" pattern="dd/MM/yyyy" />
+                                                    <fmt:formatDate value="${atendimento.dataFinalizado}" var="dataFinalizado" pattern="dd/MM/yyyy HH:mm:ss" />
                                                     <input 
                                                         readonly 
                                                         type="text" 
