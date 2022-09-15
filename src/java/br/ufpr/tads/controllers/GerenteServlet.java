@@ -56,7 +56,7 @@ public class GerenteServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            if ("atendimentosAbertos".equals(action)) {
+            if ("atendimentosAbertos".equals(action) || action == null) {
                 List<Atendimento> atendimentosAbertos = buscarAtendimentosAbertos(request);
                 request.setAttribute("listaAtendimentosAbertos", atendimentosAbertos);
                 Date dataSeteDias = calcularDataSeteDiasAtras();
@@ -100,6 +100,8 @@ public class GerenteServlet extends HttpServlet {
                 List<Usuario> usuarios = buscarColaboradores();
                 request.setAttribute("colaboradores", usuarios);
                 redirectTo("/Gerente/listaColaborador.jsp", request, response);
+            } else if ("relatorios".equals(action)) {
+                redirectTo("/Gerente/relatorios.jsp", request, response);
             } else {
                 montarInformacoesAdministrativas(request);
                 redirectTo("/Gerente/index.jsp", request, response);
